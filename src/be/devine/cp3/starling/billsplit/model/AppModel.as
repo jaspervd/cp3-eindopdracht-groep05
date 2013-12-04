@@ -7,11 +7,22 @@
  */
 package be.devine.cp3.starling.billsplit.model {
 import flash.events.EventDispatcher;
-import flash.events.IEventDispatcher;
 
 public class AppModel extends EventDispatcher {
-    public function AppModel() {
+    private static var instance:AppModel;
 
+    public static function getInstance():AppModel {
+        if (instance == null) {
+            instance = new AppModel(new Enforcer());
+        }
+        return instance;
+    }
+
+    public function AppModel(e:Enforcer) {
+        if (e == null) {
+            throw new Error('AppModel is a singleton, use getInstance() instead');
+        }
     }
 }
 }
+internal class Enforcer {};
