@@ -20,6 +20,7 @@ public class Application extends Sprite {
     public function Application() {
         new MinimalMobileTheme(); // custom theme later?
         _appModel = AppModel.getInstance();
+        _appModel.load();
 
         addEventListener(Event.ADDED_TO_STAGE, addedHandler);
     }

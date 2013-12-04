@@ -10,6 +10,15 @@ import flash.events.EventDispatcher;
 
 public class AppModel extends EventDispatcher {
     private static var instance:AppModel;
+    private var _persons:Array;
+    private var _tasks:Array;
+    private var _iou:Array;
+
+    public static var PERSON_CHANGED = 'PERSON_CHANGED';
+    public static var TASK_CHANGED = 'TASK_CHANGED';
+    public static var IOU_CHANGED = 'IOU_CHANGED';
+    public static var CALCULATION_CHANGED = 'CALCULATION_CHANGED';
+
 
     public static function getInstance():AppModel {
         if (instance == null) {
@@ -22,6 +31,34 @@ public class AppModel extends EventDispatcher {
         if (e == null) {
             throw new Error('AppModel is a singleton, use getInstance() instead');
         }
+    }
+
+    public function load() {
+
+    }
+
+    public function get persons():Array {
+        return _persons;
+    }
+
+    public function set persons(value:Array):void {
+        _persons = value;
+    }
+
+    public function get tasks():Array {
+        return _tasks;
+    }
+
+    public function set tasks(value:Array):void {
+        _tasks = value;
+    }
+
+    public function get iou():Array {
+        return _iou;
+    }
+
+    public function set iou(value:Array):void {
+        _iou = value;
     }
 }
 }

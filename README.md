@@ -3,29 +3,29 @@
 ## Structuur
 
 * Personen
-    * Add
-    * Delete
-    * Alle oproepen
-    * Specifiek
-    * Betaald
+    * Add -> Event & setter
+    * Delete -> Event & setter
+    * Alle oproepen -> Getter
+    * Specifiek -> Getter
+    * Betaald -> Getter & setter
 
 * Tasks
-    * Add
-    * Delete
-    * Edit
-    * Betaald
-    * Alle oproepen
-    * Specifiek
+    * Add -> Event & setter
+    * Delete -> Event & setter
+    * Edit -> Event & setter
+    * Betaald -> Getter & setter
+    * Alle oproepen -> Getter
+    * Specifiek -> Getter
 
 * IOU
-    * Add
-    * Delete
-    * Edit
-    * Specifiek
+    * Add -> Event & setter
+    * Delete -> Event & setter
+    * Edit -> Event & setter
+    * Specifiek -> Getter
         * Per persoon
         * Per task
 
 * Berekening
-    * Omzetting percentage <> euro en omgekeerd
-    * Gelijk verdelen
-    * Individueel
+    * Omzetting percentage <> euro en omgekeerd -> Event & setter
+    * Gelijk verdelen -> Setter
+    * Individueel -> Setter
