@@ -10,9 +10,8 @@ import be.devine.cp3.starling.billsplit.model.AppModel;
 
 import feathers.themes.MinimalMobileTheme;
 
-import flash.events.Event;
-
 import starling.display.Sprite;
+import starling.events.Event;
 
 public class Application extends Sprite {
     private var _appModel:AppModel;

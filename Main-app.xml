@@ -213,7 +213,7 @@
         <!--<externalSwfs></externalSwfs> -->
     </iPhone>
 
-    <!-- Android specific tags that get passed to AndroidManifest.xml file. -->
+    <!-- Android specific tags that get passed to AndroidManifest.json file. -->
     <android>
         <manifestAdditions>
             <![CDATA[
