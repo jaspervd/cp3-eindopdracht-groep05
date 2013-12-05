@@ -12,7 +12,6 @@ public class TaskVO {
     public var title:String;
     public var type:String;
     public var price:Number;
-    public var price_id:uint;
     public var timestamp:String;
     public var paid:Boolean = false;
 
@@ -22,7 +21,6 @@ public class TaskVO {
          title = value.title;
          type = value.type;
          price = value.price;
-         price_id = value.price_id;
          timestamp = value.timestamp;
          paid = value.paid;
 
