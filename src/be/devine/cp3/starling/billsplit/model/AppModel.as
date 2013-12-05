@@ -8,6 +8,7 @@
 package be.devine.cp3.starling.billsplit.model {
 import be.devine.cp3.queue.Queue;
 import be.devine.cp3.queue.URLLoaderTask;
+import be.devine.cp3.starling.billsplit.json.JsonHandler;
 import be.devine.cp3.starling.billsplit.vo.IouVO;
 import be.devine.cp3.starling.billsplit.vo.PersonVO;
 import be.devine.cp3.starling.billsplit.vo.TaskVO;
@@ -25,9 +26,11 @@ public class AppModel extends EventDispatcher {
     private var _tasks:Array;
     private var _iou:IouVO;
     private var _ious:Array;
+    private var completed:Boolean;
+    private var _jsonHandler:JsonHandler;
 
-    public static var PERSON_CHANGED = 'PERSON_CHANGED';
-    public static var TASK_CHANGED = 'TASK_CHANGED';
+    public static var PERSONS_CHANGED = 'PERSONS_CHANGED';
+    public static var TASKS_CHANGED = 'TASKS_CHANGED';
     public static var IOUS_CHANGED = 'IOUS_CHANGED';
     public static var CALCULATION_CHANGED = 'CALCULATION_CHANGED';
 
@@ -46,6 +49,7 @@ public class AppModel extends EventDispatcher {
         _persons = [];
         _tasks = [];
         _ious = [];
+        _jsonHandler = new JsonHandler();
     }
 
     public function load() {
@@ -74,9 +78,7 @@ public class AppModel extends EventDispatcher {
             iou = thisIou;
         }
 
-        trace(_persons);
-        trace(_tasks);
-        trace(_ious);
+        completed = true;
     }
 
     public function get person():Object {
@@ -91,6 +93,9 @@ public class AppModel extends EventDispatcher {
         _person.TASK_ID = value.task_id;
         _person.MODERATOR = value.moderator;
         _persons.push(_person);
+        if (completed) {
+            dispatchEvent(new Event(PERSONS_CHANGED));
+        }
     }
 
     public function get task():Object {
@@ -107,6 +112,10 @@ public class AppModel extends EventDispatcher {
         _task.TIMESTAMP = value.timestamp;
         _task.PAID = value.paid;
         _tasks.push(_task);
+
+        if (completed) {
+            dispatchEvent(new Event(TASKS_CHANGED));
+        }
     }
 
     public function get iou():Object {
@@ -121,7 +130,13 @@ public class AppModel extends EventDispatcher {
         _iou.TASK_ID = value.id;
         _iou.PAID = value.paid;
         _ious.push(_iou);
+
+        if (completed) {
+            dispatchEvent(new Event(IOUS_CHANGED));
+        }
     }
 }
 }
-internal class Enforcer {};
+internal class Enforcer {
+}
+;
