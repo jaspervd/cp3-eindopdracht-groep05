@@ -33,7 +33,7 @@ public class JsonHandler {
 
     }
 
-    public function upadtePersons(persons:Array):void{
+    public function updatePersons(persons:Array):void{
 
         if(_persons.length < 0){
 
@@ -49,7 +49,7 @@ public class JsonHandler {
 
     }
 
-    public function upadteTasks(tasks:Array):void{
+    public function updateTasks(tasks:Array):void{
 
         if(_persons.length < 0){
 
@@ -66,7 +66,7 @@ public class JsonHandler {
     }
 
 
-    public function upadteIous(ious:Array):void{
+    public function updateIous(ious:Array):void{
 
         if(_ious.length < 0){
 
