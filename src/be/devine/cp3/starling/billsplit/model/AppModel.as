@@ -1,7 +1,5 @@
 package be.devine.cp3.starling.billsplit.model {
 
-import be.devine.cp3.queue.Queue;
-import be.devine.cp3.queue.URLLoaderTask;
 import be.devine.cp3.starling.billsplit.json.JsonHandler;
 import be.devine.cp3.starling.billsplit.vo.IouVO;
 import be.devine.cp3.starling.billsplit.vo.PersonVO;
@@ -11,8 +9,6 @@ import flash.events.Event;
 
 import flash.events.EventDispatcher;
 import flash.filesystem.File;
-import flash.filesystem.FileMode;
-import flash.filesystem.FileStream;
 
 public class AppModel extends EventDispatcher {
 
