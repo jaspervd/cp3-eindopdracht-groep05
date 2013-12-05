@@ -52,7 +52,7 @@ public class AppModel extends EventDispatcher {
         _jsonHandler = new JsonHandler();
     }
 
-    public function load() {
+    public function load():void {
         _queue = new Queue();
         _queue.add(new URLLoaderTask('/assets/json/persons.json'));
         _queue.add(new URLLoaderTask('/assets/json/tasks.json'));
@@ -60,6 +60,10 @@ public class AppModel extends EventDispatcher {
 
         _queue.start();
         _queue.addEventListener(Event.COMPLETE, completeHandler);
+    }
+
+    public function closeApp():void {
+        _jsonHandler.write();
     }
 
     private function completeHandler(event:Event):void {

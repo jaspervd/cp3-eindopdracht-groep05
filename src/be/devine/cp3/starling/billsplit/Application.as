@@ -22,6 +22,11 @@ public class Application extends Sprite {
         _appModel.load();
 
         addEventListener(Event.ADDED_TO_STAGE, addedHandler);
+        stage.addEventListener(Event.CLOSE, closeHandler);
+    }
+
+    private function closeHandler(event:Event):void {
+        _appModel.closeApp();
     }
 
     private function addedHandler(event:Event):void {
