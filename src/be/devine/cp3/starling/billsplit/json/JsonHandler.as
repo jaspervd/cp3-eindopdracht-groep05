@@ -6,12 +6,23 @@
  * To change this template use File | Settings | File Templates.
  */
 package be.devine.cp3.starling.billsplit.json {
+import flash.events.Event;
+import flash.filesystem.File;
+import flash.filesystem.FileMode;
+import flash.filesystem.FileStream;
 
 public class JsonHandler {
 
     private var _tasks:Array;
     private var _persons:Array;
     private var _ious:Array;
+
+
+    private var _tasksfile:File;
+    private var _personsfile:File;
+    private var _iousfile:File;
+
+    private var _fileStream:FileStream;
 
 
     public function JsonHandler() {
@@ -74,9 +85,33 @@ public class JsonHandler {
 
     public function write():void{
 
+        _tasksfile = File.desktopDirectory.resolvePath ("/assets/json/tasks.json");
+        _personsfile = File.desktopDirectory.resolvePath ("/assets/json/persons.json");
+        _iousfile = File.desktopDirectory.resolvePath ("/assets/json/ious.json");
 
 
+        filestream(_tasksfile,_tasks);
+        filestream(_personsfile,_persons);
+        filestream(_iousfile,_ious);
 
+    }
+
+    private function filestream(file:File,json:Array):void{
+
+        var _json:String = JSON.stringify(json);
+
+        _fileStream = new FileStream ();
+        _fileStream.openAsync (file, FileMode.WRITE);
+        _fileStream.writeUTFBytes (_json);
+        _fileStream.addEventListener (Event.CLOSE, fileStreamClosed);
+        _fileStream.close ();
+
+
+    }
+
+    private function fileStreamClosed(event:Event):void {
+
+        trace("Closed");
 
     }
 
