@@ -77,16 +77,11 @@ public class AppModel extends EventDispatcher {
 
     }
 
-    public function closeApp():void {
-        _jsonHandler.write();
-    }
 
     private function completeHandler():void {
 
 
         for each(var thisPerson:Object in _personsData) {
-
-            trace(thisPerson.name);
 
             addPerson(thisPerson);
         }
@@ -94,15 +89,12 @@ public class AppModel extends EventDispatcher {
 
         for each(var thisTask:Object in _tasksData) {
 
-            trace(thisTask.title);
-
             addTask(thisTask);
         }
 
 
         for each(var thisIou:Object in _iousData) {
 
-            trace(thisIou.price);
 
             addIou(thisIou);
         }
@@ -124,7 +116,7 @@ public class AppModel extends EventDispatcher {
 
 
     //add
-    
+
     public function addPerson(value:Object):void {
         var person = new PersonVO(value);
         _persons.push(person);
@@ -158,6 +150,10 @@ public class AppModel extends EventDispatcher {
 
 
 
+    //write json when app Closes
+    public function closeApp():void {
+        _jsonHandler.write();
+    }
 
 
 
