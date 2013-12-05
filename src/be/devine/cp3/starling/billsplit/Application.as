@@ -1,11 +1,5 @@
-/**
- * Created with IntelliJ IDEA.
- * User: Jasper
- * Date: 28/11/13
- * Time: 16:54
- * To change this template use File | Settings | File Templates.
- */
 package be.devine.cp3.starling.billsplit {
+
 import be.devine.cp3.starling.billsplit.model.AppModel;
 
 import feathers.themes.MinimalMobileTheme;
@@ -22,7 +16,7 @@ public class Application extends Sprite {
         _appModel.load();
 
         addEventListener(Event.ADDED_TO_STAGE, addedHandler);
-        stage.addEventListener(Event.CLOSE, closeHandler);
+
     }
 
     private function closeHandler(event:Event):void {
@@ -32,6 +26,7 @@ public class Application extends Sprite {
     private function addedHandler(event:Event):void {
         removeEventListener(Event.ADDED_TO_STAGE, addedHandler);
         stage.addEventListener(Event.RESIZE, resizeHandler);
+        stage.addEventListener(Event.CLOSE, closeHandler);
         layout();
     }
 

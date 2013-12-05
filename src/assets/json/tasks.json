@@ -1,6 +1,6 @@
-{
-    "tasks": {
-        "task": {
+[
+        {
+
             "id": "1",
             "title": "Paul's Boutique",
             "type": "resto",
@@ -9,5 +9,5 @@
             "timestamp": "34TZ5Y568",
             "paid": "true"
         }
-    }
-}
+
+]

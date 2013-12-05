@@ -6,11 +6,23 @@
  * To change this template use File | Settings | File Templates.
  */
 package be.devine.cp3.starling.billsplit.vo {
+
 public class IouVO {
-    public var ID:uint;
-    public var PRICE:Number;
-    public var PERSON_ID:uint;
-    public var TASK_ID:uint;
-    public var PAID:Boolean;
+
+    public var id:uint;
+    public var price:Number;
+    public var person_id:uint;
+    public var task_id:uint;
+    public var paid:Boolean;
+
+    public function IouVO(value:Object){
+
+        id = value.id;
+        price = value.price;
+        person_id = value.id;
+        task_id = value.id;
+        paid = value.paid;
+
+    }
 }
 }

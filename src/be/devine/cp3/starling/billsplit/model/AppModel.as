@@ -1,16 +1,11 @@
-/**
- * Created with IntelliJ IDEA.
- * User: Jasper
- * Date: 28/11/13
- * Time: 16:59
- * To change this template use File | Settings | File Templates.
- */
 package be.devine.cp3.starling.billsplit.model {
+
 import be.devine.cp3.queue.Queue;
 import be.devine.cp3.queue.URLLoaderTask;
 import be.devine.cp3.starling.billsplit.json.JsonHandler;
 import be.devine.cp3.starling.billsplit.vo.IouVO;
 import be.devine.cp3.starling.billsplit.vo.PersonVO;
+import be.devine.cp3.starling.billsplit.vo.TaskVO;
 import be.devine.cp3.starling.billsplit.vo.TaskVO;
 
 import flash.events.Event;
@@ -67,20 +62,38 @@ public class AppModel extends EventDispatcher {
     }
 
     private function completeHandler(event:Event):void {
+
         var personsData:Object = JSON.parse(_queue.loadedItems[0].data);
+
         for each(var thisPerson:Object in personsData) {
+
+            trace(thisPerson.name);
+
             person = thisPerson;
         }
 
         var tasksData:Object = JSON.parse(_queue.loadedItems[1].data);
+
+
         for each(var thisTask:Object in tasksData) {
+
+            trace(thisTask.title);
+
             task = thisTask;
         }
 
         var iousData:Object = JSON.parse(_queue.loadedItems[2].data);
+
         for each(var thisIou:Object in iousData) {
+
+            trace(thisIou.price);
+
             iou = thisIou;
         }
+
+        trace(TaskVO(_tasks[0]).title);
+
+        //trace(JSON.stringify(_tasks));
 
         completed = true;
     }
@@ -90,13 +103,9 @@ public class AppModel extends EventDispatcher {
     }
 
     public function set person(value:Object):void {
-        _person = new PersonVO();
-        _person.ID = value.id;
-        _person.NAME = value.name;
-        _person.IMAGE = value.image;
-        _person.TASK_ID = value.task_id;
-        _person.MODERATOR = value.moderator;
+        _person = new PersonVO(value);
         _persons.push(_person);
+
         if (completed) {
             dispatchEvent(new Event(PERSONS_CHANGED));
         }
@@ -107,14 +116,7 @@ public class AppModel extends EventDispatcher {
     }
 
     public function set task(value:Object):void {
-        _task = new TaskVO();
-        _task.ID = value.id;
-        _task.TITLE = value.title;
-        _task.TYPE = value.type;
-        _task.PRICE = value.price;
-        _task.PRICE_ID = value.price_id;
-        _task.TIMESTAMP = value.timestamp;
-        _task.PAID = value.paid;
+        _task = new TaskVO(value);
         _tasks.push(_task);
 
         if (completed) {
@@ -127,12 +129,7 @@ public class AppModel extends EventDispatcher {
     }
 
     public function set iou(value:Object):void {
-        _iou = new IouVO();
-        _iou.ID = value.id;
-        _iou.PRICE = value.price;
-        _iou.PERSON_ID = value.id;
-        _iou.TASK_ID = value.id;
-        _iou.PAID = value.paid;
+        _iou = new IouVO(value);
         _ious.push(_iou);
 
         if (completed) {

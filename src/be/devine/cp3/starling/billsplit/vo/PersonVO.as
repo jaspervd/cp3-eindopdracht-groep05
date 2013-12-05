@@ -1,16 +1,22 @@
-/**
- * Created with IntelliJ IDEA.
- * User: Jasper
- * Date: 4/12/13
- * Time: 21:06
- * To change this template use File | Settings | File Templates.
- */
 package be.devine.cp3.starling.billsplit.vo {
+
 public class PersonVO {
-    public var ID:uint;
-    public var NAME:String;
-    public var IMAGE:String;
-    public var TASK_ID:uint;
-    public var MODERATOR:Boolean;
+
+    public var id:uint;
+    public var name:String;
+    public var image:String;
+    public var task_id:uint;
+    public var moderator:Boolean;
+
+    public function PersonVO(value:Object){
+
+
+        id = value.id;
+        name = value.name;
+        image = value.image;
+        task_id = value.task_id;
+        moderator = value.moderator;
+
+    }
 }
 }

@@ -89,7 +89,6 @@ public class JsonHandler {
         _personsfile = File.desktopDirectory.resolvePath ("/assets/json/persons.json");
         _iousfile = File.desktopDirectory.resolvePath ("/assets/json/ious.json");
 
-
         filestream(_tasksfile,_tasks);
         filestream(_personsfile,_persons);
         filestream(_iousfile,_ious);
