@@ -8,7 +8,9 @@
 package be.devine.cp3.starling.billsplit.model {
 import be.devine.cp3.queue.Queue;
 import be.devine.cp3.queue.URLLoaderTask;
+import be.devine.cp3.starling.billsplit.vo.IouVO;
 import be.devine.cp3.starling.billsplit.vo.PersonVO;
+import be.devine.cp3.starling.billsplit.vo.TaskVO;
 
 import flash.events.Event;
 
@@ -19,7 +21,9 @@ public class AppModel extends EventDispatcher {
     private var _queue:Queue;
     private var _persons:Array;
     private var _person:PersonVO;
+    private var _task:TaskVO;
     private var _tasks:Array;
+    private var _iou:IouVO;
     private var _ious:Array;
 
     public static var PERSON_CHANGED = 'PERSON_CHANGED';
@@ -55,14 +59,24 @@ public class AppModel extends EventDispatcher {
     }
 
     private function completeHandler(event:Event):void {
-        //trace(_queue.loadedItems[0], _queue.loadedItems[1], _queue.loadedItems[2]);
-        var data:Object = JSON.parse(_queue.loadedItems[0].data);
-        for each(var thisPerson:Object in data) {
+        var personsData:Object = JSON.parse(_queue.loadedItems[0].data);
+        for each(var thisPerson:Object in personsData) {
             person = thisPerson;
         }
-        trace(PersonVO(_persons[0]).NAME);
-        /*tasks = _queue.loadedItems[1].data;
-        ious = _queue.loadedItems[2].data;*/
+
+        var tasksData:Object = JSON.parse(_queue.loadedItems[1].data);
+        for each(var thisTask:Object in tasksData) {
+            task = thisTask;
+        }
+
+        var iousData:Object = JSON.parse(_queue.loadedItems[2].data);
+        for each(var thisIou:Object in iousData) {
+            iou = thisIou;
+        }
+
+        trace(_persons);
+        trace(_tasks);
+        trace(_ious);
     }
 
     public function get person():Object {
@@ -79,22 +93,34 @@ public class AppModel extends EventDispatcher {
         _persons.push(_person);
     }
 
-    public function get tasks():Array {
+    public function get task():Object {
         return _tasks;
     }
 
-    public function set tasks(value:Array):void {
-        _tasks = value;
-        trace(_tasks);
+    public function set task(value:Object):void {
+        _task = new TaskVO();
+        _task.ID = value.id;
+        _task.TITLE = value.title;
+        _task.TYPE = value.type;
+        _task.PRICE = value.price;
+        _task.PRICE_ID = value.price_id;
+        _task.TIMESTAMP = value.timestamp;
+        _task.PAID = value.paid;
+        _tasks.push(_task);
     }
 
-    public function get ious():Array {
+    public function get iou():Object {
         return _ious;
     }
 
-    public function set ious(value:Array):void {
-        _ious = value;
-        trace(_ious);
+    public function set iou(value:Object):void {
+        _iou = new IouVO();
+        _iou.ID = value.id;
+        _iou.PRICE = value.price;
+        _iou.PERSON_ID = value.id;
+        _iou.TASK_ID = value.id;
+        _iou.PAID = value.paid;
+        _ious.push(_iou);
     }
 }
 }
