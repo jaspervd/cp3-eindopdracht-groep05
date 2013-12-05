@@ -6,23 +6,34 @@ import be.devine.cp3.starling.billsplit.json.JsonHandler;
 import be.devine.cp3.starling.billsplit.vo.IouVO;
 import be.devine.cp3.starling.billsplit.vo.PersonVO;
 import be.devine.cp3.starling.billsplit.vo.TaskVO;
-import be.devine.cp3.starling.billsplit.vo.TaskVO;
 
 import flash.events.Event;
 
 import flash.events.EventDispatcher;
+import flash.filesystem.File;
+import flash.filesystem.FileMode;
+import flash.filesystem.FileStream;
 
 public class AppModel extends EventDispatcher {
+
     private static var instance:AppModel;
-    private var _queue:Queue;
+
+    private var _personsData:Object;
+    private var _tasksData:Object;
+    private var _iousData:Object;
+
+
     private var _persons:Array;
-    private var _person:PersonVO;
-    private var _task:TaskVO;
     private var _tasks:Array;
-    private var _iou:IouVO;
     private var _ious:Array;
+
+
     private var completed:Boolean;
     private var _jsonHandler:JsonHandler;
+
+
+
+
 
     public static var PERSONS_CHANGED = 'PERSONS_CHANGED';
     public static var TASKS_CHANGED = 'TASKS_CHANGED';
@@ -48,94 +59,114 @@ public class AppModel extends EventDispatcher {
     }
 
     public function load():void {
-        _queue = new Queue();
-        _queue.add(new URLLoaderTask('/assets/json/persons.json'));
-        _queue.add(new URLLoaderTask('/assets/json/tasks.json'));
-        _queue.add(new URLLoaderTask('/assets/json/ious.json'));
 
-        _queue.start();
-        _queue.addEventListener(Event.COMPLETE, completeHandler);
+        var persons:File = File.applicationStorageDirectory.resolvePath("persons.json");
+        var tasks:File = File.applicationStorageDirectory.resolvePath("tasks.json");
+        var ious:File = File.applicationStorageDirectory.resolvePath("ious.json");
+
+        _jsonHandler.insertJson(persons);
+        _jsonHandler.insertJson(tasks);
+        _jsonHandler.insertJson(ious);
+
+        _personsData = _jsonHandler.loadJson(persons);
+        _tasksData = _jsonHandler.loadJson(tasks);
+        _iousData = _jsonHandler.loadJson(ious);
+
+
+        completeHandler();
+
     }
 
     public function closeApp():void {
         _jsonHandler.write();
     }
 
-    private function completeHandler(event:Event):void {
+    private function completeHandler():void {
 
-        var personsData:Object = JSON.parse(_queue.loadedItems[0].data);
 
-        for each(var thisPerson:Object in personsData) {
+        for each(var thisPerson:Object in _personsData) {
 
             trace(thisPerson.name);
 
-            person = thisPerson;
+            addPerson(thisPerson);
         }
 
-        var tasksData:Object = JSON.parse(_queue.loadedItems[1].data);
 
-
-        for each(var thisTask:Object in tasksData) {
+        for each(var thisTask:Object in _tasksData) {
 
             trace(thisTask.title);
 
-            task = thisTask;
+            addTask(thisTask);
         }
 
-        var iousData:Object = JSON.parse(_queue.loadedItems[2].data);
 
-        for each(var thisIou:Object in iousData) {
+        for each(var thisIou:Object in _iousData) {
 
             trace(thisIou.price);
 
-            iou = thisIou;
+            addIou(thisIou);
         }
-
-        trace(TaskVO(_tasks[0]).title);
-
-        //trace(JSON.stringify(_tasks));
 
         completed = true;
     }
 
-    public function get person():Object {
-        return _person;
-    }
 
-    public function set person(value:Object):void {
-        _person = new PersonVO(value);
-        _persons.push(_person);
+
+
+
+
+
+
+
+
+
+
+
+
+    //add
+    
+    public function addPerson(value:Object):void {
+        var person = new PersonVO(value);
+        _persons.push(person);
 
         if (completed) {
             dispatchEvent(new Event(PERSONS_CHANGED));
         }
     }
 
-    public function get task():Object {
-        return _tasks;
-    }
 
-    public function set task(value:Object):void {
-        _task = new TaskVO(value);
-        _tasks.push(_task);
+    public function addTask(value:Object):void {
+        var task = new TaskVO(value);
+        _tasks.push(task);
 
         if (completed) {
             dispatchEvent(new Event(TASKS_CHANGED));
         }
     }
 
-    public function get iou():Object {
-        return _ious;
-    }
 
-    public function set iou(value:Object):void {
-        _iou = new IouVO(value);
-        _ious.push(_iou);
+    public function addIou(value:Object):void {
+        var iou = new IouVO(value);
+        _ious.push(iou);
 
         if (completed) {
             dispatchEvent(new Event(IOUS_CHANGED));
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 }
 internal class Enforcer {

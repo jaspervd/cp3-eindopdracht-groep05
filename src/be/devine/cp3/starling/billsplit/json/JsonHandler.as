@@ -114,6 +114,30 @@ public class JsonHandler {
 
     }
 
+    public function insertJson(f:File):void{
+
+        var fs:FileStream;
+
+        if(!f.exists) {
+            fs = new FileStream();
+            fs.open(f, FileMode.WRITE);
+            fs.writeUTFBytes(JSON.stringify([]));
+            fs.close();
+        }
+
+    }
+
+    public function loadJson(f:File):Object{
+
+        var fs:FileStream;
+        fs = new FileStream();
+        fs.open(f, FileMode.READ);
+        var data:Object = JSON.parse(fs.readUTFBytes(fs.bytesAvailable));
+        fs.close();
+
+        return data;
+    }
+
 
 
 
