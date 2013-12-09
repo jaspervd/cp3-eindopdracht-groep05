@@ -1,6 +1,7 @@
 package be.devine.cp3.starling.billsplit {
 
 import be.devine.cp3.starling.billsplit.model.AppModel;
+import be.devine.cp3.starling.billsplit.view.Header;
 
 import feathers.themes.MinimalMobileTheme;
 
@@ -9,6 +10,7 @@ import starling.events.Event;
 
 public class Application extends Sprite {
     private var _appModel:AppModel;
+    private var header:Header;
 
     public function Application() {
         new MinimalMobileTheme(); // custom theme later?
@@ -35,7 +37,10 @@ public class Application extends Sprite {
     }
 
     private function layout():void {
-        // x, y, width & height waardes
+
+        header = new Header();
+        addChild(header);
+
     }
 }
 }
