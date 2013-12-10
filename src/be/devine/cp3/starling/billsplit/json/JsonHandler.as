@@ -121,7 +121,15 @@ public class JsonHandler {
         if(!f.exists) {
             fs = new FileStream();
             fs.open(f, FileMode.WRITE);
-            fs.writeUTFBytes(JSON.stringify([]));
+            fs.writeUTFBytes(JSON.stringify([
+                {
+                    "id": 1,
+                    "name": "Justin Timberlake",
+                    "image": "url",
+                    "task_id": 1,
+                    "moderator": true
+                }
+            ]));
             fs.close();
         }
 
