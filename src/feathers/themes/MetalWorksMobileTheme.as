@@ -101,7 +101,7 @@ package feathers.themes
 		[Embed(source="/../assets/fonts/SourceSansPro-Semibold.ttf",fontName="SourceSansProSemibold",fontWeight="bold",mimeType="application/x-font",embedAsCFF="false")]
 		protected static const SOURCE_SANS_PRO_SEMIBOLD:Class;
 
-		protected static const PRIMARY_BACKGROUND_COLOR:uint = 0x16866d;
+		protected static const PRIMARY_BACKGROUND_COLOR:uint = 0x7ebeae;
 		protected static const LIGHT_TEXT_COLOR:uint = 0xe5e5e5;
 		protected static const DARK_TEXT_COLOR:uint = 0x1a1816;
 		protected static const SELECTED_TEXT_COLOR:uint = 0xff9900;
@@ -433,7 +433,7 @@ package feathers.themes
 			this.insetItemRendererSingleUpSkinTextures = new Scale9Textures(this.atlas.getTexture("list-inset-item-single-up-skin"), INSET_ITEM_RENDERER_SINGLE_SCALE9_GRID);
 			this.insetItemRendererSingleSelectedSkinTextures = new Scale9Textures(this.atlas.getTexture("list-inset-item-single-selected-skin"), INSET_ITEM_RENDERER_SINGLE_SCALE9_GRID);
 
-			this.headerBackgroundSkinTexture = this.atlas.getTexture("header-background-skin");
+            this.headerBackgroundSkinTexture = this.atlas.getTexture("header-background-skin");
 
 			this.calloutTopArrowSkinTexture = this.atlas.getTexture("callout-arrow-top-skin");
 			this.calloutRightArrowSkinTexture = this.atlas.getTexture("callout-arrow-right-skin");
