@@ -6,11 +6,21 @@
  * To change this template use File | Settings | File Templates.
  */
 package be.devine.cp3.starling.billsplit.view.screens {
-import flash.display.Sprite;
+import be.devine.cp3.starling.billsplit.model.PersonModel;
+import be.devine.cp3.starling.billsplit.vo.PersonVO;
 
-public class Overview extends Sprite {
+import feathers.controls.Screen;
+
+public class Overview extends Screen {
+    private var _personModel:PersonModel;
+    private var _moderator:PersonVO;
+
     public function Overview() {
-        super();
+        _personModel = PersonModel.getInstance();
+
+        _moderator = _personModel.getModerator();
+
+        trace('[Overview]', _moderator);
     }
 }
 }

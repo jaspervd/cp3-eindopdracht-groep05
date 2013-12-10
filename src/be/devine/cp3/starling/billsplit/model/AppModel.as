@@ -29,12 +29,11 @@ public class AppModel extends EventDispatcher {
 
 
 
-
-
     public static var PERSONS_CHANGED = 'PERSONS_CHANGED';
     public static var TASKS_CHANGED = 'TASKS_CHANGED';
     public static var IOUS_CHANGED = 'IOUS_CHANGED';
     public static var CALCULATION_CHANGED = 'CALCULATION_CHANGED';
+    public static var COMPLETE_BITCH:String = 'COMPLETE_BITCH';
 
     public static function getInstance():AppModel {
         if (instance == null) {
@@ -95,6 +94,7 @@ public class AppModel extends EventDispatcher {
             addIou(thisIou);
         }
 
+        dispatchEvent(new Event(COMPLETE_BITCH));
         completed = true;
     }
 
@@ -152,13 +152,9 @@ public class AppModel extends EventDispatcher {
     }
 
 
-
-
-
-
-
-
-
+    public function get persons():Array {
+        return _persons;
+    }
 }
 }
 internal class Enforcer {
