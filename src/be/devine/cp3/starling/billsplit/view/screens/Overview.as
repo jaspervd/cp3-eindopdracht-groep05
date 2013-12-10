@@ -12,7 +12,11 @@ import be.devine.cp3.starling.billsplit.vo.PersonVO;
 import feathers.controls.LayoutGroup;
 
 import feathers.controls.Screen;
+import feathers.events.FeathersEventType;
+import feathers.layout.HorizontalLayout;
 import feathers.layout.VerticalLayout;
+
+import flash.events.Event;
 
 import starling.display.Image;
 import starling.text.TextField;
@@ -32,11 +36,16 @@ public class Overview extends Screen {
 
 
         _profileLayout = new LayoutGroup();
-        _profileLayout.layout = new VerticalLayout();
         addChild(_profileLayout);
+
+        var layout:VerticalLayout = new VerticalLayout();
+        layout.gap = 10;
+        _profileLayout.layout = layout;
+
 
 
         _fullName = new TextField(actualWidth,actualHeight,_moderator.name,null,28,0xffffff);
+        _profileLayout.addChild(_fullName);
 
 
     }
@@ -45,15 +54,14 @@ public class Overview extends Screen {
 
     override protected function initialize():void{
 
-        _profileLayout.addChild(_fullName);
-
+        draw();
         trace('[OVERVIEW]');
     }
 
 
     override protected function draw():void{
 
-        _profileLayout.width = stage.stageWidth;
+        _profileLayout.setSize(stage.stageWidth,stage.stageHeight);
 
     }
 }

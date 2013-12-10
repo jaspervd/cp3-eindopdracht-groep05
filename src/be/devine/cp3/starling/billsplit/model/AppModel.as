@@ -159,6 +159,12 @@ public class AppModel extends EventDispatcher {
     public function get persons():Array {
         return _persons;
     }
+    public function get tasks():Array {
+        return _tasks;
+    }
+    public function get ious():Array {
+        return _ious;
+    }
 
 
 

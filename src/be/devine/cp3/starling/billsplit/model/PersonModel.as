@@ -1,11 +1,5 @@
-/**
- * Created with IntelliJ IDEA.
- * User: Jasper
- * Date: 10/12/13
- * Time: 14:29
- * To change this template use File | Settings | File Templates.
- */
 package be.devine.cp3.starling.billsplit.model {
+
 import be.devine.cp3.starling.billsplit.vo.PersonVO;
 
 public class PersonModel {

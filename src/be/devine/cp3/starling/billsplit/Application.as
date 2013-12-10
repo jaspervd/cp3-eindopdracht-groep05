@@ -1,19 +1,26 @@
 package be.devine.cp3.starling.billsplit {
 
+
+
+//IMPORTS
 import be.devine.cp3.starling.billsplit.model.AppModel;
 import be.devine.cp3.starling.billsplit.model.PersonModel;
+import be.devine.cp3.starling.billsplit.model.TaskModel;
 import be.devine.cp3.starling.billsplit.view.Content;
 import be.devine.cp3.starling.billsplit.view.Header;
-
-
 import feathers.themes.MetalWorksMobileTheme;
-
 import starling.display.Sprite;
 import starling.events.Event;
 
+
+
+
 public class Application extends Sprite {
+
+
     private var _appModel:AppModel;
     private var _personModel:PersonModel;
+    private var _taskModel:TaskModel;
     private var header:Header;
     private var content:Content;
     private var _theme:MetalWorksMobileTheme;
@@ -25,6 +32,8 @@ public class Application extends Sprite {
         _appModel.load();
 
         _personModel = PersonModel.getInstance();
+
+        _taskModel = TaskModel.getInstance();
 
         addEventListener(Event.ADDED_TO_STAGE, addedHandler);
     }
@@ -49,6 +58,7 @@ public class Application extends Sprite {
     private function layout():void {
 
         _personModel.persons = _appModel.persons;
+        _taskModel.tasks = _appModel.tasks;
 
         content = new Content();
         addChild(content);
