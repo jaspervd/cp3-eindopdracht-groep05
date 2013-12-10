@@ -9,22 +9,27 @@ import feathers.events.FeathersEventType;
 import feathers.layout.HorizontalLayout;
 
 import starling.display.DisplayObject;
+import starling.display.Image;
 import starling.display.Quad;
 
 import starling.events.Event;
 
 public class Header extends Screen{
+    [Embed(source="/../assets/images/metalworks/menu_stripes_btn.png")]
+    public static const MenuBtn:Class;
+
+    [Embed(source="/../assets/images/metalworks/add_plus_btn.png")]
+    public static const AddBtn:Class;
 
     private var _menu:Button;
     private var _multiple:Button;
-    private var _headergroup:LayoutGroup;
     private var _quad:Quad;
     private var _header:feathers.controls.Header;
 
     public function Header() {
 
 
-        _quad = new Quad(10,10);
+        _quad = new Quad(100,100);
         _quad.alpha = 0;
 
         _header = new feathers.controls.Header();
@@ -32,11 +37,9 @@ public class Header extends Screen{
         addChild( _header );
 
         _menu = new Button();
-        _menu.label = "Menu";
         _menu.addEventListener(Event.TRIGGERED, menuClicked);
 
         _multiple = new Button();
-        _multiple.label = "Add";
         _multiple.addEventListener(Event.TRIGGERED, checkAction);
 
 
@@ -50,6 +53,17 @@ public class Header extends Screen{
 
 
     override protected function initialize():void{
+        _menu.defaultIcon = Image.fromBitmap(new MenuBtn());
+        _menu.iconPosition = Button.ICON_POSITION_LEFT;
+        _menu.defaultSkin = _quad;
+        _menu.upSkin = _quad;
+        _menu.downSkin = _quad;
+
+        _multiple.defaultIcon = Image.fromBitmap(new AddBtn());
+        _multiple.iconPosition = Button.ICON_POSITION_LEFT;
+        _multiple.defaultSkin = _quad;
+        _multiple.upSkin = _quad;
+        _multiple.downSkin = _quad;
 
         _header.leftItems = new <DisplayObject>[ _menu ];
         _header.rightItems = new <DisplayObject>[ _multiple ];
