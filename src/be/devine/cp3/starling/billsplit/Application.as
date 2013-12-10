@@ -3,6 +3,8 @@ package be.devine.cp3.starling.billsplit {
 import be.devine.cp3.starling.billsplit.model.AppModel;
 import be.devine.cp3.starling.billsplit.view.Header;
 
+import feathers.controls.Button;
+
 import feathers.themes.MetalWorksMobileTheme;
 
 import starling.display.Sprite;
@@ -11,9 +13,11 @@ import starling.events.Event;
 public class Application extends Sprite {
     private var _appModel:AppModel;
     private var header:Header;
+    private var _theme:MetalWorksMobileTheme;
 
     public function Application() {
-        new MetalWorksMobileTheme();
+        _theme = new MetalWorksMobileTheme();
+
 
         _appModel = AppModel.getInstance();
         _appModel.load();
