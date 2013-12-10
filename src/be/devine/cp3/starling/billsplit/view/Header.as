@@ -38,6 +38,9 @@ public class Header extends Screen{
 
         _theme = new MetalWorksMobileTheme();
 
+        /*_theme.setInitializerForClass(Button ,myCustomButtonInitializer,"menu");
+        _theme.setInitializerForClass(Button ,myCustomButtonInitializer,"multiple");*/
+
         _header = new feathers.controls.Header();
         _header.title = "Splits";
         addChild( _header );
@@ -69,13 +72,11 @@ public class Header extends Screen{
 
         _menu.defaultIcon = Image.fromBitmap(new MenuBtn());
         _menu.iconPosition = Button.ICON_POSITION_LEFT;
-        _theme.setInitializerForClass(Button ,myCustomButtonInitializer,"menu");
 
 
 
         _multiple.defaultIcon = Image.fromBitmap(new Multiple());
         _multiple.iconPosition = Button.ICON_POSITION_LEFT;
-        _theme.setInitializerForClass(Button ,myCustomButtonInitializer,"multiple");
 
 
 
@@ -110,7 +111,6 @@ public class Header extends Screen{
         button.defaultSkin = new Image(texture);
         button.downSkin =  new Image(texture);
         button.hoverSkin =  new Image(texture);
-
     }
 
 
