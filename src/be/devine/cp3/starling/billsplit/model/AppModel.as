@@ -3,6 +3,8 @@ package be.devine.cp3.starling.billsplit.model {
 import be.devine.cp3.starling.billsplit.json.JsonHandler;
 import be.devine.cp3.starling.billsplit.vo.IouVO;
 import be.devine.cp3.starling.billsplit.vo.PersonVO;
+import be.devine.cp3.starling.billsplit.vo.PersonVO;
+import be.devine.cp3.starling.billsplit.vo.PersonVO;
 import be.devine.cp3.starling.billsplit.vo.TaskVO;
 
 import flash.events.Event;
@@ -24,7 +26,7 @@ public class AppModel extends EventDispatcher {
     private var _ious:Array;
 
 
-    private var completed:Boolean;
+    private var _completed:Boolean;
     private var _jsonHandler:JsonHandler;
 
 
@@ -90,12 +92,14 @@ public class AppModel extends EventDispatcher {
 
         for each(var thisIou:Object in _iousData) {
 
-
             addIou(thisIou);
         }
 
-        dispatchEvent(new Event(COMPLETE_BITCH));
-        completed = true;
+        if(_persons && _tasks && _ious){
+
+            completed = true;
+        }
+
     }
 
 
@@ -155,6 +159,35 @@ public class AppModel extends EventDispatcher {
     public function get persons():Array {
         return _persons;
     }
+
+
+
+
+
+
+
+
+
+
+    public function get completed():Boolean {
+        return _completed;
+    }
+
+    public function set completed(value:Boolean):void {
+        _completed = value;
+
+        trace("[COMPLETE] = "+_completed);
+
+        trace(PersonVO(_persons[0]).name);
+
+        if(_completed){
+
+            dispatchEvent(new Event(COMPLETE_BITCH,true));
+        }
+
+    }
+
+
 }
 }
 internal class Enforcer {

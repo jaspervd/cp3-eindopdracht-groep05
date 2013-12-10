@@ -34,10 +34,11 @@ public class PersonModel {
     }
 
     public function set persons(value:Array):void {
-        if(_persons == value) {
-            return;
+        if(_persons != value) {
+
+            _persons = value;
+
         }
-        _persons = value;
     }
 
     public function getModerator():PersonVO {

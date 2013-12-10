@@ -29,10 +29,6 @@ public class Application extends Sprite {
         addEventListener(Event.ADDED_TO_STAGE, addedHandler);
     }
 
-    private function completeHandler(event:Event):void {
-        trace('complete');
-        _personModel.persons = _appModel.persons;
-    }
 
     private function closeHandler(event:Event):void {
         _appModel.closeApp();
@@ -42,7 +38,7 @@ public class Application extends Sprite {
         removeEventListener(Event.ADDED_TO_STAGE, addedHandler);
         stage.addEventListener(Event.RESIZE, resizeHandler);
         stage.addEventListener(Event.CLOSE, closeHandler);
-        this.addEventListener(AppModel.COMPLETE_BITCH, completeHandler);
+
         layout();
     }
 
@@ -51,6 +47,8 @@ public class Application extends Sprite {
     }
 
     private function layout():void {
+
+        _personModel.persons = _appModel.persons;
 
         content = new Content();
         addChild(content);

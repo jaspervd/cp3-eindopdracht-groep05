@@ -88,7 +88,7 @@ public class Header extends Screen{
         _header.backgroundSkin = _quad;
 
 
-        trace('init');
+        trace('[HEADER]');
     }
 
 
