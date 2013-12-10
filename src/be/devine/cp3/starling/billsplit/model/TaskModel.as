@@ -19,7 +19,7 @@ public class TaskModel {
 
     }
 
-    public function PersonModel(e:Enforcer) {
+    public function TaskModel(e:Enforcer) {
 
         if (e == null) { throw new Error('AppModel is a singleton, use getInstance() instead');}
 
@@ -36,6 +36,11 @@ public class TaskModel {
             _tasks = value;
 
         }
+    }
+
+    public function getAllTasks():Array{
+
+        return _tasks;
     }
 
     public function getTask(id:uint):TaskVO {

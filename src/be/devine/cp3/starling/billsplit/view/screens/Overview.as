@@ -7,9 +7,11 @@
  */
 package be.devine.cp3.starling.billsplit.view.screens {
 import be.devine.cp3.starling.billsplit.model.PersonModel;
+import be.devine.cp3.starling.billsplit.model.TaskModel;
 import be.devine.cp3.starling.billsplit.vo.PersonVO;
 
 import feathers.controls.LayoutGroup;
+import feathers.controls.List;
 
 import feathers.controls.Screen;
 import feathers.events.FeathersEventType;
@@ -23,20 +25,29 @@ import starling.text.TextField;
 
 public class Overview extends Screen {
     private var _personModel:PersonModel;
+    private var _taskModel:TaskModel;
     private var _moderator:PersonVO;
+    private var _tasks:Array;
     private var _profile:Image;
     private var _fullName:TextField;
     private var _profileLayout:LayoutGroup;
+    private var _taskList:List;
 
     public function Overview() {
 
         _personModel = PersonModel.getInstance();
+        _taskModel = TaskModel.getInstance();
 
         _moderator = _personModel.getModerator();
+
+        _tasks = _taskModel.getAllTasks();
 
 
         _profileLayout = new LayoutGroup();
         addChild(_profileLayout);
+
+        _taskList = new List();
+        addChild(_taskList);
 
         var layout:VerticalLayout = new VerticalLayout();
         layout.gap = 10;
@@ -61,7 +72,10 @@ public class Overview extends Screen {
 
     override protected function draw():void{
 
-        _profileLayout.setSize(stage.stageWidth,stage.stageHeight);
+
+        _profileLayout.setSize(stage.stageWidth,500);
+        _taskList.setSize(stage.stageWidth,(stage.stageHeight - _profileLayout.height));
+        _taskList.y = _profileLayout.height;
 
     }
 }
