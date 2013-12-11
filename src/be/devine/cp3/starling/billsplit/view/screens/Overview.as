@@ -6,23 +6,21 @@
  * To change this template use File | Settings | File Templates.
  */
 package be.devine.cp3.starling.billsplit.view.screens {
-import be.devine.cp3.starling.billsplit.model.AppModel;
 import be.devine.cp3.starling.billsplit.model.PersonModel;
 import be.devine.cp3.starling.billsplit.model.TaskModel;
 import be.devine.cp3.starling.billsplit.vo.PersonVO;
 
+import feathers.controls.ImageLoader;
 import feathers.controls.LayoutGroup;
 import feathers.controls.List;
-
 import feathers.controls.Screen;
 import feathers.data.ListCollection;
-import feathers.events.FeathersEventType;
-import feathers.layout.HorizontalLayout;
 import feathers.layout.VerticalLayout;
 
-import flash.events.Event;
+import flash.filesystem.File;
 
-import starling.display.Image;
+import starling.events.Event;
+
 import starling.text.TextField;
 
 public class Overview extends Screen {
@@ -30,7 +28,7 @@ public class Overview extends Screen {
     private var _taskModel:TaskModel;
     private var _moderator:PersonVO;
     private var _tasks:Array;
-    private var _profile:Image;
+    private var _profile:ImageLoader;
     private var _fullName:TextField;
     private var _profileLayout:LayoutGroup;
     private var _taskList:List;
@@ -44,7 +42,6 @@ public class Overview extends Screen {
 
         _tasks = _taskModel.getAllTasks();
 
-
         _profileLayout = new LayoutGroup();
         addChild(_profileLayout);
 
@@ -56,28 +53,33 @@ public class Overview extends Screen {
         layout.gap = 10;
         _profileLayout.layout = layout;
 
-
-
-        _fullName = new TextField(actualWidth,actualHeight,_moderator.name,null,28,0xffffff);
+        _fullName = new TextField(100, 30, _moderator.name, "SourceSansProSemiBold", 28, 0xFFFFFF);
         _profileLayout.addChild(_fullName);
 
+        var image:File = File.applicationStorageDirectory.resolvePath(_moderator.image);
+        _profile = new ImageLoader();
+        _profile.source = image.url;
+        _profile.addEventListener(Event.COMPLETE, imageCompleteHandler);
+        _profileLayout.addChild(_profile);
+    }
 
+    private function imageCompleteHandler(event:Event):void {
+        _profile.x = (stage.stageWidth + _profile.width) / 2;
     }
 
 
-
-    override protected function initialize():void{
-
-        draw();
+    override protected function initialize():void {
+        layout();
         trace('[OVERVIEW]');
     }
 
 
-    override protected function draw():void{
+    private function layout():void {
+        _fullName.width = stage.stageWidth;
 
-
-        _profileLayout.setSize(stage.stageWidth,500);
-        _taskList.setSize(stage.stageWidth,(stage.stageHeight - _profileLayout.height));
+        _profileLayout.setSize(stage.stageWidth, 400);
+        _profile.x = (stage.stageWidth + _profile.width) / 2;
+        _taskList.setSize(stage.stageWidth, (stage.stageHeight - _profileLayout.height));
         _taskList.y = _profileLayout.height;
         _taskList.dataProvider = new ListCollection(_tasks);
 
