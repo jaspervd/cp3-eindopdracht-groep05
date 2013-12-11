@@ -32,11 +32,11 @@ public class AppModel extends EventDispatcher {
 
 
 
-    public static var PERSONS_CHANGED = 'PERSONS_CHANGED';
-    public static var TASKS_CHANGED = 'TASKS_CHANGED';
-    public static var IOUS_CHANGED = 'IOUS_CHANGED';
-    public static var CALCULATION_CHANGED = 'CALCULATION_CHANGED';
-    public static var COMPLETE_BITCH:String = 'COMPLETE_BITCH';
+    public static var PERSONS_CHANGED:String = 'PERSONS_CHANGED';
+    public static var TASKS_CHANGED:String = 'TASKS_CHANGED';
+    public static var IOUS_CHANGED:String = 'IOUS_CHANGED';
+    public static var CALCULATION_CHANGED:String = 'CALCULATION_CHANGED';
+    public static var COMPLETED:String = 'COMPLETED';
 
     public static function getInstance():AppModel {
         if (instance == null) {
@@ -189,7 +189,7 @@ public class AppModel extends EventDispatcher {
 
         if(_completed){
 
-            dispatchEvent(new Event(COMPLETE_BITCH,true));
+            dispatchEvent(new Event(COMPLETED,true));
         }
 
     }
