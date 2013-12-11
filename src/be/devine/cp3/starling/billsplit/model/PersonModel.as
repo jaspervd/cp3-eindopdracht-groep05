@@ -17,7 +17,7 @@ public class PersonModel {
 
     public function PersonModel(e:Enforcer) {
         if (e == null) {
-            throw new Error('AppModel is a singleton, use getInstance() instead');
+            throw new Error('PersonModel is a singleton, use getInstance() instead');
         }
 
         _persons = [];

@@ -21,7 +21,7 @@ public class TaskModel {
 
     public function TaskModel(e:Enforcer) {
 
-        if (e == null) { throw new Error('AppModel is a singleton, use getInstance() instead');}
+        if (e == null) { throw new Error('TaskModel is a singleton, use getInstance() instead');}
 
         _tasks = [];
     }

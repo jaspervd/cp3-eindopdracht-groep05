@@ -85,9 +85,9 @@ public class JsonHandler {
 
     public function write():void{
 
-        _tasksfile = File.desktopDirectory.resolvePath ("/assets/json/tasks.json");
-        _personsfile = File.desktopDirectory.resolvePath ("/assets/json/persons.json");
-        _iousfile = File.desktopDirectory.resolvePath ("/assets/json/ious.json");
+        _tasksfile = File.applicationStorageDirectory.resolvePath ("tasks.json");
+        _personsfile = File.applicationStorageDirectory.resolvePath ("persons.json");
+        _iousfile = File.applicationStorageDirectory.resolvePath ("ious.json");
 
         filestream(_tasksfile,_tasks);
         filestream(_personsfile,_persons);

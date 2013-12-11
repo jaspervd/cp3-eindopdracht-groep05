@@ -6,6 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 package be.devine.cp3.starling.billsplit.view.screens {
+import be.devine.cp3.starling.billsplit.model.AppModel;
 import be.devine.cp3.starling.billsplit.model.PersonModel;
 import be.devine.cp3.starling.billsplit.model.TaskModel;
 import be.devine.cp3.starling.billsplit.vo.PersonVO;
@@ -14,6 +15,7 @@ import feathers.controls.LayoutGroup;
 import feathers.controls.List;
 
 import feathers.controls.Screen;
+import feathers.data.ListCollection;
 import feathers.events.FeathersEventType;
 import feathers.layout.HorizontalLayout;
 import feathers.layout.VerticalLayout;
@@ -47,6 +49,7 @@ public class Overview extends Screen {
         addChild(_profileLayout);
 
         _taskList = new List();
+        _taskList.itemRendererProperties.labelField = "title";
         addChild(_taskList);
 
         var layout:VerticalLayout = new VerticalLayout();
@@ -76,6 +79,7 @@ public class Overview extends Screen {
         _profileLayout.setSize(stage.stageWidth,500);
         _taskList.setSize(stage.stageWidth,(stage.stageHeight - _profileLayout.height));
         _taskList.y = _profileLayout.height;
+        _taskList.dataProvider = new ListCollection(_tasks);
 
     }
 }
