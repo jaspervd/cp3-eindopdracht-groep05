@@ -6,7 +6,6 @@
  * To change this template use File | Settings | File Templates.
  */
 package be.devine.cp3.starling.billsplit.service {
-import be.devine.cp3.starling.billsplit.factory.PersonVOFactory;
 import be.devine.cp3.starling.billsplit.factory.TaskVOFactory;
 
 import flash.events.Event;
@@ -20,15 +19,15 @@ public class TaskService extends EventDispatcher {
     public var tasks:Array;
 
     public function load():void {
-        var songsFile:File = File.applicationStorageDirectory.resolvePath("persons.json");
-        if (!songsFile.exists) {
+        var tasksFile:File = File.applicationStorageDirectory.resolvePath("tasks.json");
+        if (!tasksFile.exists) {
             var writeStream:FileStream = new FileStream();
-            writeStream.open(songsFile, FileMode.WRITE);
+            writeStream.open(tasksFile, FileMode.WRITE);
             writeStream.writeUTFBytes(JSON.stringify([]));
             writeStream.close();
         }
         var readStream:FileStream = new FileStream();
-        readStream.open(songsFile, FileMode.READ);
+        readStream.open(tasksFile, FileMode.READ);
         var str:String = readStream.readUTFBytes(readStream.bytesAvailable);
         var parsedJSON:Array = JSON.parse(str) as Array;
         readStream.close();
@@ -40,8 +39,12 @@ public class TaskService extends EventDispatcher {
         dispatchEvent(new Event(Event.COMPLETE));
     }
 
-    public function write():void {
-
+    public static function write(tasks:Array):void {
+        var tasksFile:File = File.applicationStorageDirectory.resolvePath("tasks.json");
+        var writeStream:FileStream = new FileStream();
+        writeStream.open(tasksFile, FileMode.WRITE);
+        writeStream.writeUTFBytes(JSON.stringify(tasks));
+        writeStream.close();
     }
 }
 }

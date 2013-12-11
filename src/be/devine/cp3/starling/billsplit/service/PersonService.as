@@ -19,10 +19,10 @@ public class PersonService extends EventDispatcher {
     public var persons:Array;
 
     public function load():void {
-        var songsFile:File = File.applicationStorageDirectory.resolvePath("persons.json");
-        if (!songsFile.exists) {
+        var personsFile:File = File.applicationStorageDirectory.resolvePath("persons.json");
+        if (!personsFile.exists) {
             var writeStream:FileStream = new FileStream();
-            writeStream.open(songsFile, FileMode.WRITE);
+            writeStream.open(personsFile, FileMode.WRITE);
             writeStream.writeUTFBytes(JSON.stringify([
                 {
                     "id": 1,
@@ -35,7 +35,7 @@ public class PersonService extends EventDispatcher {
             writeStream.close();
         }
         var readStream:FileStream = new FileStream();
-        readStream.open(songsFile, FileMode.READ);
+        readStream.open(personsFile, FileMode.READ);
         var str:String = readStream.readUTFBytes(readStream.bytesAvailable);
         var parsedJSON:Array = JSON.parse(str) as Array;
         readStream.close();
@@ -47,8 +47,12 @@ public class PersonService extends EventDispatcher {
         dispatchEvent(new Event(Event.COMPLETE));
     }
 
-    public function write():void {
-
+    public static function write(persons:Array):void {
+        var personsFile:File = File.applicationStorageDirectory.resolvePath("persons.json");
+        var writeStream:FileStream = new FileStream();
+        writeStream.open(personsFile, FileMode.WRITE);
+        writeStream.writeUTFBytes(JSON.stringify(persons));
+        writeStream.close();
     }
 }
 }

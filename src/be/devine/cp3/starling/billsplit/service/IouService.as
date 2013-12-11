@@ -7,7 +7,6 @@
  */
 package be.devine.cp3.starling.billsplit.service {
 import be.devine.cp3.starling.billsplit.factory.IouVOFactory;
-import be.devine.cp3.starling.billsplit.factory.PersonVOFactory;
 
 import flash.events.Event;
 import flash.events.EventDispatcher;
@@ -20,15 +19,15 @@ public class IouService extends EventDispatcher {
     public var ious:Array;
 
     public function load():void {
-        var songsFile:File = File.applicationStorageDirectory.resolvePath("ious.json");
-        if (!songsFile.exists) {
+        var iousFile:File = File.applicationStorageDirectory.resolvePath("ious.json");
+        if (!iousFile.exists) {
             var writeStream:FileStream = new FileStream();
-            writeStream.open(songsFile, FileMode.WRITE);
+            writeStream.open(iousFile, FileMode.WRITE);
             writeStream.writeUTFBytes(JSON.stringify([]));
             writeStream.close();
         }
         var readStream:FileStream = new FileStream();
-        readStream.open(songsFile, FileMode.READ);
+        readStream.open(iousFile, FileMode.READ);
         var str:String = readStream.readUTFBytes(readStream.bytesAvailable);
         var parsedJSON:Array = JSON.parse(str) as Array;
         readStream.close();
@@ -40,8 +39,12 @@ public class IouService extends EventDispatcher {
         dispatchEvent(new Event(Event.COMPLETE));
     }
 
-    public function write():void {
-
+    public static function write(ious:Array):void {
+        var personsFile:File = File.applicationStorageDirectory.resolvePath("ious.json");
+        var writeStream:FileStream = new FileStream();
+        writeStream.open(personsFile, FileMode.WRITE);
+        writeStream.writeUTFBytes(JSON.stringify(ious));
+        writeStream.close();
     }
 }
 }

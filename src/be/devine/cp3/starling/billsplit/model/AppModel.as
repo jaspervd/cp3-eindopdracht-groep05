@@ -4,6 +4,9 @@ import be.devine.cp3.starling.billsplit.factory.IouVOFactory;
 import be.devine.cp3.starling.billsplit.factory.PersonVOFactory;
 import be.devine.cp3.starling.billsplit.factory.TaskVOFactory;
 import be.devine.cp3.starling.billsplit.json.JsonHandler;
+import be.devine.cp3.starling.billsplit.service.IouService;
+import be.devine.cp3.starling.billsplit.service.PersonService;
+import be.devine.cp3.starling.billsplit.service.TaskService;
 import be.devine.cp3.starling.billsplit.vo.IouVO;
 import be.devine.cp3.starling.billsplit.vo.PersonVO;
 import be.devine.cp3.starling.billsplit.vo.TaskVO;
@@ -11,7 +14,6 @@ import be.devine.cp3.starling.billsplit.vo.TaskVO;
 import flash.events.Event;
 
 import flash.events.EventDispatcher;
-import flash.filesystem.File;
 
 public class AppModel extends EventDispatcher {
 
@@ -28,7 +30,6 @@ public class AppModel extends EventDispatcher {
 
 
     private var _completed:Boolean;
-    private var _jsonHandler:JsonHandler;
 
 
 
@@ -53,57 +54,38 @@ public class AppModel extends EventDispatcher {
         _persons = [];
         _tasks = [];
         _ious = [];
-        _jsonHandler = new JsonHandler();
     }
 
     public function load():void {
+        var personService:PersonService = new PersonService();
+        personService.addEventListener(Event.COMPLETE, personsLoadCompleteHandler);
+        personService.load();
 
-        var persons:File = File.applicationStorageDirectory.resolvePath("persons.json");
-        var tasks:File = File.applicationStorageDirectory.resolvePath("tasks.json");
-        var ious:File = File.applicationStorageDirectory.resolvePath("ious.json");
+        var taskService:TaskService = new TaskService();
+        taskService.addEventListener(Event.COMPLETE, tasksLoadCompleteHandler);
+        taskService.load();
 
-        _jsonHandler.insertJson(persons);
-        _jsonHandler.insertJson(tasks);
-        _jsonHandler.insertJson(ious);
+        var iouService:IouService = new IouService();
+        iouService.addEventListener(Event.COMPLETE, iousLoadCompleteHandler);
+        iouService.load();
 
-        _personsData = _jsonHandler.loadJson(persons);
-        _tasksData = _jsonHandler.loadJson(tasks);
-        _iousData = _jsonHandler.loadJson(ious);
-
-
-        completeHandler();
-
+        completed = true;
     }
 
-
-    private function completeHandler():void {
-
-
-        for each(var thisPerson:Object in _personsData) {
-
-            addPerson(thisPerson);
-        }
-
-
-        for each(var thisTask:Object in _tasksData) {
-
-            addTask(thisTask);
-        }
-
-
-        for each(var thisIou:Object in _iousData) {
-
-            addIou(thisIou);
-        }
-
-        if(_persons && _tasks && _ious){
-
-            completed = true;
-        }
-
+    private function personsLoadCompleteHandler(event:Event):void {
+        var personService:PersonService = event.target as PersonService;
+        _persons = personService.persons;
     }
 
+    private function tasksLoadCompleteHandler(event:Event):void {
+        var taskService:TaskService = event.target as TaskService;
+        _tasks = taskService.tasks;
+    }
 
+    private function iousLoadCompleteHandler(event:Event):void {
+        var iouService:IouService = event.target as IouService;
+        _ious = iouService.ious;
+    }
 
 
 
@@ -121,30 +103,21 @@ public class AppModel extends EventDispatcher {
     public function addPerson(value:Object):void {
         var person:PersonVO = PersonVOFactory.createPersonVOFromObject(value);
         _persons.push(person);
-
-        if (completed) {
-            dispatchEvent(new Event(PERSONS_CHANGED));
-        }
+        dispatchEvent(new Event(PERSONS_CHANGED));
     }
 
 
     public function addTask(value:Object):void {
         var task:TaskVO = TaskVOFactory.createTaskVOFromObject(value);
         _tasks.push(task);
-
-        if (completed) {
-            dispatchEvent(new Event(TASKS_CHANGED));
-        }
+        dispatchEvent(new Event(TASKS_CHANGED));
     }
 
 
     public function addIou(value:Object):void {
         var iou:IouVO = IouVOFactory.createIouVOFromObject(value);
         _ious.push(iou);
-
-        if (completed) {
-            dispatchEvent(new Event(IOUS_CHANGED));
-        }
+        dispatchEvent(new Event(IOUS_CHANGED));
     }
 
 
@@ -153,7 +126,9 @@ public class AppModel extends EventDispatcher {
 
     //write json when app Closes
     public function closeApp():void {
-        _jsonHandler.write();
+        PersonService.write(_persons);
+        TaskService.write(_tasks);
+        IouService.write(_ious);
     }
 
 
