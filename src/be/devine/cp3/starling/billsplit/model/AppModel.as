@@ -1,9 +1,10 @@
 package be.devine.cp3.starling.billsplit.model {
 
+import be.devine.cp3.starling.billsplit.factory.IouVOFactory;
+import be.devine.cp3.starling.billsplit.factory.PersonVOFactory;
+import be.devine.cp3.starling.billsplit.factory.TaskVOFactory;
 import be.devine.cp3.starling.billsplit.json.JsonHandler;
 import be.devine.cp3.starling.billsplit.vo.IouVO;
-import be.devine.cp3.starling.billsplit.vo.PersonVO;
-import be.devine.cp3.starling.billsplit.vo.PersonVO;
 import be.devine.cp3.starling.billsplit.vo.PersonVO;
 import be.devine.cp3.starling.billsplit.vo.TaskVO;
 
@@ -118,7 +119,7 @@ public class AppModel extends EventDispatcher {
     //add
 
     public function addPerson(value:Object):void {
-        var person = new PersonVO(value);
+        var person:PersonVO = PersonVOFactory.createPersonVOFromObject(value);
         _persons.push(person);
 
         if (completed) {
@@ -128,7 +129,7 @@ public class AppModel extends EventDispatcher {
 
 
     public function addTask(value:Object):void {
-        var task = new TaskVO(value);
+        var task:TaskVO = TaskVOFactory.createTaskVOFromObject(value);
         _tasks.push(task);
 
         if (completed) {
@@ -138,7 +139,7 @@ public class AppModel extends EventDispatcher {
 
 
     public function addIou(value:Object):void {
-        var iou = new IouVO(value);
+        var iou:IouVO = IouVOFactory.createIouVOFromObject(value);
         _ious.push(iou);
 
         if (completed) {

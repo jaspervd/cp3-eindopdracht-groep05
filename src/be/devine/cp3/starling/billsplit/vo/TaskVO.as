@@ -14,16 +14,5 @@ public class TaskVO {
     public var price:Number;
     public var timestamp:String;
     public var paid:Boolean = false;
-
-    public function TaskVO(value:Object){
-
-         id = value.id;
-         title = value.title;
-         type = value.type;
-         price = value.price;
-         timestamp = value.timestamp;
-         paid = value.paid;
-
-    }
 }
 }
