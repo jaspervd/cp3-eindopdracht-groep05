@@ -16,10 +16,13 @@ public class AppModel extends EventDispatcher {
 
     private static var instance:AppModel;
 
+
+
     private var _persons:Array;
     private var _tasks:Array;
     private var _ious:Array;
     private var _currentScreen:String = "overview";
+    public var _oldScreenName:String = "";
 
     private var _completed:Boolean;
 
@@ -166,6 +169,7 @@ public class AppModel extends EventDispatcher {
 
         if(_currentScreen != value){
 
+            _oldScreenName = _currentScreen;
             _currentScreen = value;
 
             dispatchEvent(new Event(Event.CHANGE));
