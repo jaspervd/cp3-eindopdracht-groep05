@@ -81,6 +81,12 @@ public class Overview extends Screen {
         _fullName = new TextField(100, 30, _moderator.name, "SourceSansProSemiBold", 28, 0xFFFFFF);
         _profileLayout.addChild(_fullName);
 
+        this.backButtonHandler = onBack;
+
+    }
+
+    private function onBack():void{
+        trace("on back");
     }
 
     private function imageCompleteHandler(event:Event):void {

@@ -5,6 +5,8 @@ import be.devine.cp3.starling.billsplit.view.screens.Add;
 import be.devine.cp3.starling.billsplit.view.screens.Detail;
 import be.devine.cp3.starling.billsplit.view.screens.Overview;
 
+import feathers.controls.Screen;
+
 import feathers.controls.ScreenNavigator;
 import feathers.controls.ScreenNavigatorItem;
 
@@ -17,9 +19,8 @@ import starling.core.Starling;
 
 import starling.display.DisplayObject;
 
-import starling.display.Sprite;
 
-public class Content extends Sprite {
+public class Content extends Screen {
 
     private var _navigator:ScreenNavigator;
     private var _appmodel:AppModel;
@@ -27,7 +28,6 @@ public class Content extends Sprite {
     protected var tween:Tween;
     protected var savedOldScreen:DisplayObject;
     protected var savedCompleteCallback:Function;
-    protected var backButtonHandler:Function;
 
     public function Content() {
 
@@ -48,8 +48,6 @@ public class Content extends Sprite {
 
         this.navigator = _navigator;
 
-        this.backButtonHandler = onBackButton;
-
     }
 
     private function screenHandler(event:Event):void {
@@ -57,12 +55,6 @@ public class Content extends Sprite {
         navigator.transition = onTransition;
         navigator.showScreen(_appmodel.currentScreen);
 
-    }
-
-    private function onBackButton():void
-    {
-        navigator.transition = onTransition;
-        navigator.showScreen(_appmodel._oldScreenName);
     }
 
     private function onTransition(oldScreen:DisplayObject, newScreen:DisplayObject, completeCallback:Function):void
