@@ -38,7 +38,7 @@ public class Detail extends Screen {
 
         _personList = new List();
         _personList.itemRendererProperties.labelField = "name";
-        addChild(_personList)
+        addChild(_personList);
 
         _taskLayout = new LayoutGroup();
         addChild(_taskLayout);
