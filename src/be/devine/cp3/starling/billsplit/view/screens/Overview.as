@@ -29,10 +29,6 @@ import starling.text.TextField;
 public class Overview extends Screen {
 
 
-    public var screenName:String = "Overview";
-
-
-
     private var _personModel:PersonModel;
     private var _taskModel:TaskModel;
     private var _appmodel:AppModel;
