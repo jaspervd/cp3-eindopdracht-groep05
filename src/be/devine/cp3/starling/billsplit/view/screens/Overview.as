@@ -23,6 +23,7 @@ import feathers.layout.VerticalLayout;
 import flash.events.Event;
 
 import starling.display.Image;
+import starling.display.Quad;
 import starling.text.TextField;
 
 public class Overview extends Screen {
@@ -34,6 +35,7 @@ public class Overview extends Screen {
     private var _fullName:TextField;
     private var _profileLayout:LayoutGroup;
     private var _taskList:List;
+    private var _quad:Quad;
 
     public function Overview() {
 
@@ -76,10 +78,19 @@ public class Overview extends Screen {
     override protected function draw():void{
 
 
-        _profileLayout.setSize(stage.stageWidth,500);
+        _quad = new Quad(100,100,0xf9f8ef);
+        _quad.alpha = 1;
+
+
+
+        _profileLayout.setSize(stage.stageWidth,400);
         _taskList.setSize(stage.stageWidth,(stage.stageHeight - _profileLayout.height));
         _taskList.y = _profileLayout.height;
         _taskList.dataProvider = new ListCollection(_tasks);
+        _taskList.itemRendererFactory
+
+
+        _taskList.backgroundSkin = _quad;
 
     }
 }

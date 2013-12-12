@@ -24,9 +24,6 @@ public class Header extends Screen{
     [Embed(source="/../assets/images/metalworks/add_plus_btn.png")]
     public static const Multiple:Class;
 
-    [Embed(source="/../assets/images/metalworks/transparent_repeat.png")]
-    public static const Transparent:Class;
-
 
     private var _menu:Button;
     private var _multiple:Button;
@@ -96,21 +93,6 @@ public class Header extends Screen{
 
         _header.width = stage.stageWidth;
 
-    }
-
-
-
-
-    private function myCustomButtonInitializer( button:Button ):void
-    {
-
-
-        var texture:Texture = Texture.fromBitmap(new Transparent());
-
-
-        button.defaultSkin = new Image(texture);
-        button.downSkin =  new Image(texture);
-        button.hoverSkin =  new Image(texture);
     }
 
 
