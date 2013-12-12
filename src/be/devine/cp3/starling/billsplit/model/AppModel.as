@@ -21,6 +21,7 @@ public class AppModel extends EventDispatcher {
     private var _persons:Array;
     private var _tasks:Array;
     private var _ious:Array;
+    private var _currentScreen:String = "overview";
 
 
     private var _completed:Boolean;
@@ -164,6 +165,20 @@ public class AppModel extends EventDispatcher {
     }
 
 
+    public function get currentScreen():String {
+        return _currentScreen;
+    }
+
+    public function set currentScreen(value:String):void {
+
+        if(_currentScreen != value){
+
+            _currentScreen = value;
+
+            dispatchEvent(new Event(Event.CHANGE));
+
+        }
+    }
 }
 }
 internal class Enforcer {

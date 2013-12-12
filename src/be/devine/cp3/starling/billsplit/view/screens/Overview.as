@@ -24,6 +24,12 @@ import starling.text.TextField;
 
 
 public class Overview extends Screen {
+
+
+    public var screenName:String = "Overview";
+
+
+
     private var _personModel:PersonModel;
     private var _taskModel:TaskModel;
     private var _moderator:PersonVO;
@@ -42,6 +48,7 @@ public class Overview extends Screen {
 
         _tasks = _taskModel.getAllTasks();
 
+
         _profileLayout = new LayoutGroup();
         addChild(_profileLayout);
 
@@ -49,22 +56,32 @@ public class Overview extends Screen {
         _taskList.itemRendererProperties.labelField = "title";
         addChild(_taskList);
 
+
+
+
         var layout:VerticalLayout = new VerticalLayout();
-        layout.gap = 10;
+        layout.horizontalAlign = VerticalLayout.HORIZONTAL_ALIGN_CENTER;
+        layout.gap = 15;
+        layout.paddingTop = 100;
         _profileLayout.layout = layout;
 
-        _fullName = new TextField(100, 30, _moderator.name, "SourceSansProSemiBold", 28, 0xFFFFFF);
-        _profileLayout.addChild(_fullName);
 
         var image:File = File.applicationStorageDirectory.resolvePath(_moderator.image);
         _profile = new ImageLoader();
         _profile.source = image.url;
         _profile.addEventListener(Event.COMPLETE, imageCompleteHandler);
         _profileLayout.addChild(_profile);
+
+
+        _fullName = new TextField(100, 30, _moderator.name, "SourceSansProSemiBold", 28, 0xFFFFFF);
+        _profileLayout.addChild(_fullName);
+
     }
 
     private function imageCompleteHandler(event:Event):void {
-        _profile.x = (stage.stageWidth + _profile.width) / 2;
+
+        _profile.setSize(200,200);
+
     }
 
 
@@ -77,7 +94,7 @@ public class Overview extends Screen {
     private function layout():void {
         _fullName.width = stage.stageWidth;
 
-        _profileLayout.setSize(stage.stageWidth, 400);
+        _profileLayout.setSize(stage.stageWidth, 500);
         _profile.x = (stage.stageWidth + _profile.width) / 2;
         _taskList.setSize(stage.stageWidth, (stage.stageHeight - _profileLayout.height));
         _taskList.y = _profileLayout.height;

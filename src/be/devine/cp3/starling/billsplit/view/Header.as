@@ -1,13 +1,13 @@
 package be.devine.cp3.starling.billsplit.view {
 
 
+import be.devine.cp3.starling.billsplit.model.AppModel;
+
 import feathers.controls.Button;
 import feathers.controls.Header;
-import feathers.controls.LayoutGroup;
 import feathers.controls.Screen;
-import feathers.events.FeathersEventType;
-import feathers.layout.HorizontalLayout;
 import feathers.themes.MetalWorksMobileTheme;
+
 
 
 import starling.display.DisplayObject;
@@ -15,7 +15,6 @@ import starling.display.Image;
 import starling.display.Quad;
 
 import starling.events.Event;
-import starling.textures.Texture;
 
 public class Header extends Screen{
     [Embed(source="/../assets/images/metalworks/menu_stripes_btn.png")]
@@ -25,18 +24,23 @@ public class Header extends Screen{
     public static const Multiple:Class;
 
 
+    public static var NAVIGATE_ADD:String = "NAVIGATE_ADD";
+    public static var NAVIGATE_REMOVE:String = "NAVIGATE_ADD";
+
+
     private var _menu:Button;
     private var _multiple:Button;
     private var _quad:Quad;
     private var _header:feathers.controls.Header;
     private var _theme:MetalWorksMobileTheme;
+    private var _action:String;
+    private var _appmodel:AppModel;
 
     public function Header() {
 
-        _theme = new MetalWorksMobileTheme();
+        _appmodel = AppModel.getInstance();
 
-        /*_theme.setInitializerForClass(Button ,myCustomButtonInitializer,"menu");
-        _theme.setInitializerForClass(Button ,myCustomButtonInitializer,"multiple");*/
+        _theme = new MetalWorksMobileTheme();
 
         _header = new feathers.controls.Header();
         _header.title = "Splits";
@@ -73,6 +77,7 @@ public class Header extends Screen{
 
 
         _multiple.defaultIcon = Image.fromBitmap(new Multiple());
+        action = "add";
         _multiple.iconPosition = Button.ICON_POSITION_LEFT;
 
 
@@ -83,6 +88,8 @@ public class Header extends Screen{
 
 
         _header.backgroundSkin = _quad;
+
+
 
 
         trace('[HEADER]');
@@ -98,7 +105,44 @@ public class Header extends Screen{
 
     private function checkAction(event:Event):void {
 
+        var currentButton:Button = Button(event.target);
 
+        trace(currentButton.name);
+
+        switch (currentButton.name){
+
+            case "add feathers-header-item":
+
+                    trace("add");
+
+                    dispatchEvent(new Event(NAVIGATE_ADD));
+            break;
+
+
+            case "remove feahters-header-item":
+
+                trace("Remove");
+
+                dispatchEvent(new Event(NAVIGATE_REMOVE));
+            break;
+
+        }
+
+
+    }
+
+    public function get action():String {
+        return _action;
+    }
+
+    public function set action(value:String):void {
+
+       if(_action != value){
+
+           _action = value;
+
+           _multiple.name = _action;
+       }
     }
 }
 }
