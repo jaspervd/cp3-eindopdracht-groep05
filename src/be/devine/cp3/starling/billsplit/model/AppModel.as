@@ -3,7 +3,6 @@ package be.devine.cp3.starling.billsplit.model {
 import be.devine.cp3.starling.billsplit.factory.IouVOFactory;
 import be.devine.cp3.starling.billsplit.factory.PersonVOFactory;
 import be.devine.cp3.starling.billsplit.factory.TaskVOFactory;
-import be.devine.cp3.starling.billsplit.json.JsonHandler;
 import be.devine.cp3.starling.billsplit.service.IouService;
 import be.devine.cp3.starling.billsplit.service.PersonService;
 import be.devine.cp3.starling.billsplit.service.TaskService;
@@ -18,11 +17,6 @@ import flash.events.EventDispatcher;
 public class AppModel extends EventDispatcher {
 
     private static var instance:AppModel;
-
-    private var _personsData:Object;
-    private var _tasksData:Object;
-    private var _iousData:Object;
-
 
     private var _persons:Array;
     private var _tasks:Array;

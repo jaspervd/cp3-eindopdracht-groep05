@@ -32,7 +32,6 @@ public class Application extends Sprite {
         _appModel.load();
 
         _personModel = PersonModel.getInstance();
-
         _taskModel = TaskModel.getInstance();
 
         addEventListener(Event.ADDED_TO_STAGE, addedHandler);
