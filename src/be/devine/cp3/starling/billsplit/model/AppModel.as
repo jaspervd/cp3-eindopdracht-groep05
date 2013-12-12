@@ -11,6 +11,7 @@ import flash.events.Event;
 
 import flash.events.EventDispatcher;
 
+
 public class AppModel extends EventDispatcher {
 
     private static var instance:AppModel;

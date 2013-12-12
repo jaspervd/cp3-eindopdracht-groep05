@@ -1,6 +1,7 @@
 package be.devine.cp3.starling.billsplit.view {
 
 import be.devine.cp3.starling.billsplit.model.AppModel;
+import be.devine.cp3.starling.billsplit.view.screens.Detail;
 import be.devine.cp3.starling.billsplit.view.screens.Overview;
 
 import feathers.controls.ScreenNavigator;
@@ -9,7 +10,6 @@ import feathers.controls.ScreenNavigatorItem;
 import flash.events.Event;
 
 import starling.display.Sprite;
-import starling.events.Event;
 
 public class Content extends Sprite {
 
@@ -28,7 +28,7 @@ public class Content extends Sprite {
 
 
         _navigator.addScreen("overview",new ScreenNavigatorItem( new Overview() ));
-        _navigator.addScreen("detail",new ScreenNavigatorItem( new Overview() ));
+        _navigator.addScreen("detail",new ScreenNavigatorItem( new Detail() ));
         _navigator.addScreen("add",new ScreenNavigatorItem( new Overview() ));
 
         _navigator.showScreen("overview");

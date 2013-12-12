@@ -31,8 +31,11 @@ public class Detail extends Screen {
     public function Detail() {
         _taskModel = TaskModel.getInstance();
         _personModel = PersonModel.getInstance();
+        _currentTask = new TaskVO();
 
-        _currentTask = _taskModel.currentTask;
+        if(_taskModel.currentTask) {
+            _currentTask = _taskModel.currentTask;
+        }
         
         trace('Current Task:', _currentTask.title);
 
