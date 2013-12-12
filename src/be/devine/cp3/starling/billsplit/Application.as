@@ -39,6 +39,7 @@ public class Application extends Sprite {
 
 
     private function closeHandler(event:Event):void {
+        trace('main close');
         _appModel.closeApp();
     }
 

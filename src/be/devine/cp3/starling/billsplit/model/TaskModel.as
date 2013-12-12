@@ -58,7 +58,13 @@ public class TaskModel {
 
     public function add(value:Object):Array {
         var lastTask:TaskVO = _tasks[_tasks.length - 1];
-        value.id = lastTask.id + 1;
+        var date:Date = new Date();
+        if(_tasks.length == 0) {
+            value.id = 1;
+        } else {
+            value.id = lastTask.id + 1;
+        }
+        value.timestamp = date.time;
         var task:TaskVO = TaskVOFactory.createTaskVOFromObject(value);
         _tasks.push(task);
         return _tasks;

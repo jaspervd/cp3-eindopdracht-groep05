@@ -6,10 +6,13 @@
  * To change this template use File | Settings | File Templates.
  */
 package be.devine.cp3.starling.billsplit.view.screens {
+import be.devine.cp3.starling.billsplit.factory.TaskVOFactory;
 import be.devine.cp3.starling.billsplit.model.AppModel;
 import be.devine.cp3.starling.billsplit.model.PersonModel;
 import be.devine.cp3.starling.billsplit.model.TaskModel;
+import be.devine.cp3.starling.billsplit.service.TaskService;
 import be.devine.cp3.starling.billsplit.vo.PersonVO;
+import be.devine.cp3.starling.billsplit.vo.TaskVO;
 
 import feathers.controls.Alert;
 import feathers.controls.Button;
@@ -55,7 +58,7 @@ public class Add extends Screen {
             var radio:Radio = new Radio();
             radio.label = type;
             radio.toggleGroup = _group;
-            if(type == "Other") {
+            if (type == "Other") {
                 _group.selectedItem = radio;
             }
             _addLayout.addChild(radio);
@@ -78,9 +81,32 @@ public class Add extends Screen {
     }
 
     private function buttonHandler(event:Event):void {
+        var error:Boolean = false;
         var moderator:PersonVO = _personModel.getModerator();
-        if(_inputTitle.text.length == 0) {
-            var alert:Alert = Alert.show("Error!1!!!1!!1!!!", "Hello, " + moderator.name, new ListCollection([{ label: "OK" }]));
+        if (_inputTitle.text.length == 0) {
+            var alert:Alert = Alert.show("Please fill in a title", "Error", new ListCollection([
+                { label: "OK" }
+            ]));
+            error = true;
+        }
+        if (_inputPrice.text.length == 0) {
+            var alert:Alert = Alert.show("Please fill in a price", "Error", new ListCollection([
+                { label: "OK" }
+            ]));
+            error = true;
+        }
+        if (!error) {
+            var obj:Object = {};
+            var radio:Radio = _group.selectedItem as Radio;
+            obj.title = _inputTitle.text;
+            obj.price = _inputPrice.text;
+            obj.type = String(radio.label).toLowerCase();
+
+            _taskModel.add(obj);
+            TaskService.write(_taskModel.tasks);
+
+            _taskModel.currentTask = _taskModel.tasks[_taskModel.tasks.length - 1];
+            _appModel.currentScreen = "detail";
         }
     }
 }

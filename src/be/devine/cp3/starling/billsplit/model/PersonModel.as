@@ -49,8 +49,14 @@ public class PersonModel {
     }
 
     public function add(value:Object):Array {
-        var lastTask:PersonVO = _persons[_persons.length - 1];
-        value.id = lastTask.id + 1;
+        var personTask:PersonVO = _persons[_persons.length - 1];
+        value.id = personTask.id + 1;
+        if(_persons.length == 0) {
+            value.id = 1;
+        } else {
+            value.id = personTask.id + 1;
+        }
+
         var person:PersonVO = PersonVOFactory.createPersonVOFromObject(value);
         _persons.push(person);
         return _persons;
