@@ -6,21 +6,27 @@
  * To change this template use File | Settings | File Templates.
  */
 package be.devine.cp3.starling.billsplit.view.screens {
+
+
+
+
 import be.devine.cp3.starling.billsplit.model.PersonModel;
 import be.devine.cp3.starling.billsplit.model.TaskModel;
 import be.devine.cp3.starling.billsplit.vo.PersonVO;
-
 import feathers.controls.ImageLoader;
 import feathers.controls.LayoutGroup;
 import feathers.controls.List;
 import feathers.controls.Screen;
 import feathers.data.ListCollection;
 import feathers.layout.VerticalLayout;
-
+import flash.display.BitmapData;
+import flash.display.Sprite;
 import flash.filesystem.File;
 
+import starling.display.Image;
 import starling.events.Event;
 import starling.text.TextField;
+import starling.textures.Texture;
 
 
 public class Overview extends Screen {
@@ -70,7 +76,6 @@ public class Overview extends Screen {
         _profile = new ImageLoader();
         _profile.source = image.url;
         _profile.addEventListener(Event.COMPLETE, imageCompleteHandler);
-        _profileLayout.addChild(_profile);
 
 
         _fullName = new TextField(100, 30, _moderator.name, "SourceSansProSemiBold", 28, 0xFFFFFF);
@@ -80,7 +85,24 @@ public class Overview extends Screen {
 
     private function imageCompleteHandler(event:Event):void {
 
+       
         _profile.setSize(200,200);
+
+        var profileMask:Sprite = new Sprite();
+        profileMask.graphics.lineStyle(10,0xffffff);
+        profileMask.graphics.beginFill(0xffffff);
+        profileMask.graphics.drawCircle(0,0,100);
+        profileMask.graphics.endFill();
+
+        var bmpData:BitmapData = new BitmapData(200,200);
+        bmpData.draw(profileMask);
+
+        var texture:Texture = Texture.fromBitmapData(bmpData);
+
+        var circle:Image = new Image(texture);
+        addChild(circle);
+
+
 
     }
 
