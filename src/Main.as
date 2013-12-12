@@ -10,6 +10,7 @@ import flash.geom.Rectangle;
 
 import starling.core.Starling;
 import starling.events.Event;
+import starling.events.ResizeEvent;
 
 [SWF(frameRate=60)]
 public class Main extends Sprite {
@@ -29,7 +30,7 @@ public class Main extends Sprite {
         _starling.viewPort = new Rectangle(0, 0, stage.stageWidth, stage.stageHeight);
         _starling.stage.stageWidth = stage.stageWidth;
         _starling.stage.stageHeight = stage.stageHeight;
-        _starling.stage.dispatchEvent(new starling.events.Event(starling.events.Event.RESIZE));
+        _starling.stage.dispatchEvent(new starling.events.ResizeEvent(starling.events.Event.RESIZE, stage.stageWidth, stage.stageHeight));
     }
 }
 }

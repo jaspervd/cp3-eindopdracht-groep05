@@ -85,6 +85,7 @@ public class Header extends Screen{
         _header.leftItems = new <DisplayObject>[ _menu ];
         _header.rightItems = new <DisplayObject>[ _multiple ];
         _header.width = stage.stageWidth;
+        _header.height = stage.stageHeight*.1;
 
 
         _header.backgroundSkin = _quad;

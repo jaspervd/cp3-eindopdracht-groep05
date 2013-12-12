@@ -47,17 +47,9 @@ public class Application extends Sprite {
         stage.addEventListener(Event.RESIZE, resizeHandler);
         stage.addEventListener(Event.CLOSE, closeHandler);
 
-        layout();
-    }
-
-    private function resizeHandler(event:Event):void {
-        layout();
-    }
-
-    private function layout():void {
-
         _personModel.persons = _appModel.persons;
         _taskModel.tasks = _appModel.tasks;
+
 
         content = new Content();
         addChild(content);
@@ -65,6 +57,13 @@ public class Application extends Sprite {
         header = new Header();
         addChild(header);
 
+
     }
+
+    private function resizeHandler(event:Event):void {
+
+        trace("resize");
+    }
+
 }
 }

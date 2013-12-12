@@ -44,6 +44,7 @@ public class Overview extends Screen {
     private var _fullName:TextField;
     private var _profileLayout:LayoutGroup;
     private var _taskList:List;
+    private var _layout:VerticalLayout;
 
     public function Overview() {
 
@@ -65,17 +66,17 @@ public class Overview extends Screen {
 
 
 
-        var layout:VerticalLayout = new VerticalLayout();
-        layout.horizontalAlign = VerticalLayout.HORIZONTAL_ALIGN_CENTER;
-        layout.gap = 15;
-        layout.paddingTop = 100;
-        _profileLayout.layout = layout;
+        _layout = new VerticalLayout();
+        _layout.horizontalAlign = VerticalLayout.HORIZONTAL_ALIGN_CENTER;
+        _layout.gap = 15;
+        _profileLayout.layout = _layout;
 
 
         var image:File = File.applicationStorageDirectory.resolvePath(_moderator.image);
         _profile = new ImageLoader();
         _profile.source = image.url;
         _profile.addEventListener(Event.COMPLETE, imageCompleteHandler);
+        _profileLayout.addChild(_profile);
 
 
         _fullName = new TextField(100, 30, _moderator.name, "SourceSansProSemiBold", 28, 0xFFFFFF);
@@ -85,24 +86,7 @@ public class Overview extends Screen {
 
     private function imageCompleteHandler(event:Event):void {
 
-       
-        _profile.setSize(200,200);
-
-        var profileMask:Sprite = new Sprite();
-        profileMask.graphics.lineStyle(10,0xffffff);
-        profileMask.graphics.beginFill(0xffffff);
-        profileMask.graphics.drawCircle(0,0,100);
-        profileMask.graphics.endFill();
-
-        var bmpData:BitmapData = new BitmapData(200,200);
-        bmpData.draw(profileMask);
-
-        var texture:Texture = Texture.fromBitmapData(bmpData);
-
-        var circle:Image = new Image(texture);
-        addChild(circle);
-
-
+        _profile.setSize(stage.stageWidth*0.3,stage.stageWidth*0.3);
 
     }
 
@@ -114,9 +98,11 @@ public class Overview extends Screen {
 
 
     private function layout():void {
-        _fullName.width = stage.stageWidth;
 
-        _profileLayout.setSize(stage.stageWidth, 500);
+        _layout.paddingTop = stage.stageHeight*0.1;
+        _fullName.width = stage.stageWidth*0.5;
+
+        _profileLayout.setSize(stage.stageWidth, stage.stageHeight/2);
         _profile.x = (stage.stageWidth + _profile.width) / 2;
         _taskList.setSize(stage.stageWidth, (stage.stageHeight - _profileLayout.height));
         _taskList.y = _profileLayout.height;
