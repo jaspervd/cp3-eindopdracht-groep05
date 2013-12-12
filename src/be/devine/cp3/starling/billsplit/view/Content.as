@@ -1,6 +1,7 @@
 package be.devine.cp3.starling.billsplit.view {
 
 import be.devine.cp3.starling.billsplit.model.AppModel;
+import be.devine.cp3.starling.billsplit.view.screens.Add;
 import be.devine.cp3.starling.billsplit.view.screens.Detail;
 import be.devine.cp3.starling.billsplit.view.screens.Overview;
 
@@ -29,7 +30,7 @@ public class Content extends Sprite {
 
         _navigator.addScreen("overview",new ScreenNavigatorItem( new Overview() ));
         _navigator.addScreen("detail",new ScreenNavigatorItem( new Detail() ));
-        _navigator.addScreen("add",new ScreenNavigatorItem( new Overview() ));
+        _navigator.addScreen("add",new ScreenNavigatorItem( new Add() ));
 
         _navigator.showScreen("overview");
 

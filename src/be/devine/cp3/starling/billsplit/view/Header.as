@@ -115,6 +115,7 @@ public class Header extends Screen{
             case "add feathers-header-item":
 
                     trace("add");
+                    _appmodel.currentScreen = "add";
 
                     dispatchEvent(new Event(NAVIGATE_ADD));
             break;
