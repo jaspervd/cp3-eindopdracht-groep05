@@ -1,5 +1,6 @@
 package be.devine.cp3.starling.billsplit.model {
 
+import be.devine.cp3.starling.billsplit.factory.PersonVOFactory;
 import be.devine.cp3.starling.billsplit.vo.PersonVO;
 
 public class PersonModel {
@@ -45,6 +46,23 @@ public class PersonModel {
             trace('account aanmaken');
         }
         return _moderator;
+    }
+
+    public function add(value:Object):Array {
+        var lastTask:PersonVO = _persons[_persons.length - 1];
+        value.id = lastTask.id + 1;
+        var person:PersonVO = PersonVOFactory.createPersonVOFromObject(value);
+        _persons.push(person);
+        return _persons;
+    }
+
+    public function deleteById(id:uint):Array {
+        for each(var person:PersonVO in _persons) {
+            if (person.id == id) {
+                _persons.splice(_persons.indexOf(person), 1);
+            }
+        }
+        return _persons;
     }
 }
 }
