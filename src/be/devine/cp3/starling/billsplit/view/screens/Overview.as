@@ -8,25 +8,22 @@
 package be.devine.cp3.starling.billsplit.view.screens {
 
 
-
-
+import be.devine.cp3.starling.billsplit.model.AppModel;
 import be.devine.cp3.starling.billsplit.model.PersonModel;
 import be.devine.cp3.starling.billsplit.model.TaskModel;
 import be.devine.cp3.starling.billsplit.vo.PersonVO;
+import be.devine.cp3.starling.billsplit.vo.TaskVO;
+
 import feathers.controls.ImageLoader;
 import feathers.controls.LayoutGroup;
 import feathers.controls.List;
 import feathers.controls.Screen;
 import feathers.data.ListCollection;
 import feathers.layout.VerticalLayout;
-import flash.display.BitmapData;
-import flash.display.Sprite;
 import flash.filesystem.File;
 
-import starling.display.Image;
 import starling.events.Event;
 import starling.text.TextField;
-import starling.textures.Texture;
 
 
 public class Overview extends Screen {
@@ -38,6 +35,7 @@ public class Overview extends Screen {
 
     private var _personModel:PersonModel;
     private var _taskModel:TaskModel;
+    private var _appmodel:AppModel;
     private var _moderator:PersonVO;
     private var _tasks:Array;
     private var _profile:ImageLoader;
@@ -50,10 +48,13 @@ public class Overview extends Screen {
 
         _personModel = PersonModel.getInstance();
         _taskModel = TaskModel.getInstance();
-
+        _appmodel = AppModel.getInstance();
         _moderator = _personModel.getModerator();
-
         _tasks = _taskModel.getAllTasks();
+
+
+
+
 
 
         _profileLayout = new LayoutGroup();
@@ -62,6 +63,8 @@ public class Overview extends Screen {
         _taskList = new List();
         _taskList.itemRendererProperties.labelField = "title";
         addChild(_taskList);
+
+
 
 
 
@@ -107,7 +110,20 @@ public class Overview extends Screen {
         _taskList.setSize(stage.stageWidth, (stage.stageHeight - _profileLayout.height));
         _taskList.y = _profileLayout.height;
         _taskList.dataProvider = new ListCollection(_tasks);
+        _taskList.addEventListener( Event.CHANGE, triggeredHandler );
 
+
+    }
+
+    private function triggeredHandler(event:Event):void {
+
+        if(_taskList.selectedItem){
+            var listItem:TaskVO = TaskVO(_taskList.selectedItem);
+
+            _taskModel.currentTask = listItem;
+            _appmodel.currentScreen = "detail";
+
+        }
 
     }
 }
