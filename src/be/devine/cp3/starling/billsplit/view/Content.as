@@ -48,8 +48,6 @@ public class Content extends Screen {
 
         this.navigator = _navigator;
 
-        this.backButtonHandler = onBackButton;
-
     }
 
     private function screenHandler(event:Event):void {
@@ -57,12 +55,6 @@ public class Content extends Screen {
         navigator.transition = onTransition;
         navigator.showScreen(_appmodel.currentScreen);
 
-    }
-
-    private function onBackButton():void
-    {
-        navigator.transition = onTransition;
-        navigator.showScreen(_appmodel._oldScreenName);
     }
 
     private function onTransition(oldScreen:DisplayObject, newScreen:DisplayObject, completeCallback:Function):void

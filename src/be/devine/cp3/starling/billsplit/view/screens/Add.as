@@ -9,6 +9,7 @@ package be.devine.cp3.starling.billsplit.view.screens {
 import be.devine.cp3.starling.billsplit.model.AppModel;
 import be.devine.cp3.starling.billsplit.model.PersonModel;
 import be.devine.cp3.starling.billsplit.model.TaskModel;
+import be.devine.cp3.starling.billsplit.vo.PersonVO;
 
 import feathers.controls.Alert;
 import feathers.controls.Button;
@@ -31,6 +32,7 @@ public class Add extends Screen {
     private var _taskModel:TaskModel;
     private var _personModel:PersonModel;
     private var _group:ToggleGroup;
+    private var _arrTypes:Array;
 
     public function Add() {
         _appModel = AppModel.getInstance();
@@ -46,6 +48,19 @@ public class Add extends Screen {
         layout.paddingTop = 100;
         _addLayout.layout = layout;
 
+        _group = new ToggleGroup();
+        _arrTypes = ["Other", "Restaurant", "Bar", "Shop"];
+
+        for each(var type:String in _arrTypes) {
+            var radio:Radio = new Radio();
+            radio.label = type;
+            radio.toggleGroup = _group;
+            if(type == "Other") {
+                _group.selectedItem = radio;
+            }
+            _addLayout.addChild(radio);
+        }
+
         _inputTitle = new TextInput();
         _inputTitle.prompt = "Title";
         _addLayout.addChild(_inputTitle);
@@ -55,24 +70,6 @@ public class Add extends Screen {
         _inputPrice.restrict = "0-9^.";
         _addLayout.addChild(_inputPrice);
 
-        _group = new ToggleGroup();
-
-        var radio1:Radio = new Radio();
-        radio1.label = "Restaurant";
-        radio1.toggleGroup = _group;
-        _group.selectedItem = radio1;
-        _addLayout.addChild(radio1);
-
-        var radio2:Radio = new Radio();
-        radio2.label = "Bar";
-        radio2.toggleGroup = _group;
-        _addLayout.addChild(radio2);
-
-        var radio3:Radio = new Radio();
-        radio3.label = "Shop";
-        radio3.toggleGroup = _group;
-        _addLayout.addChild(radio3);
-
         _submitBtn = new Button();
         _submitBtn.label = "Save";
         _addLayout.addChild(_submitBtn);
@@ -81,7 +78,10 @@ public class Add extends Screen {
     }
 
     private function buttonHandler(event:Event):void {
-        var alert:Alert = Alert.show("This is an alert!", "Hello World", new ListCollection([{ label: "OK" }]));
+        var moderator:PersonVO = _personModel.getModerator();
+        if(_inputTitle.text.length == 0) {
+            var alert:Alert = Alert.show("Error!1!!!1!!1!!!", "Hello, " + moderator.name, new ListCollection([{ label: "OK" }]));
+        }
     }
 }
 }
