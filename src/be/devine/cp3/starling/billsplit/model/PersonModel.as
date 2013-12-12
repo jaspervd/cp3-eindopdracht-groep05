@@ -64,6 +64,16 @@ public class PersonModel {
         }
         return _persons;
     }
+
+    public function getPersonsByTaskId(id:uint):Array {
+        var tempArr:Array = [];
+        for each(var person:PersonVO in _persons) {
+            if (person.task_id == id) {
+                tempArr.push(person);
+            }
+        }
+        return tempArr;
+    }
 }
 }
 internal class Enforcer {

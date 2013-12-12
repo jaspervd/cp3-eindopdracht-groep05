@@ -1,14 +1,11 @@
 package be.devine.cp3.starling.billsplit.model {
 
 import be.devine.cp3.starling.billsplit.factory.IouVOFactory;
-import be.devine.cp3.starling.billsplit.factory.PersonVOFactory;
-import be.devine.cp3.starling.billsplit.factory.TaskVOFactory;
 import be.devine.cp3.starling.billsplit.service.IouService;
 import be.devine.cp3.starling.billsplit.service.PersonService;
 import be.devine.cp3.starling.billsplit.service.TaskService;
 import be.devine.cp3.starling.billsplit.vo.IouVO;
 import be.devine.cp3.starling.billsplit.vo.PersonVO;
-import be.devine.cp3.starling.billsplit.vo.TaskVO;
 
 import flash.events.Event;
 
@@ -22,7 +19,6 @@ public class AppModel extends EventDispatcher {
     private var _tasks:Array;
     private var _ious:Array;
     private var _currentScreen:String = "overview";
-
 
     private var _completed:Boolean;
 
@@ -93,28 +89,24 @@ public class AppModel extends EventDispatcher {
 
 
 
-    //add
+    //add iou
 
-    public function addPerson(value:Object):void {
-        var person:PersonVO = PersonVOFactory.createPersonVOFromObject(value);
-        _persons.push(person);
-        dispatchEvent(new Event(PERSONS_CHANGED));
-    }
-
-
-    public function addTask(value:Object):void {
-        var task:TaskVO = TaskVOFactory.createTaskVOFromObject(value);
-        _tasks.push(task);
-        dispatchEvent(new Event(TASKS_CHANGED));
-    }
-
-
-    public function addIou(value:Object):void {
-        var iou:IouVO = IouVOFactory.createIouVOFromObject(value);
+    public function addIou(value:Object):Array {
+        var lastIou:IouVO = _ious[_ious.length - 1];
+        value.id = lastIou.id + 1;
+        var iou:IouVO = IouVO(value);
         _ious.push(iou);
-        dispatchEvent(new Event(IOUS_CHANGED));
+        return _ious;
     }
 
+    public function deleteById(id:uint):Array {
+        for each(var iou:IouVO in _ious) {
+            if (iou.id == id) {
+                _ious.splice(_ious.indexOf(iou), 1);
+            }
+        }
+        return _ious;
+    }
 
 
 
@@ -155,7 +147,7 @@ public class AppModel extends EventDispatcher {
 
         trace("[COMPLETE] = "+_completed);
 
-        trace(PersonVO(_persons[0]).name);
+        trace('Hello', PersonVO(_persons[0]).name);
 
         if(_completed){
 

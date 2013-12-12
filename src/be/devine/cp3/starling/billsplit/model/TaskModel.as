@@ -10,6 +10,7 @@ public class TaskModel {
 
     private var _tasks:Array;
     private var _task:TaskVO;
+    private var _currentTask:TaskVO;
 
     public static function getInstance():TaskModel {
 
@@ -43,7 +44,6 @@ public class TaskModel {
     }
 
     public function getAllTasks():Array {
-
         return _tasks;
     }
 
@@ -71,6 +71,14 @@ public class TaskModel {
             }
         }
         return _tasks;
+    }
+
+    public function get currentTask():TaskVO {
+        return _currentTask;
+    }
+
+    public function set currentTask(value:TaskVO):void {
+        _currentTask = value;
     }
 }
 }
