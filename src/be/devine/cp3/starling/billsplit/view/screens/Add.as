@@ -38,6 +38,8 @@ public class Add extends Screen {
     private var _arrTypes:Array;
 
     public function Add() {
+
+
         _appModel = AppModel.getInstance();
         _taskModel = TaskModel.getInstance();
         _personModel = PersonModel.getInstance();
@@ -78,6 +80,19 @@ public class Add extends Screen {
         _addLayout.addChild(_submitBtn);
 
         _submitBtn.addEventListener(Event.TRIGGERED, buttonHandler);
+    }
+
+    override protected function initialize():void{
+
+        trace('[HEADER]');
+
+        draw();
+    }
+
+    override protected function draw():void{
+
+        _addLayout.width = stage.stageWidth;
+
     }
 
     private function buttonHandler(event:Event):void {

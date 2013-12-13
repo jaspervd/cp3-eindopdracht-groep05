@@ -102,12 +102,12 @@ package feathers.themes
 		protected static const SOURCE_SANS_PRO_SEMIBOLD:Class;
 
 		protected static const PRIMARY_BACKGROUND_COLOR:uint = 0x7ebeae;
-		protected static const LIGHT_TEXT_COLOR:uint = 0xe5e5e5;
-		protected static const DARK_TEXT_COLOR:uint = 0x1a1816;
-		protected static const SELECTED_TEXT_COLOR:uint = 0xff9900;
-		protected static const DISABLED_TEXT_COLOR:uint = 0x8a8a8a;
-		protected static const DARK_DISABLED_TEXT_COLOR:uint = 0x383430;
-		protected static const LIST_BACKGROUND_COLOR:uint = 0x383430;
+		protected static const LIGHT_TEXT_COLOR:uint = 0xffffff;
+		protected static const DARK_TEXT_COLOR:uint = 0x6b6a5f;
+		protected static const SELECTED_TEXT_COLOR:uint = 0xffffff;
+		protected static const DISABLED_TEXT_COLOR:uint = 0xffffff;
+		protected static const DARK_DISABLED_TEXT_COLOR:uint = 0x6b6a5f;
+		protected static const LIST_BACKGROUND_COLOR:uint = 0xf9f8ef;
 		protected static const TAB_BACKGROUND_COLOR:uint = 0x1a1816;
 		protected static const TAB_DISABLED_BACKGROUND_COLOR:uint = 0x292624;
 		protected static const GROUPED_LIST_HEADER_BACKGROUND_COLOR:uint = 0x2e2a26;
@@ -900,7 +900,8 @@ package feathers.themes
 			defaultIcon.alpha = 0;
 			renderer.defaultIcon = defaultIcon;
 
-			renderer.defaultLabelProperties.textFormat = this.largeLightTextFormat;
+			//renderer.defaultLabelProperties.textFormat = this.largeLightTextFormat; [Changed]
+            renderer.defaultLabelProperties.textFormat = this.largeDarkTextFormat;
 			renderer.defaultLabelProperties.embedFonts = true;
 			renderer.downLabelProperties.textFormat = this.largeDarkTextFormat;
 			renderer.downLabelProperties.embedFonts = true;
@@ -932,7 +933,8 @@ package feathers.themes
 			};
 			renderer.stateToSkinFunction = skinSelector.updateValue;
 
-			renderer.defaultLabelProperties.textFormat = this.largeLightTextFormat;
+            //renderer.defaultLabelProperties.textFormat = this.largeLightTextFormat; [Changed]
+            renderer.defaultLabelProperties.textFormat = this.largeDarkTextFormat;
 			renderer.defaultLabelProperties.embedFonts = true;
 			renderer.downLabelProperties.textFormat = this.largeDarkTextFormat;
 			renderer.downLabelProperties.embedFonts = true;

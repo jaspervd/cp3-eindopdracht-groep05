@@ -104,6 +104,7 @@ public class Overview extends Screen {
 
     private function layout():void {
 
+
         _layout.paddingTop = stage.stageHeight*0.1;
         _fullName.width = stage.stageWidth*0.5;
 
@@ -112,6 +113,7 @@ public class Overview extends Screen {
         _taskList.setSize(stage.stageWidth, (stage.stageHeight - _profileLayout.height));
         _taskList.y = _profileLayout.height;
         _taskList.dataProvider = new ListCollection(_tasks);
+        _taskList.itemRendererProperties.gap = 1;
         _taskList.addEventListener( Event.CHANGE, triggeredHandler );
 
 
