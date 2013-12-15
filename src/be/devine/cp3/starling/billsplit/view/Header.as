@@ -1,11 +1,13 @@
 package be.devine.cp3.starling.billsplit.view {
 
 
+import be.devine.cp3.starling.billsplit.factory.Skins;
 import be.devine.cp3.starling.billsplit.model.AppModel;
 
 import feathers.controls.Button;
 import feathers.controls.Header;
 import feathers.controls.Screen;
+import feathers.skins.SmartDisplayObjectStateValueSelector;
 import feathers.themes.MetalWorksMobileTheme;
 
 
@@ -15,6 +17,7 @@ import starling.display.Image;
 import starling.display.Quad;
 
 import starling.events.Event;
+import starling.textures.Texture;
 
 public class Header extends Screen{
     [Embed(source="/../assets/images/metalworks/menu_stripes_btn.png")]
@@ -22,6 +25,9 @@ public class Header extends Screen{
 
     [Embed(source="/../assets/images/metalworks/add_plus_btn.png")]
     public static const Multiple:Class;
+
+    [Embed(source="/../assets/images/metalworks/transparent_repeat.png")]
+    public static const Transparent:Class;
 
 
     public static var NAVIGATE_ADD:String = "NAVIGATE_ADD";
@@ -46,12 +52,17 @@ public class Header extends Screen{
         _header.title = "Splits";
         addChild( _header );
 
+        var newSkin:SmartDisplayObjectStateValueSelector = Skins.defaultSkin(Transparent);
+
         _menu = new Button();
         _menu.nameList.add("menu");
+        _menu.stateToSkinFunction = newSkin.updateValue;
         _menu.addEventListener(Event.TRIGGERED, menuClicked);
 
         _multiple = new Button();
         _multiple.nameList.add("multiple");
+        _multiple.stateToSkinFunction = newSkin.updateValue;
+        _menu.stateToSkinFunction = newSkin.updateValue;
         _multiple.addEventListener(Event.TRIGGERED, checkAction);
 
 
@@ -62,7 +73,6 @@ public class Header extends Screen{
 
 
     }
-
 
     override protected function initialize():void{
 
