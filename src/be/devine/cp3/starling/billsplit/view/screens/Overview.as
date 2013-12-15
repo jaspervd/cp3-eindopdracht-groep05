@@ -18,22 +18,14 @@ import feathers.controls.ImageLoader;
 import feathers.controls.LayoutGroup;
 import feathers.controls.List;
 import feathers.controls.Screen;
-import feathers.controls.renderers.IListItemRenderer;
 import feathers.data.ListCollection;
 import feathers.layout.VerticalLayout;
 import feathers.renderers.TaskListRenderer;
 
 import flash.filesystem.File;
 
-import starling.core.Starling;
-
-import starling.display.MovieClip;
-import starling.display.Sprite;
-
 import starling.events.Event;
 import starling.text.TextField;
-import starling.textures.Texture;
-import starling.textures.TextureAtlas;
 
 
 public class Overview extends Screen {
@@ -46,10 +38,10 @@ public class Overview extends Screen {
     private var _tasks:Array;
     private var _profile:ImageLoader;
     private var _fullName:TextField;
+    private var _infoText:TextField;
     private var _profileLayout:LayoutGroup;
     private var _taskList:List;
     private var _layout:VerticalLayout;
-
 
 
     [Embed(source="/../assets/images/circle_mask.png")]
@@ -64,10 +56,6 @@ public class Overview extends Screen {
         _tasks = _taskModel.getAllTasks();
 
 
-
-
-
-
         _profileLayout = new LayoutGroup();
         addChild(_profileLayout);
 
@@ -77,10 +65,6 @@ public class Overview extends Screen {
         _taskList.itemRendererProperties.labelField = "title";
         _taskList.itemRendererProperties.accessoryField = "accessory";
         addChild(_taskList);
-
-
-
-
 
 
         _layout = new VerticalLayout();
@@ -96,21 +80,27 @@ public class Overview extends Screen {
         mask();
         _profileLayout.addChild(_profile);
 
+        var totalPrice:Number = 0;
+        for each(var task:TaskVO in _tasks) {
+            totalPrice += task.price;
+        }
 
-        _fullName = new TextField(100, 30, _moderator.name, "SourceSansProSemiBold", 28, 0xFFFFFF);
+        _fullName = new TextField(100, 30, _moderator.name, "SourceSansProSemiBold", 26, 0xFFFFFF);
+        _infoText = new TextField(400, 30, "You have created " + _tasks.length + " bills with a total of " + totalPrice + " euros", "SourceSansPro", 14, 0xFFFFFF);
         _profileLayout.addChild(_fullName);
+        _profileLayout.addChild(_infoText);
 
         this.backButtonHandler = onBack;
 
     }
 
-    private function onBack():void{
+    private function onBack():void {
         trace("on back");
     }
 
     private function imageCompleteHandler(event:Event):void {
 
-        _profile.setSize(stage.stageWidth*0.3,stage.stageWidth*0.3);
+        _profile.setSize(stage.stageWidth * 0.3, stage.stageWidth * 0.3);
 
     }
 
@@ -124,29 +114,28 @@ public class Overview extends Screen {
     private function layout():void {
 
 
-        _layout.paddingTop = stage.stageHeight*0.1;
-        _fullName.width = stage.stageWidth*0.5;
+        _layout.paddingTop = stage.stageHeight * 0.15;
+        _fullName.width = stage.stageWidth * 0.5;
 
-        _profileLayout.setSize(stage.stageWidth, stage.stageHeight/2);
+        _profileLayout.setSize(stage.stageWidth, stage.stageHeight / 2);
         _profile.x = (stage.stageWidth + _profile.width) / 2;
         _taskList.setSize(stage.stageWidth, (stage.stageHeight - _profileLayout.height));
         _taskList.y = _profileLayout.height;
         _taskList.dataProvider = new ListCollection(_tasks);
         _taskList.itemRendererProperties.gap = 1;
-        _taskList.addEventListener( Event.CHANGE, triggeredHandler );
+        _taskList.addEventListener(Event.CHANGE, triggeredHandler);
 
 
     }
 
-    private function mask():void{
+    private function mask():void {
 
-        
 
     }
 
     private function triggeredHandler(event:Event):void {
 
-        if(_taskList.selectedItem){
+        if (_taskList.selectedItem) {
             var listItem:TaskVO = TaskVO(_taskList.selectedItem);
 
             _taskModel.currentTask = listItem;
