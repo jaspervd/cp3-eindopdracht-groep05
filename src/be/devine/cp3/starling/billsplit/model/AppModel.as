@@ -1,6 +1,5 @@
 package be.devine.cp3.starling.billsplit.model {
 
-import be.devine.cp3.starling.billsplit.factory.IouVOFactory;
 import be.devine.cp3.starling.billsplit.service.IouService;
 import be.devine.cp3.starling.billsplit.service.PersonService;
 import be.devine.cp3.starling.billsplit.service.TaskService;
@@ -22,7 +21,7 @@ public class AppModel extends EventDispatcher {
     private var _tasks:Array;
     private var _ious:Array;
     private var _currentScreen:String = "overview";
-    public var _oldScreenName:String = "";
+    public var _oldScreenName:String = "overview";
 
     private var _completed:Boolean;
 

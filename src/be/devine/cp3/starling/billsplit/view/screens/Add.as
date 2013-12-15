@@ -100,7 +100,7 @@ public class Add extends Screen {
         var moderator:PersonVO = _personModel.getModerator();
 
         if(_inputPrice.text.length == 0 && _inputTitle.text.length == 0){
-            var alert:Alert = Alert.show("Please fill in all Textboxes",  moderator.name , new ListCollection([
+            var alert:Alert = Alert.show("Please fill in all textboxes",  moderator.name , new ListCollection([
                 { label: "OK" }
             ]));
             error = true;

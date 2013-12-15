@@ -1,4 +1,4 @@
-package be.devine.cp3.starling.billsplit.mask
+package starling.extensions.pixelmask
 {
 	import flash.display3D.Context3DBlendFactor;
 	import flash.geom.Matrix;

@@ -21,7 +21,7 @@ import starling.textures.Texture;
 
 public class Header extends Screen{
     [Embed(source="/../assets/images/metalworks/menu_stripes_btn.png")]
-    public static const MenuBtn:Class;
+    public static const OverviewBtn:Class;
 
     [Embed(source="/../assets/images/metalworks/add_plus_btn.png")]
     public static const Multiple:Class;
@@ -29,12 +29,7 @@ public class Header extends Screen{
     [Embed(source="/../assets/images/metalworks/transparent_repeat.png")]
     public static const Transparent:Class;
 
-
-    public static var NAVIGATE_ADD:String = "NAVIGATE_ADD";
-    public static var NAVIGATE_REMOVE:String = "NAVIGATE_ADD";
-
-
-    private var _menu:Button;
+    private var _overview:Button;
     private var _multiple:Button;
     private var _quad:Quad;
     private var _header:feathers.controls.Header;
@@ -54,24 +49,22 @@ public class Header extends Screen{
 
         var newSkin:SmartDisplayObjectStateValueSelector = Skins.defaultSkin(Transparent);
 
-        _menu = new Button();
-        _menu.nameList.add("menu");
-        _menu.stateToSkinFunction = newSkin.updateValue;
-        _menu.addEventListener(Event.TRIGGERED, menuClicked);
+        _overview = new Button(); // backbutton
+        _overview.nameList.add("overview");
+        _overview.stateToSkinFunction = newSkin.updateValue;
+        _overview.addEventListener(Event.TRIGGERED, overviewClicked);
 
         _multiple = new Button();
         _multiple.nameList.add("multiple");
         _multiple.stateToSkinFunction = newSkin.updateValue;
-        _menu.stateToSkinFunction = newSkin.updateValue;
         _multiple.addEventListener(Event.TRIGGERED, checkAction);
 
 
 
     }
 
-    private function menuClicked(event:Event):void {
-
-
+    private function overviewClicked(event:Event):void {
+        _appmodel.currentScreen = "overview";
     }
 
     override protected function initialize():void{
@@ -81,8 +74,8 @@ public class Header extends Screen{
         _quad.alpha = 0;
 
 
-        _menu.defaultIcon = Image.fromBitmap(new MenuBtn());
-        _menu.iconPosition = Button.ICON_POSITION_LEFT;
+        _overview.defaultIcon = Image.fromBitmap(new OverviewBtn());
+        _overview.iconPosition = Button.ICON_POSITION_LEFT;
 
 
 
@@ -92,7 +85,7 @@ public class Header extends Screen{
 
 
 
-        _header.leftItems = new <DisplayObject>[ _menu ];
+        _header.leftItems = new <DisplayObject>[ _overview ];
         _header.rightItems = new <DisplayObject>[ _multiple ];
         _header.width = stage.stageWidth;
         _header.height = stage.stageHeight*.1;
@@ -126,16 +119,12 @@ public class Header extends Screen{
 
                     trace("add");
                     _appmodel.currentScreen = "add";
-
-                    dispatchEvent(new Event(NAVIGATE_ADD));
             break;
 
 
-            case "remove feahters-header-item":
+            case "remove feathers-header-item":
 
                 trace("Remove");
-
-                dispatchEvent(new Event(NAVIGATE_REMOVE));
             break;
 
         }
