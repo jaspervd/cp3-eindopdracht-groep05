@@ -18,8 +18,11 @@ import feathers.controls.ImageLoader;
 import feathers.controls.LayoutGroup;
 import feathers.controls.List;
 import feathers.controls.Screen;
+import feathers.controls.renderers.IListItemRenderer;
 import feathers.data.ListCollection;
 import feathers.layout.VerticalLayout;
+import feathers.renderers.customListRenderer;
+
 import flash.filesystem.File;
 
 import starling.core.Starling;
@@ -69,6 +72,8 @@ public class Overview extends Screen {
         addChild(_profileLayout);
 
         _taskList = new List();
+        _taskList.itemRendererType = customListRenderer;
+        _taskList.itemRendererFactory = returnListItemRenderer;
         _taskList.itemRendererProperties.labelField = "title";
         addChild(_taskList);
 
@@ -96,6 +101,12 @@ public class Overview extends Screen {
 
         this.backButtonHandler = onBack;
 
+    }
+
+    private function returnListItemRenderer():IListItemRenderer {
+            var renderer:customListRenderer = new customListRenderer();
+            renderer.padding = 10;
+            return renderer;
     }
 
     private function onBack():void{
