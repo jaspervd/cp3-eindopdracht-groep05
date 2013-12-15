@@ -72,7 +72,7 @@ public class Add extends Screen {
 
         _inputPrice = new TextInput();
         _inputPrice.prompt = "Price";
-        _inputPrice.restrict = "0-9^.";
+        _inputPrice.restrict = "0-9.,";
         _addLayout.addChild(_inputPrice);
 
         _submitBtn = new Button();
@@ -111,6 +111,11 @@ public class Add extends Screen {
             error = true;
         }else if (_inputTitle.text.length == 0) {
             var alert:Alert = Alert.show("Please fill in a title", moderator.name, new ListCollection([
+                { label: "OK" }
+            ]));
+            error = true;
+        }else  if (isNaN(_inputPrice.text as Number)) {
+            var alert:Alert = Alert.show("Please fill in a valid price", moderator.name, new ListCollection([
                 { label: "OK" }
             ]));
             error = true;

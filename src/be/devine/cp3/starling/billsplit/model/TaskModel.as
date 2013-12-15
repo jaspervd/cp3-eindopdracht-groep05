@@ -3,8 +3,12 @@ package be.devine.cp3.starling.billsplit.model {
 import be.devine.cp3.starling.billsplit.factory.TaskVOFactory;
 import be.devine.cp3.starling.billsplit.vo.TaskVO;
 
+import starling.events.Event;
 
-public class TaskModel {
+import starling.events.EventDispatcher;
+
+
+public class TaskModel extends EventDispatcher {
 
     private static var instance:TaskModel;
 
@@ -67,6 +71,7 @@ public class TaskModel {
         value.timestamp = date.time;
         var task:TaskVO = TaskVOFactory.createTaskVOFromObject(value);
         _tasks.push(task);
+        dispatchEvent(new Event(Event.CHANGE));
         return _tasks;
     }
 
@@ -76,6 +81,7 @@ public class TaskModel {
                 _tasks.splice(_tasks.indexOf(task), 1);
             }
         }
+        dispatchEvent(new Event(Event.CHANGE));
         return _tasks;
     }
 
