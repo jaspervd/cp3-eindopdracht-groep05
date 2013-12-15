@@ -55,6 +55,7 @@ public class Overview extends Screen {
         _moderator = _personModel.getModerator();
         _tasks = _taskModel.getAllTasks();
 
+        _taskModel.addEventListener(Event.CHANGE, tasksChangedHandler);
 
         _profileLayout = new LayoutGroup();
         addChild(_profileLayout);
@@ -80,18 +81,23 @@ public class Overview extends Screen {
         mask();
         _profileLayout.addChild(_profile);
 
+        _fullName = new TextField(100, 30, _moderator.name, "SourceSansProSemiBold", 26, 0xFFFFFF);
+        _infoText = new TextField(400, 30, "You have created " + 0 + " bills with a total of " + 0 + " euros", "SourceSansPro", 14, 0xFFFFFF);
+        _profileLayout.addChild(_fullName);
+        _profileLayout.addChild(_infoText);
+
+        this.backButtonHandler = onBack;
+        tasksChangedHandler();
+    }
+
+    private function tasksChangedHandler(event:Event = null):void {
         var totalPrice:Number = 0;
         for each(var task:TaskVO in _tasks) {
             totalPrice += task.price;
         }
 
-        _fullName = new TextField(100, 30, _moderator.name, "SourceSansProSemiBold", 26, 0xFFFFFF);
-        _infoText = new TextField(400, 30, "You have created " + _tasks.length + " bills with a total of " + totalPrice + " euros", "SourceSansPro", 14, 0xFFFFFF);
-        _profileLayout.addChild(_fullName);
-        _profileLayout.addChild(_infoText);
-
-        this.backButtonHandler = onBack;
-
+        _infoText.text = "You have created " + _tasks.length + " bills with a total of " + totalPrice + " euros";
+        _taskList.validate();
     }
 
     private function onBack():void {
