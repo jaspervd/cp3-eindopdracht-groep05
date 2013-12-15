@@ -67,7 +67,8 @@ package feathers.themes
 	import feathers.display.TiledImage;
 	import feathers.layout.HorizontalLayout;
 	import feathers.layout.VerticalLayout;
-	import feathers.skins.SmartDisplayObjectStateValueSelector;
+import feathers.renderers.TaskListRenderer;
+import feathers.skins.SmartDisplayObjectStateValueSelector;
 	import feathers.skins.StandardIcons;
 	import feathers.system.DeviceCapabilities;
 	import feathers.textures.Scale3Textures;
@@ -102,7 +103,7 @@ package feathers.themes
 		protected static const SOURCE_SANS_PRO_SEMIBOLD:Class;
 
 		protected static const PRIMARY_BACKGROUND_COLOR:uint = 0x7ebeae;
-		protected static const LIGHT_TEXT_COLOR:uint = 0xffffff;
+		protected static const LIGHT_TEXT_COLOR:uint = 0x6b6a5f;
 		protected static const DARK_TEXT_COLOR:uint = 0x6b6a5f;
 		protected static const SELECTED_TEXT_COLOR:uint = 0xffffff;
 		protected static const DISABLED_TEXT_COLOR:uint = 0xffffff;
@@ -164,9 +165,11 @@ package feathers.themes
 			{
 				container = Starling.current.stage;
 			}
-			super(container)
+			super(container);
 			this._scaleToDPI = scaleToDPI;
 			this.initialize();
+
+            this.setInitializerForClass(TaskListRenderer, this.itemRendererInitializer);
 		}
 
 		protected var _originalDPI:int;

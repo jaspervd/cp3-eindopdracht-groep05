@@ -16,14 +16,13 @@ import starling.events.Event;
 
 
 public class Application extends Sprite {
-
-
     private var _appModel:AppModel;
     private var _personModel:PersonModel;
     private var _taskModel:TaskModel;
     private var header:Header;
     private var content:Content;
     private var _theme:MetalWorksMobileTheme;
+
 
     public function Application() {
         _theme = new MetalWorksMobileTheme();

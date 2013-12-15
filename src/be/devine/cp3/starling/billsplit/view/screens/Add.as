@@ -54,7 +54,7 @@ public class Add extends Screen {
         _addLayout.layout = layout;
 
         _group = new ToggleGroup();
-        _arrTypes = ["Other", "Restaurant", "Bar", "Shop"];
+        _arrTypes = ["Other", "Restaurant", "Bar", "Cinema"];
 
         for each(var type:String in _arrTypes) {
             var radio:Radio = new Radio();

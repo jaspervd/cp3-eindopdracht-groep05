@@ -21,7 +21,7 @@ import feathers.controls.Screen;
 import feathers.controls.renderers.IListItemRenderer;
 import feathers.data.ListCollection;
 import feathers.layout.VerticalLayout;
-import feathers.renderers.customListRenderer;
+import feathers.renderers.TaskListRenderer;
 
 import flash.filesystem.File;
 
@@ -71,10 +71,11 @@ public class Overview extends Screen {
         _profileLayout = new LayoutGroup();
         addChild(_profileLayout);
 
+
         _taskList = new List();
-        _taskList.itemRendererType = customListRenderer;
-        _taskList.itemRendererFactory = returnListItemRenderer;
+        _taskList.itemRendererType = TaskListRenderer;
         _taskList.itemRendererProperties.labelField = "title";
+        _taskList.itemRendererProperties.accessoryField = "accessory";
         addChild(_taskList);
 
 
@@ -104,7 +105,7 @@ public class Overview extends Screen {
     }
 
     private function returnListItemRenderer():IListItemRenderer {
-            var renderer:customListRenderer = new customListRenderer();
+            var renderer:TaskListRenderer = new TaskListRenderer();
             renderer.padding = 10;
             return renderer;
     }
