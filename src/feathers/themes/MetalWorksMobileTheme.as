@@ -104,7 +104,7 @@ import feathers.skins.SmartDisplayObjectStateValueSelector;
 
 		protected static const PRIMARY_BACKGROUND_COLOR:uint = 0x7ebeae;
 		protected static const LIGHT_TEXT_COLOR:uint = 0x6b6a5f;
-		protected static const DARK_TEXT_COLOR:uint = 0x6b6a5f;
+		protected static const DARK_TEXT_COLOR:uint = 0xffffff;
 		protected static const SELECTED_TEXT_COLOR:uint = 0xffffff;
 		protected static const DISABLED_TEXT_COLOR:uint = 0xffffff;
 		protected static const DARK_DISABLED_TEXT_COLOR:uint = 0x6b6a5f;
@@ -328,7 +328,7 @@ import feathers.skins.SmartDisplayObjectStateValueSelector;
 			const regularFontNames:String = "SourceSansPro";
 			const semiboldFontNames:String = "SourceSansProSemibold";
 
-			this.headerTextFormat = new TextFormat(semiboldFontNames, Math.round(36 * this.scale), LIGHT_TEXT_COLOR, true);
+			this.headerTextFormat = new TextFormat(semiboldFontNames, Math.round(36 * this.scale), DARK_TEXT_COLOR, true);
 
 			this.darkUITextFormat = new TextFormat(semiboldFontNames, 24 * this.scale, DARK_TEXT_COLOR, true);
 			this.lightUITextFormat = new TextFormat(semiboldFontNames, 24 * this.scale, LIGHT_TEXT_COLOR, true);

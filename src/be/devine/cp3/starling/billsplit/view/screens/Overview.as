@@ -104,12 +104,6 @@ public class Overview extends Screen {
 
     }
 
-    private function returnListItemRenderer():IListItemRenderer {
-            var renderer:TaskListRenderer = new TaskListRenderer();
-            renderer.padding = 10;
-            return renderer;
-    }
-
     private function onBack():void{
         trace("on back");
     }
@@ -157,7 +151,7 @@ public class Overview extends Screen {
 
             _taskModel.currentTask = listItem;
             _appmodel.currentScreen = "detail";
-
+            _taskList.selectedIndex = -1;
         }
 
     }

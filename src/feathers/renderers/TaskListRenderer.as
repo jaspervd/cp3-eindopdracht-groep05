@@ -67,11 +67,12 @@ public class TaskListRenderer extends DefaultListItemRenderer {
 
         this.goToButton = new Button();
         this.goToButton.defaultIcon = Image.fromBitmap(new ListAccessory());
-        this.goToButton.addEventListener(Event.TRIGGERED, goToButton_triggeredHandler);
+        this.goToButton.setSize(10, 10);
+        this.goToButton.addEventListener(Event.TRIGGERED, goToButtonHandler);
         this.replaceAccessory(goToButton);
     }
 
-    private function goToButton_triggeredHandler(event:Event):void {
+    private function goToButtonHandler(event:Event):void {
         dispatchEvent(new Event(Event.TRIGGERED));
     }
 }
