@@ -42,7 +42,7 @@ public class Content extends Screen {
         _navigator.addScreen("detail",new ScreenNavigatorItem( new Detail() ));
         _navigator.addScreen("add",new ScreenNavigatorItem( new Add() ));
 
-        var transitionManager:ScreenSlidingStackTransitionManager = new ScreenSlidingStackTransitionManager(this._navigator);
+        var transitionManager:ScreenSlidingStackTransitionManager = new ScreenSlidingStackTransitionManager(_navigator);
         transitionManager.ease = Transitions.EASE_IN_OUT;
         transitionManager.duration = .5;
 
