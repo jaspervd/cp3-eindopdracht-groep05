@@ -22,8 +22,15 @@ import feathers.data.ListCollection;
 import feathers.layout.VerticalLayout;
 import flash.filesystem.File;
 
+import starling.core.Starling;
+
+import starling.display.MovieClip;
+import starling.display.Sprite;
+
 import starling.events.Event;
 import starling.text.TextField;
+import starling.textures.Texture;
+import starling.textures.TextureAtlas;
 
 
 public class Overview extends Screen {
@@ -39,6 +46,11 @@ public class Overview extends Screen {
     private var _profileLayout:LayoutGroup;
     private var _taskList:List;
     private var _layout:VerticalLayout;
+
+
+
+    [Embed(source="/../assets/images/circle_mask.png")]
+    private var CircleMask:Class;
 
     public function Overview() {
 
@@ -75,6 +87,7 @@ public class Overview extends Screen {
         _profile = new ImageLoader();
         _profile.source = image.url;
         _profile.addEventListener(Event.COMPLETE, imageCompleteHandler);
+        mask();
         _profileLayout.addChild(_profile);
 
 
@@ -116,6 +129,12 @@ public class Overview extends Screen {
         _taskList.itemRendererProperties.gap = 1;
         _taskList.addEventListener( Event.CHANGE, triggeredHandler );
 
+
+    }
+
+    private function mask():void{
+
+        
 
     }
 

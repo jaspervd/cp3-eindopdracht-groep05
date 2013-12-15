@@ -98,18 +98,25 @@ public class Add extends Screen {
     private function buttonHandler(event:Event):void {
         var error:Boolean = false;
         var moderator:PersonVO = _personModel.getModerator();
-        if (_inputTitle.text.length == 0) {
-            var alert:Alert = Alert.show("Please fill in a title", "Error", new ListCollection([
+
+        if(_inputPrice.text.length == 0 && _inputTitle.text.length == 0){
+            var alert:Alert = Alert.show("Please fill in all Textboxes",  moderator.name , new ListCollection([
+                { label: "OK" }
+            ]));
+            error = true;
+        }else  if (_inputPrice.text.length == 0) {
+            var alert:Alert = Alert.show("Please fill in a price", moderator.name, new ListCollection([
+                { label: "OK" }
+            ]));
+            error = true;
+        }else if (_inputTitle.text.length == 0) {
+            var alert:Alert = Alert.show("Please fill in a title", moderator.name, new ListCollection([
                 { label: "OK" }
             ]));
             error = true;
         }
-        if (_inputPrice.text.length == 0) {
-            var alert:Alert = Alert.show("Please fill in a price", "Error", new ListCollection([
-                { label: "OK" }
-            ]));
-            error = true;
-        }
+
+
         if (!error) {
             var obj:Object = {};
             var radio:Radio = _group.selectedItem as Radio;
