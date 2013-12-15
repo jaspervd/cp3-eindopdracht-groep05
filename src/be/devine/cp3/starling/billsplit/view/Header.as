@@ -69,7 +69,7 @@ public class Header extends Screen{
     }
 
     override protected function initialize():void{
-        
+
 
         _quad = new Quad(100,100);
         _quad.alpha = 0;

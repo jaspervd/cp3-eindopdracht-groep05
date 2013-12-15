@@ -82,7 +82,7 @@ public class Overview extends Screen {
         _profileLayout.addChild(_profile);
 
         _fullName = new TextField(100, 30, _moderator.name, "SourceSansProSemiBold", 26, 0xFFFFFF);
-        _infoText = new TextField(400, 30, "You have created " + 0 + " bills with a total of " + 0 + " euros", "SourceSansPro", 14, 0xFFFFFF);
+        _infoText = new TextField(400, 30, "You have created " + 0 + " bills with a total of " + 0 + " euros", "SourceSansPro", 18, 0xFFFFFF);
         _profileLayout.addChild(_fullName);
         _profileLayout.addChild(_infoText);
 
