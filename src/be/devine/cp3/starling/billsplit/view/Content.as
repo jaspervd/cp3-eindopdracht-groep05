@@ -52,6 +52,7 @@ public class Content extends Screen {
     }
 
     private function screenHandler(event:Event):void {
+
         navigator.showScreen(_appmodel.currentScreen);
     }
 }

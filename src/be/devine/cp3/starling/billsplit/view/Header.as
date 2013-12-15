@@ -3,25 +3,24 @@ package be.devine.cp3.starling.billsplit.view {
 
 import be.devine.cp3.starling.billsplit.factory.Skins;
 import be.devine.cp3.starling.billsplit.model.AppModel;
-
 import feathers.controls.Button;
 import feathers.controls.Header;
 import feathers.controls.Screen;
 import feathers.skins.SmartDisplayObjectStateValueSelector;
 import feathers.themes.MetalWorksMobileTheme;
-
-
-
 import starling.display.DisplayObject;
 import starling.display.Image;
 import starling.display.Quad;
-
 import starling.events.Event;
-import starling.textures.Texture;
+
+
 
 public class Header extends Screen{
     [Embed(source="/../assets/images/metalworks/menu_stripes_btn.png")]
     public static const OverviewBtn:Class;
+
+    [Embed(source="/../assets/images/back_btn.png")]
+    public static const BackBtn:Class;
 
     [Embed(source="/../assets/images/metalworks/add_plus_btn.png")]
     public static const Multiple:Class;
@@ -36,11 +35,13 @@ public class Header extends Screen{
     private var _theme:MetalWorksMobileTheme;
     private var _action:String;
     private var _appmodel:AppModel;
+    private var _back:Boolean;
 
     public function Header() {
 
-        _appmodel = AppModel.getInstance();
 
+
+        _appmodel = AppModel.getInstance();
         _theme = new MetalWorksMobileTheme();
 
         _header = new feathers.controls.Header();
@@ -68,7 +69,7 @@ public class Header extends Screen{
     }
 
     override protected function initialize():void{
-
+        
 
         _quad = new Quad(100,100);
         _quad.alpha = 0;
@@ -144,6 +145,35 @@ public class Header extends Screen{
 
            _multiple.name = _action;
        }
+    }
+
+    public function get back():Boolean {
+        return _back;
+    }
+
+    public function set back(value:Boolean):void {
+        _back = value;
+
+
+        if(_back){
+            _overview.defaultIcon = Image.fromBitmap(new BackBtn());
+        }else{
+            _overview.defaultIcon = Image.fromBitmap(new OverviewBtn());
+        }
+
+
+    }
+
+    private function checkBack(event:Event):void {
+
+        back = false;
+
+        if(_appmodel.currentScreen !="overview"){
+
+            back = true;
+
+        }
+
     }
 }
 }
