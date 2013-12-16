@@ -10,6 +10,7 @@ import be.devine.cp3.starling.billsplit.factory.TaskVOFactory;
 import be.devine.cp3.starling.billsplit.model.AppModel;
 import be.devine.cp3.starling.billsplit.model.PersonModel;
 import be.devine.cp3.starling.billsplit.model.TaskModel;
+import be.devine.cp3.starling.billsplit.service.PersonService;
 import be.devine.cp3.starling.billsplit.service.TaskService;
 import be.devine.cp3.starling.billsplit.vo.PersonVO;
 import be.devine.cp3.starling.billsplit.vo.TaskVO;
@@ -39,7 +40,7 @@ public class Add extends Screen {
     private var _appModel:AppModel;
     private var _taskModel:TaskModel;
     private var _personModel:PersonModel;
-    private var _typesList:List = new List();
+    private var _typesList:List;
 
     public function Add() {
 
@@ -141,6 +142,15 @@ public class Add extends Screen {
             TaskService.write(_taskModel.tasks);
 
             _taskModel.currentTask = _taskModel.tasks[_taskModel.tasks.length - 1];
+
+            var modObject:Object = moderator;
+            modObject.moderator = false;
+            modObject.task_id = _taskModel.currentTask.id;
+            _personModel.add(modObject);
+            trace(modObject);
+            trace(_personModel.persons);
+            PersonService.write(_personModel.persons);
+
             _appModel.currentScreen = "detail";
         }
     }

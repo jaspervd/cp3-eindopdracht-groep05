@@ -27,7 +27,7 @@ public class PersonService extends EventDispatcher {
                 {
                     "id": 1,
                     "name": "Justin Timberlake",
-                    "image": "url",
+                    "image": "images/person1.jpg",
                     "task_id": 0,
                     "moderator": true
                 }

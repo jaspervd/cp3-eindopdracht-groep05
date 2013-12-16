@@ -96,7 +96,6 @@ public class AppModel extends EventDispatcher {
 
     public function addIou(value:Object):Array {
         var lastIou:IouVO = _ious[_ious.length - 1];
-        value.id = lastIou.id + 1;
         if(_ious.length == 0) {
             value.id = 1;
         } else {

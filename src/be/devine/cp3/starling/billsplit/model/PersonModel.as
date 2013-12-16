@@ -3,6 +3,8 @@ package be.devine.cp3.starling.billsplit.model {
 import be.devine.cp3.starling.billsplit.factory.PersonVOFactory;
 import be.devine.cp3.starling.billsplit.vo.PersonVO;
 
+import starling.events.Event;
+
 import starling.events.EventDispatcher;
 
 public class PersonModel extends EventDispatcher {
@@ -51,16 +53,17 @@ public class PersonModel extends EventDispatcher {
     }
 
     public function add(value:Object):Array {
-        var personTask:PersonVO = _persons[_persons.length - 1];
-        value.id = personTask.id + 1;
+        var lastPerson:PersonVO = _persons[_persons.length - 1];
         if(_persons.length == 0) {
             value.id = 1;
         } else {
-            value.id = personTask.id + 1;
+            value.id = lastPerson.id + 1;
         }
+        trace("[ADD PERSON]", value.id);
 
-        var person:PersonVO = PersonVOFactory.createPersonVOFromObject(value);
-        _persons.push(person);
+        var personVO:PersonVO = PersonVOFactory.createPersonVOFromObject(value);
+        _persons.push(personVO);
+        dispatchEvent(new Event(Event.CHANGE));
         return _persons;
     }
 
