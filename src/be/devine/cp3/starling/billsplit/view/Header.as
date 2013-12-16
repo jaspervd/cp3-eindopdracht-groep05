@@ -1,12 +1,10 @@
 package be.devine.cp3.starling.billsplit.view {
 
 
-import be.devine.cp3.starling.billsplit.factory.Skins;
 import be.devine.cp3.starling.billsplit.model.AppModel;
 import feathers.controls.Button;
 import feathers.controls.Header;
 import feathers.controls.Screen;
-import feathers.skins.SmartDisplayObjectStateValueSelector;
 import feathers.themes.MetalWorksMobileTheme;
 import starling.display.DisplayObject;
 import starling.display.Image;
@@ -16,6 +14,8 @@ import starling.events.Event;
 
 
 public class Header extends Screen{
+
+
     [Embed(source="/../assets/images/metalworks/menu_stripes_btn.png")]
     public static const OverviewBtn:Class;
 

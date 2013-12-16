@@ -8,6 +8,7 @@
 package be.devine.cp3.starling.billsplit.view.screens {
 
 
+import be.devine.cp3.starling.billsplit.format.DateFormat;
 import be.devine.cp3.starling.billsplit.model.AppModel;
 import be.devine.cp3.starling.billsplit.model.PersonModel;
 import be.devine.cp3.starling.billsplit.model.TaskModel;
@@ -41,6 +42,7 @@ public class Detail extends Screen {
     private var _total:Button;
     private var _people:Button;
     private var _addPerson:Button;
+    private var _dateTime:TextField;
 
 
 
@@ -76,13 +78,17 @@ public class Detail extends Screen {
         _taskLayout.addChild(_taskTitle);
 
 
+        _dateTime = new TextField(100, 30, "", "SourceSansProSemiBold", 18, 0xFFFFFF);
+        _taskLayout.addChild(_dateTime);
+
+
         _detailGroup = new LayoutGroup();
         _taskLayout.addChild(_detailGroup);
 
 
         var horlayout:HorizontalLayout = new HorizontalLayout();
-        layout.horizontalAlign = VerticalLayout.HORIZONTAL_ALIGN_LEFT;
-        layout.gap = 20;
+        horlayout.horizontalAlign = VerticalLayout.HORIZONTAL_ALIGN_LEFT;
+        horlayout.gap = 20;
         _detailGroup.layout = horlayout;
 
 
@@ -118,12 +124,14 @@ public class Detail extends Screen {
 
             trace('Current Task:', _currentTask.title);
             _taskTitle.text = _currentTask.title;
+            _dateTime.text = DateFormat.timestampToUFDate(_currentTask.timestamp as Number);
             _total.label = String(_currentTask.price);
             _addPerson.label = String(_personList.selectedItems.length);
             _type.defaultIcon = TaskService.icon(_currentTask);
             trace(_personModel.getPersonsByTaskId(_currentTask.id));
             trace(_currentTask.id);
             _personList.dataProvider = new ListCollection(_personModel.getPersonsByTaskId(_currentTask.id));
+
 
         }
     }
@@ -135,14 +143,10 @@ public class Detail extends Screen {
 
 
     private function layout():void {
+
         _taskTitle.width = stage.stageWidth;
-
-
-        _type.defaultIcon = TaskService.icon(_taskModel.currentTask);
-        _total.label = String(_currentTask.price);
-        _addPerson.label = String(_personList.selectedItems.length);
-
-        _taskLayout.setSize(stage.stageWidth, stage.stageHeight * 0.3);
+        _dateTime.width = stage.stageWidth;
+        _taskLayout.setSize(stage.stageWidth, stage.stageHeight * 0.5);
         _personList.setSize(stage.stageWidth, (stage.stageHeight - _taskLayout.height));
         _personList.y = _taskLayout.height;
     }
