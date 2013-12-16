@@ -10,7 +10,7 @@ public class DateFormat {
     public function DateFormat() {
     }
 
-    public static function timestampToUFDate(timestamp:int):String { // UF = User Friendly
+    public static function timestampToUFDate(timestamp:Number):String { // UF = User Friendly
         var today:Date = new Date();
         var date:Date = new Date(timestamp);
         var timeAgo:String = "";
@@ -23,20 +23,21 @@ public class DateFormat {
             case date.date - 1:
                 timeAgo = "yesterday";
                 break;
+            default:
+                timeAgo = (today.date - date.date) + " days ago";
+                break;
         }
 
-        trace(today.date, date.date);
-
-        if(date.getHours() > 11) {
-            date.setHours(date.getHours() - 12);
+        if(date.hours > 11) {
+            date.setHours(date.hours - 12);
             timeString = "pm";
         }
 
-        if(date.getHours() == 0) {
+        if(date.hours == 0) {
             date.setHours(12);
         }
 
-        return timeAgo + " @ " + date.getHours() + timeString; // today @ 2pm
+        return timeAgo + " @ " + date.hours + timeString; // today @ 2pm
     }
 }
 }

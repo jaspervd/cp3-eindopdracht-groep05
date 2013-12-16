@@ -12,7 +12,7 @@ public class TaskVO {
     public var title:String;
     public var type:String;
     public var price:Number;
-    public var timestamp:uint;
+    public var timestamp:Number;
     public var paid:Boolean = false;
 }
 }
