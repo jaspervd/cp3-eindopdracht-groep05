@@ -39,7 +39,7 @@ public class Add extends Screen {
     private var _appModel:AppModel;
     private var _taskModel:TaskModel;
     private var _personModel:PersonModel;
-    private var _group:ToggleGroup;
+    private var _typesList:List = new List();
 
     public function Add() {
 
@@ -60,17 +60,18 @@ public class Add extends Screen {
         var radioLayout:HorizontalLayout = new HorizontalLayout();
         radioLayout.gap = 30;
 
-        var typesList:List = new List();
-        typesList.layout = radioLayout;
-        typesList.itemRendererType = TypesListRenderer;
-        _addLayout.addChild(typesList);
+        _typesList = new List();
+        _typesList.layout = radioLayout;
+        _typesList.itemRendererType = TypesListRenderer;
+        _addLayout.addChild(_typesList);
 
-        typesList.dataProvider = new ListCollection([
+        _typesList.dataProvider = new ListCollection([
             {"type": "other"},
             {"type": "restaurant"},
             {"type": "bar"},
             {"type": "cinema"}
         ]);
+        _typesList.selectedIndex = 0;
 
         _inputTitle = new TextInput();
         _inputTitle.prompt = "Title";
@@ -132,10 +133,9 @@ public class Add extends Screen {
 
         if (!error) {
             var obj:Object = {};
-            var radio:Radio = _group.selectedItem as Radio;
             obj.title = _inputTitle.text;
             obj.price = _inputPrice.text;
-            obj.type = String(radio.label).toLowerCase();
+            obj.type = _typesList.selectedItem.type;
 
             _taskModel.add(obj);
             TaskService.write(_taskModel.tasks);
