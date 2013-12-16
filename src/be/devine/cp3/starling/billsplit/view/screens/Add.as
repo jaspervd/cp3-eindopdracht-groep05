@@ -19,9 +19,11 @@ import feathers.controls.Button;
 import feathers.controls.LayoutGroup;
 import feathers.controls.Radio;
 import feathers.controls.Screen;
+import feathers.controls.ScrollContainer;
 import feathers.controls.TextInput;
 import feathers.core.ToggleGroup;
 import feathers.data.ListCollection;
+import feathers.layout.HorizontalLayout;
 import feathers.layout.VerticalLayout;
 
 import starling.events.Event;
@@ -53,17 +55,24 @@ public class Add extends Screen {
         layout.paddingTop = 100;
         _addLayout.layout = layout;
 
+        var radioLayout:HorizontalLayout = new HorizontalLayout();
+        radioLayout.gap = 30;
+        var radioContainer:ScrollContainer = new ScrollContainer();
+        radioContainer.layout = radioLayout;
+        _addLayout.addChild(radioContainer);
         _group = new ToggleGroup();
-        _arrTypes = ["Other", "Restaurant", "Bar", "Cinema"];
+        _arrTypes = ["other", "restaurant", "bar", "cinema"];
 
         for each(var type:String in _arrTypes) {
             var radio:Radio = new Radio();
-            radio.label = type;
+            var taskVO:TaskVO = TaskVOFactory.createTaskVOFromObject({"type":type});
+            radio.defaultIcon = TaskService.icon(taskVO);
+            radio.iconPosition = "left";
             radio.toggleGroup = _group;
             if (type == "Other") {
                 _group.selectedItem = radio;
             }
-            _addLayout.addChild(radio);
+            radioContainer.addChild(radio);
         }
 
         _inputTitle = new TextInput();
