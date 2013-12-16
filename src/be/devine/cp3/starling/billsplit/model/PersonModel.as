@@ -59,7 +59,6 @@ public class PersonModel extends EventDispatcher {
         } else {
             value.id = lastPerson.id + 1;
         }
-        trace("[ADD PERSON]", value.id);
 
         var personVO:PersonVO = PersonVOFactory.createPersonVOFromObject(value);
         _persons.push(personVO);

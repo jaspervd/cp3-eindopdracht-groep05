@@ -5,11 +5,11 @@
  * Time: 15:11
  * To change this template use File | Settings | File Templates.
  */
-package be.devine.cp3.starling.billsplit.calc {
+package be.devine.cp3.starling.billsplit.format {
 import be.devine.cp3.starling.billsplit.vo.IouVO;
 
-public class Prices {
-    public function Prices() {
+public class PriceFormat {
+    public function PriceFormat() {
     }
 
     public static function priceToPercentage(price:Number, totalPrice:Number):Number {

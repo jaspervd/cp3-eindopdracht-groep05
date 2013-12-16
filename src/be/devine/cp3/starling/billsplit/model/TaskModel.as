@@ -68,7 +68,7 @@ public class TaskModel extends EventDispatcher {
         } else {
             value.id = lastTask.id + 1;
         }
-        value.timestamp = date.time;
+        value.timestamp = date.getTime();
         var task:TaskVO = TaskVOFactory.createTaskVOFromObject(value);
         _tasks.push(task);
         dispatchEvent(new Event(Event.CHANGE));
