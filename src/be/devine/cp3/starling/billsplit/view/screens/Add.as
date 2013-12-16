@@ -17,6 +17,8 @@ import be.devine.cp3.starling.billsplit.vo.TaskVO;
 import feathers.controls.Alert;
 import feathers.controls.Button;
 import feathers.controls.LayoutGroup;
+import feathers.controls.List;
+import feathers.controls.PickerList;
 import feathers.controls.Radio;
 import feathers.controls.Screen;
 import feathers.controls.ScrollContainer;
@@ -25,6 +27,7 @@ import feathers.core.ToggleGroup;
 import feathers.data.ListCollection;
 import feathers.layout.HorizontalLayout;
 import feathers.layout.VerticalLayout;
+import feathers.renderers.TypesListRenderer;
 
 import starling.events.Event;
 
@@ -37,7 +40,6 @@ public class Add extends Screen {
     private var _taskModel:TaskModel;
     private var _personModel:PersonModel;
     private var _group:ToggleGroup;
-    private var _arrTypes:Array;
 
     public function Add() {
 
@@ -57,23 +59,18 @@ public class Add extends Screen {
 
         var radioLayout:HorizontalLayout = new HorizontalLayout();
         radioLayout.gap = 30;
-        var radioContainer:ScrollContainer = new ScrollContainer();
-        radioContainer.layout = radioLayout;
-        _addLayout.addChild(radioContainer);
-        _group = new ToggleGroup();
-        _arrTypes = ["other", "restaurant", "bar", "cinema"];
 
-        for each(var type:String in _arrTypes) {
-            var radio:Radio = new Radio();
-            var taskVO:TaskVO = TaskVOFactory.createTaskVOFromObject({"type":type});
-            radio.defaultIcon = TaskService.icon(taskVO);
-            radio.iconPosition = "left";
-            radio.toggleGroup = _group;
-            if (type == "Other") {
-                _group.selectedItem = radio;
-            }
-            radioContainer.addChild(radio);
-        }
+        var typesList:List = new List();
+        typesList.layout = radioLayout;
+        typesList.itemRendererType = TypesListRenderer;
+        _addLayout.addChild(typesList);
+
+        typesList.dataProvider = new ListCollection([
+            {"type": "other"},
+            {"type": "restaurant"},
+            {"type": "bar"},
+            {"type": "cinema"}
+        ]);
 
         _inputTitle = new TextInput();
         _inputTitle.prompt = "Title";
@@ -91,14 +88,14 @@ public class Add extends Screen {
         _submitBtn.addEventListener(Event.TRIGGERED, buttonHandler);
     }
 
-    override protected function initialize():void{
+    override protected function initialize():void {
 
         trace('[HEADER]');
 
         draw();
     }
 
-    override protected function draw():void{
+    override protected function draw():void {
 
         _addLayout.width = stage.stageWidth;
 
@@ -110,22 +107,22 @@ public class Add extends Screen {
 
         var alert:Alert;
 
-        if(_inputPrice.text.length == 0 && _inputTitle.text.length == 0){
-             alert = Alert.show("Please fill in all textboxes",  moderator.name , new ListCollection([
+        if (_inputPrice.text.length == 0 && _inputTitle.text.length == 0) {
+            alert = Alert.show("Please fill in all textboxes", moderator.name, new ListCollection([
                 { label: "OK" }
             ]));
             error = true;
-        }else  if (_inputPrice.text.length == 0) {
+        } else if (_inputPrice.text.length == 0) {
             alert = Alert.show("Please fill in a price", moderator.name, new ListCollection([
                 { label: "OK" }
             ]));
             error = true;
-        }else if (_inputTitle.text.length == 0) {
+        } else if (_inputTitle.text.length == 0) {
             alert = Alert.show("Please fill in a title", moderator.name, new ListCollection([
                 { label: "OK" }
             ]));
             error = true;
-        }else  if (isNaN(_inputPrice.text as Number)) {
+        } else if (isNaN(_inputPrice.text as Number)) {
             alert = Alert.show("Please fill in a valid price", moderator.name, new ListCollection([
                 { label: "OK" }
             ]));

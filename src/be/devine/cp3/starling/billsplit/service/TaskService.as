@@ -71,7 +71,7 @@ public class TaskService extends EventDispatcher {
 
         switch(task.type) {
             case 'restaurant':
-                img= Image.fromBitmap(new ResIcon());
+                img = Image.fromBitmap(new ResIcon());
                 break;
             case 'cinema':
                 img = Image.fromBitmap(new CinemaIcon());
@@ -84,7 +84,7 @@ public class TaskService extends EventDispatcher {
                 break;
         }
 
-        return img
+        return img;
 
     }
 }
