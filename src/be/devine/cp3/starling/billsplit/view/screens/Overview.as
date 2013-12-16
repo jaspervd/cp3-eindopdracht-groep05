@@ -95,7 +95,7 @@ public class Overview extends Screen {
         }
 
         _infoText.text = "You have created " + _tasks.length + " bills with a total of " + totalPrice + " euros";
-        _taskList.validate();
+        _taskList.dataProvider = new ListCollection(_tasks);
     }
 
     private function imageCompleteHandler(event:Event):void {

@@ -133,23 +133,26 @@ public class Add extends Screen {
 
 
         if (!error) {
-            var obj:Object = {};
-            obj.title = _inputTitle.text;
-            obj.price = _inputPrice.text;
-            obj.type = _typesList.selectedItem.type;
+            var taskObj:Object = {};
+            taskObj.title = _inputTitle.text;
+            taskObj.price = _inputPrice.text;
+            taskObj.type = _typesList.selectedItem.type;
 
-            _taskModel.add(obj);
+            _taskModel.add(taskObj);
             TaskService.write(_taskModel.tasks);
 
             _taskModel.currentTask = _taskModel.tasks[_taskModel.tasks.length - 1];
 
-            var modObject:Object = moderator;
-            modObject.moderator = false;
-            modObject.task_id = _taskModel.currentTask.id;
-            _personModel.add(modObject);
-            trace(modObject);
+            var personObj:Object = {};
+            personObj.name = moderator.name;
+            personObj.image = moderator.image;
+            personObj.task_id = _taskModel.currentTask.id;
+            _personModel.add(personObj);
+            trace(personObj);
             trace(_personModel.persons);
             PersonService.write(_personModel.persons);
+
+            _inputTitle.text = _inputPrice.text = "";
 
             _appModel.currentScreen = "detail";
         }
