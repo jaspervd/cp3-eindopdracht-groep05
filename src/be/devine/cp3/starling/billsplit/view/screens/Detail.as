@@ -6,34 +6,46 @@
  * To change this template use File | Settings | File Templates.
  */
 package be.devine.cp3.starling.billsplit.view.screens {
-import be.devine.cp3.starling.billsplit.Application;
+
+
 import be.devine.cp3.starling.billsplit.model.AppModel;
 import be.devine.cp3.starling.billsplit.model.PersonModel;
 import be.devine.cp3.starling.billsplit.model.TaskModel;
+import be.devine.cp3.starling.billsplit.service.TaskService;
 import be.devine.cp3.starling.billsplit.vo.TaskVO;
-
+import feathers.controls.Button;
 import feathers.controls.LayoutGroup;
-
 import feathers.controls.List;
-
 import feathers.controls.Screen;
 import feathers.data.ListCollection;
+import feathers.layout.HorizontalLayout;
 import feathers.layout.VerticalLayout;
-
 import flash.events.Event;
-
 import starling.text.TextField;
 
+
+
 public class Detail extends Screen {
+
+
+
     private var _appModel:AppModel;
     private var _taskModel:TaskModel;
     private var _personModel:PersonModel;
     private var _personList:List;
     private var _taskLayout:LayoutGroup;
+    private var _detailGroup:LayoutGroup;
     private var _taskTitle:TextField;
     private var _currentTask:TaskVO;
-    
+    private var _type:Button;
+    private var _total:Button;
+    private var _people:Button;
+    private var _addPerson:Button;
+
+
+
     public function Detail() {
+
         _appModel = AppModel.getInstance();
         _taskModel = TaskModel.getInstance();
         _personModel = PersonModel.getInstance();
@@ -48,25 +60,71 @@ public class Detail extends Screen {
         _taskLayout = new LayoutGroup();
         addChild(_taskLayout);
 
+
         var layout:VerticalLayout = new VerticalLayout();
         layout.horizontalAlign = VerticalLayout.HORIZONTAL_ALIGN_CENTER;
         layout.gap = 15;
         layout.paddingTop = 100;
         _taskLayout.layout = layout;
 
+        _type = new Button();
+        _type.nameList.add("type");
+        _type.iconPosition = Button.ICON_POSITION_LEFT;
+        _taskLayout.addChild(_type);
+
         _taskTitle = new TextField(100, 30, "", "SourceSansProSemiBold", 28, 0xFFFFFF);
         _taskLayout.addChild(_taskTitle);
+
+
+        _detailGroup = new LayoutGroup();
+        _taskLayout.addChild(_detailGroup);
+
+
+        var horlayout:HorizontalLayout = new HorizontalLayout();
+        layout.horizontalAlign = VerticalLayout.HORIZONTAL_ALIGN_LEFT;
+        layout.gap = 20;
+        _detailGroup.layout = horlayout;
+
+
+
+        _total = new Button();
+        _total.nameList.add("total");
+        _total.iconPosition = Button.ICON_POSITION_LEFT;
+        _detailGroup.addChild(_total);
+
+
+
+        _people = new Button();
+        _people.nameList.add("people");
+        _people.iconPosition = Button.ICON_POSITION_LEFT;
+        _detailGroup.addChild(_people);
+
+
+
+        _addPerson = new Button();
+        _addPerson.nameList.add("addPerson");
+        _addPerson.label = "add";
+        _addPerson.iconPosition = Button.ICON_POSITION_LEFT;
+        _detailGroup.addChild(_addPerson);
+
+
     }
 
     private function updateTask(event:Event):void {
+
         if(_taskModel.currentTask) {
+
             _currentTask = _taskModel.currentTask;
 
             trace('Current Task:', _currentTask.title);
             _taskTitle.text = _currentTask.title;
+            _total.label = String(_currentTask.price);
+            _addPerson.label = String(_personList.selectedItems.length);
+            _type.defaultIcon = TaskService.icon(_currentTask);
             trace(_personModel.getPersonsByTaskId(_currentTask.id));
             trace(_currentTask.id);
             _personList.dataProvider = new ListCollection(_personModel.getPersonsByTaskId(_currentTask.id));
+
         }
     }
 
@@ -79,7 +137,12 @@ public class Detail extends Screen {
     private function layout():void {
         _taskTitle.width = stage.stageWidth;
 
-        _taskLayout.setSize(stage.stageWidth, 200);
+
+        _type.defaultIcon = TaskService.icon(_taskModel.currentTask);
+        _total.label = String(_currentTask.price);
+        _addPerson.label = String(_personList.selectedItems.length);
+
+        _taskLayout.setSize(stage.stageWidth, stage.stageHeight * 0.3);
         _personList.setSize(stage.stageWidth, (stage.stageHeight - _taskLayout.height));
         _personList.y = _taskLayout.height;
     }

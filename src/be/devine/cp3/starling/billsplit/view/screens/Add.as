@@ -99,23 +99,25 @@ public class Add extends Screen {
         var error:Boolean = false;
         var moderator:PersonVO = _personModel.getModerator();
 
+        var alert:Alert;
+
         if(_inputPrice.text.length == 0 && _inputTitle.text.length == 0){
-            var alert:Alert = Alert.show("Please fill in all textboxes",  moderator.name , new ListCollection([
+             alert = Alert.show("Please fill in all textboxes",  moderator.name , new ListCollection([
                 { label: "OK" }
             ]));
             error = true;
         }else  if (_inputPrice.text.length == 0) {
-            var alert:Alert = Alert.show("Please fill in a price", moderator.name, new ListCollection([
+            alert = Alert.show("Please fill in a price", moderator.name, new ListCollection([
                 { label: "OK" }
             ]));
             error = true;
         }else if (_inputTitle.text.length == 0) {
-            var alert:Alert = Alert.show("Please fill in a title", moderator.name, new ListCollection([
+            alert = Alert.show("Please fill in a title", moderator.name, new ListCollection([
                 { label: "OK" }
             ]));
             error = true;
         }else  if (isNaN(_inputPrice.text as Number)) {
-            var alert:Alert = Alert.show("Please fill in a valid price", moderator.name, new ListCollection([
+            alert = Alert.show("Please fill in a valid price", moderator.name, new ListCollection([
                 { label: "OK" }
             ]));
             error = true;

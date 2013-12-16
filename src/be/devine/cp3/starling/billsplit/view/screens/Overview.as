@@ -78,7 +78,6 @@ public class Overview extends Screen {
         _profile = new ImageLoader();
         _profile.source = image.url;
         _profile.addEventListener(Event.COMPLETE, imageCompleteHandler);
-        mask();
         _profileLayout.addChild(_profile);
 
         _fullName = new TextField(100, 30, _moderator.name, "SourceSansProSemiBold", 26, 0xFFFFFF);
@@ -86,7 +85,6 @@ public class Overview extends Screen {
         _profileLayout.addChild(_fullName);
         _profileLayout.addChild(_infoText);
 
-        this.backButtonHandler = onBack;
         tasksChangedHandler();
     }
 
@@ -98,10 +96,6 @@ public class Overview extends Screen {
 
         _infoText.text = "You have created " + _tasks.length + " bills with a total of " + totalPrice + " euros";
         _taskList.validate();
-    }
-
-    private function onBack():void {
-        trace("on back");
     }
 
     private function imageCompleteHandler(event:Event):void {

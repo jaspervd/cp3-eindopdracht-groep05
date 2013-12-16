@@ -48,16 +48,12 @@ public class Header extends Screen{
         _header.title = "Splits";
         addChild( _header );
 
-        var newSkin:SmartDisplayObjectStateValueSelector = Skins.defaultSkin(Transparent);
-
         _overview = new Button(); // backbutton
         _overview.nameList.add("overview");
-        _overview.stateToSkinFunction = newSkin.updateValue;
         _overview.addEventListener(Event.TRIGGERED, overviewClicked);
 
         _multiple = new Button();
         _multiple.nameList.add("multiple");
-        _multiple.stateToSkinFunction = newSkin.updateValue;
         _multiple.addEventListener(Event.TRIGGERED, checkAction);
 
 

@@ -49,6 +49,17 @@ public class Content extends Screen {
         _navigator.showScreen("overview");
 
         this.navigator = _navigator;
+
+        this.backButtonHandler = onBack;
+
+    }
+
+
+
+    private function onBack():void {
+
+        _appmodel.currentScreen = "overview";
+
     }
 
     private function screenHandler(event:Event):void {
