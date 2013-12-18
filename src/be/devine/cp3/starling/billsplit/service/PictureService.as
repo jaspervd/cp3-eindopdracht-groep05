@@ -67,7 +67,7 @@ public class PictureService extends ScrollContainer {
         var byteArray:ByteArray = PNGEncoder.encode(bitmapData);
 
         var date:Date = new Date();
-        var url:String = "images/scr_" + date.time + ".jpg";
+        var url:String = "images/scr_" + date.time + ".png";
         var file:File = File.applicationStorageDirectory.resolvePath(url);
         var newFile:File = new File(file.nativePath);
         var stream:FileStream = new FileStream();
