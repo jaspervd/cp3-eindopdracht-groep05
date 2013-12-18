@@ -57,13 +57,14 @@ public class PersonModel extends EventDispatcher {
         } else {
             value.id = lastPerson.id + 1;
         }
+        var personVO:PersonVO = PersonVOFactory.createPersonVOFromObject(value);
+        _persons.push(personVO);
+        dispatchEvent(new Event(Event.CHANGE));
+
         if(value.moderator) {
             dispatchEvent(new Event(MODERATOR_SET));
         }
 
-        var personVO:PersonVO = PersonVOFactory.createPersonVOFromObject(value);
-        _persons.push(personVO);
-        dispatchEvent(new Event(Event.CHANGE));
         return _persons;
     }
 

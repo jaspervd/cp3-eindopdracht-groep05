@@ -52,8 +52,8 @@ public class Overview extends Screen {
         _personModel = PersonModel.getInstance();
         _taskModel = TaskModel.getInstance();
         _appmodel = AppModel.getInstance();
-        _moderator = _personModel.getModerator();
         _tasks = _taskModel.getAllTasks();
+        _moderator = _personModel.getModerator();
 
         _taskModel.addEventListener(Event.CHANGE, tasksChangedHandler);
 
@@ -67,13 +67,13 @@ public class Overview extends Screen {
         _taskList.itemRendererProperties.accessoryField = "accessory";
         addChild(_taskList);
 
-
         _layout = new VerticalLayout();
         _layout.horizontalAlign = VerticalLayout.HORIZONTAL_ALIGN_CENTER;
         _layout.gap = 15;
         _profileLayout.layout = _layout;
 
         _profile = new ImageLoader();
+        _profileLayout.addChild(_profile);
 
         _fullName = new TextField(100, 30, "", "SourceSansProSemiBold", 26, 0xFFFFFF);
         _infoText = new TextField(400, 30, "You have created " + 0 + " bills with a total of " + 0 + " euros", "SourceSansPro", 18, 0xFFFFFF);
@@ -82,13 +82,17 @@ public class Overview extends Screen {
         _profileLayout.addChild(_infoText);
 
         _personModel.addEventListener(PersonModel.MODERATOR_SET, setModeratorHandler);
+
+        if(_moderator != null) {
+            setModeratorHandler();
+        }
     }
 
-    private function setModeratorHandler(event:Event):void {
-        var image:File = File.applicationStorageDirectory.resolvePath(_moderator.image);
+    private function setModeratorHandler(event:Event = null):void {
+        _moderator = _personModel.getModerator();
+        var image:File = File.applicationStorageDirectory.resolvePath("images/person1.jpg"); // _moderator.image
         _profile.source = image.url;
         _profile.addEventListener(Event.COMPLETE, imageCompleteHandler);
-        _profileLayout.addChild(_profile);
 
         _fullName.text = _moderator.name;
 

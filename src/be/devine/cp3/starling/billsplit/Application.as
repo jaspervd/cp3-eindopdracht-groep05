@@ -50,14 +50,12 @@ public class Application extends Sprite {
         _personModel.persons = _appModel.persons;
         _taskModel.tasks = _appModel.tasks;
 
-
         content = new Content();
         addChild(content);
 
         header = new Header();
         addChild(header);
 
-        trace(_personModel.getModerator());
         if(_personModel.getModerator() == null) {
             _appModel.currentScreen = "register";
         }
