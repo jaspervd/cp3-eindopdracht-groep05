@@ -38,7 +38,7 @@ public class PictureService extends Sprite {
         var screen:BitmapData = new BitmapData(_camera.width, _camera.height);
         screenShot = new Bitmap(screen);
         screen.draw(_video);
-        dispatchEvent(new Event(Event.TRIGGERED));
+        dispatchEvent(new Event(TouchEvent.TOUCH));
     }
 }
 }

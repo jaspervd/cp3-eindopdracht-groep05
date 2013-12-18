@@ -22,9 +22,10 @@ import feathers.controls.TextInput;
 import feathers.data.ListCollection;
 import feathers.layout.VerticalLayout;
 
-import starling.display.Sprite;
+import flash.events.Event;
 
-import starling.events.Event;
+import starling.display.Sprite;
+import starling.events.TouchEvent;
 
 public class Register extends Screen {
     private var _appModel:AppModel;
@@ -47,10 +48,10 @@ public class Register extends Screen {
         layout.paddingTop = 100;
         _registerLayout.layout = layout;
 
-        _pictureService = new PictureService();
-        _pictureService.addEventListener(Event.TRIGGERED, pictureTriggeredHandler);
+        /*_pictureService = new PictureService();
+        _pictureService.addEventListener(TouchEvent.TOUCH, pictureTriggeredHandler);
         _pictureService.height = this.width * .75;
-        _registerLayout.addChild(_pictureService);
+        _registerLayout.addChild(_pictureService);*/
 
         _inputName = new TextInput();
         _inputName.prompt = "Name";
@@ -61,17 +62,9 @@ public class Register extends Screen {
         _registerLayout.addChild(_submitBtn);
 
         _submitBtn.addEventListener(Event.TRIGGERED, buttonHandler);
-
-        _appModel.addEventListener(Event.CHANGE, changeHandler);
     }
 
-    private function changeHandler(event:Event):void {
-        if(_appModel.currentScreen == "register") {
-            _pictureService.init();
-        }
-    }
-
-    private function pictureTriggeredHandler(event:Event):void {
+    private function pictureTriggeredHandler(event:TouchEvent):void {
         _registerLayout.removeChild(_pictureService);
         _registerLayout.addChild(_pictureService.screenShot as Sprite);
     }
