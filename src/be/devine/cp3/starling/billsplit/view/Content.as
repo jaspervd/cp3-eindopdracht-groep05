@@ -2,6 +2,7 @@ package be.devine.cp3.starling.billsplit.view {
 
 import be.devine.cp3.starling.billsplit.model.AppModel;
 import be.devine.cp3.starling.billsplit.view.drawer.DrawerView;
+import be.devine.cp3.starling.billsplit.view.drawer.skin.DrawersExplorerTheme;
 import be.devine.cp3.starling.billsplit.view.screens.Add;
 import be.devine.cp3.starling.billsplit.view.screens.Detail;
 import be.devine.cp3.starling.billsplit.view.screens.Overview;
@@ -109,7 +110,7 @@ public class Content extends Drawers {
 
 
         var optionsDrawer:DrawerView = new DrawerView("Right");
-        optionsDrawer.nameList.add(DrawerExplorer.THEME_NAME_LEFT_AND_RIGHT_DRAWER);
+        optionsDrawer.nameList.add(DrawersExplorerTheme.THEME_NAME_LEFT_AND_RIGHT_DRAWER);
         optionsDrawer.addEventListener(DrawerView.CHANGE_DOCK_MODE_TO_NONE, drawer_dockNoneHandler);
         optionsDrawer.addEventListener(DrawerView.CHANGE_DOCK_MODE_TO_BOTH, drawer_dockBothHandler);
         this.rightDrawer = optionsDrawer;
