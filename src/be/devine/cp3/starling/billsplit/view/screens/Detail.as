@@ -16,6 +16,8 @@ import feathers.controls.ScrollContainer;
 import feathers.data.ListCollection;
 import feathers.layout.HorizontalLayout;
 import feathers.layout.VerticalLayout;
+
+import starling.display.Image;
 import starling.events.Event;
 import starling.text.TextField;
 
@@ -24,6 +26,17 @@ import starling.text.TextField;
 
 
 public class Detail extends Screen {
+
+    [Embed(source="/../assets/images/person_icon.png")]
+    public static const Person:Class;
+
+
+    [Embed(source="/../assets/images/person_add_icon.png")]
+    public static const PersonAdd:Class;
+
+
+    [Embed(source="/../assets/images/task_icon.png")]
+    public static const Task:Class;
 
 
     private var _appModel:AppModel;
@@ -91,12 +104,14 @@ public class Detail extends Screen {
 
         _total = new Button();
         _total.nameList.add("total");
+        _total.labelOffsetX = -15;
         _total.iconPosition = Button.ICON_POSITION_LEFT;
         _detailGroup.addChild(_total);
 
 
 
         _people = new Button();
+        _people.labelOffsetX = -15;
         _people.nameList.add("people");
         _people.iconPosition = Button.ICON_POSITION_LEFT;
         _detailGroup.addChild(_people);
@@ -105,7 +120,6 @@ public class Detail extends Screen {
 
         _addPerson = new Button();
         _addPerson.nameList.add("addPerson");
-        _addPerson.label = "add";
         _addPerson.iconPosition = Button.ICON_POSITION_LEFT;
         _detailGroup.addChild(_addPerson);
 
@@ -118,14 +132,20 @@ public class Detail extends Screen {
 
             _currentTask = _taskModel.currentTask;
 
-            trace('Current Task:', _currentTask.title);
             _taskTitle.text = _currentTask.title;
+
             _dateTime.text = DateFormat.timestampToUFDate(_currentTask.timestamp as Number);
-            _total.label = String(_currentTask.price);
-            _addPerson.label = String(_personList.selectedItems.length);
+
+            _people.defaultIcon = Image.fromBitmap(new Person());
+            _total.defaultIcon = Image.fromBitmap(new Task());
+            _addPerson.defaultIcon = Image.fromBitmap(new PersonAdd());
+
+            _total.label = "€" + String(_currentTask.price);
+
+            _people.label = String(_personModel.getPersonsByTaskId(_currentTask.id).length);
+
             _type.defaultIcon = TaskService.icon(_currentTask);
-            trace(_personModel.getPersonsByTaskId(_currentTask.id));
-            trace(_currentTask.id);
+
             _personList.dataProvider = new ListCollection(_personModel.getPersonsByTaskId(_currentTask.id));
 
 
