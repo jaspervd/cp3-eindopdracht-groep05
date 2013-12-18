@@ -4,7 +4,6 @@ import be.devine.cp3.starling.billsplit.service.IouService;
 import be.devine.cp3.starling.billsplit.service.PersonService;
 import be.devine.cp3.starling.billsplit.service.TaskService;
 import be.devine.cp3.starling.billsplit.vo.IouVO;
-import be.devine.cp3.starling.billsplit.vo.PersonVO;
 
 import flash.events.Event;
 

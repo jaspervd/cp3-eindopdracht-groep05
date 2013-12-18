@@ -9,6 +9,7 @@ package be.devine.cp3.starling.billsplit.view.screens {
 import be.devine.cp3.starling.billsplit.model.AppModel;
 import be.devine.cp3.starling.billsplit.model.PersonModel;
 import be.devine.cp3.starling.billsplit.service.PersonService;
+import be.devine.cp3.starling.billsplit.service.PictureService;
 
 import feathers.controls.Alert;
 
@@ -21,12 +22,15 @@ import feathers.controls.TextInput;
 import feathers.data.ListCollection;
 import feathers.layout.VerticalLayout;
 
+import starling.display.Sprite;
+
 import starling.events.Event;
 
 public class Register extends Screen {
     private var _appModel:AppModel;
     private var _personModel:PersonModel;
     private var _registerLayout:LayoutGroup;
+    private var _pictureService:PictureService;
     private var _inputName:TextInput;
     private var _submitBtn:Button;
 
@@ -43,6 +47,11 @@ public class Register extends Screen {
         layout.paddingTop = 100;
         _registerLayout.layout = layout;
 
+        _pictureService = new PictureService();
+        _pictureService.addEventListener(Event.TRIGGERED, pictureTriggeredHandler);
+        _pictureService.height = this.width * .75;
+        _registerLayout.addChild(_pictureService);
+
         _inputName = new TextInput();
         _inputName.prompt = "Name";
         _registerLayout.addChild(_inputName);
@@ -52,6 +61,19 @@ public class Register extends Screen {
         _registerLayout.addChild(_submitBtn);
 
         _submitBtn.addEventListener(Event.TRIGGERED, buttonHandler);
+
+        _appModel.addEventListener(Event.CHANGE, changeHandler);
+    }
+
+    private function changeHandler(event:Event):void {
+        if(_appModel.currentScreen == "register") {
+            _pictureService.init();
+        }
+    }
+
+    private function pictureTriggeredHandler(event:Event):void {
+        _registerLayout.removeChild(_pictureService);
+        _registerLayout.addChild(_pictureService.screenShot as Sprite);
     }
 
     private function buttonHandler(event:Event):void {
