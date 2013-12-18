@@ -23,15 +23,7 @@ public class PersonService extends EventDispatcher {
         if (!personsFile.exists) {
             var writeStream:FileStream = new FileStream();
             writeStream.open(personsFile, FileMode.WRITE);
-            writeStream.writeUTFBytes(JSON.stringify([
-                {
-                    "id": 1,
-                    "name": "Justin Timberlake",
-                    "image": "images/person1.jpg",
-                    "task_id": 0,
-                    "moderator": true
-                }
-            ]));
+            writeStream.writeUTFBytes(JSON.stringify([]));
             writeStream.close();
         }
         var readStream:FileStream = new FileStream();
@@ -40,8 +32,8 @@ public class PersonService extends EventDispatcher {
         var parsedJSON:Array = JSON.parse(str) as Array;
         readStream.close();
         var persons:Array = [];
-        for each(var iou:Object in parsedJSON) {
-            persons.push(PersonVOFactory.createPersonVOFromObject(iou));
+        for each(var person:Object in parsedJSON) {
+            persons.push(PersonVOFactory.createPersonVOFromObject(person));
         }
         this.persons = persons;
         dispatchEvent(new Event(Event.COMPLETE));

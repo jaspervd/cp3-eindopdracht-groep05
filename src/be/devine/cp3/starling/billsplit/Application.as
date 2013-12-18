@@ -43,7 +43,6 @@ public class Application extends Sprite {
     }
 
     private function addedHandler(event:Event):void {
-
         removeEventListener(Event.ADDED_TO_STAGE, addedHandler);
         stage.addEventListener(Event.RESIZE, resizeHandler);
         stage.addEventListener(Event.CLOSE, closeHandler);
@@ -58,7 +57,10 @@ public class Application extends Sprite {
         header = new Header();
         addChild(header);
 
-
+        trace(_personModel.getModerator());
+        if(_personModel.getModerator() == null) {
+            _appModel.currentScreen = "register";
+        }
     }
 
     private function resizeHandler(event:Event):void {

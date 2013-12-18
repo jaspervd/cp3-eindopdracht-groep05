@@ -73,17 +73,24 @@ public class Overview extends Screen {
         _layout.gap = 15;
         _profileLayout.layout = _layout;
 
-
-        var image:File = File.applicationStorageDirectory.resolvePath(_moderator.image);
         _profile = new ImageLoader();
+
+        _fullName = new TextField(100, 30, "", "SourceSansProSemiBold", 26, 0xFFFFFF);
+        _infoText = new TextField(400, 30, "You have created " + 0 + " bills with a total of " + 0 + " euros", "SourceSansPro", 18, 0xFFFFFF);
+
+        _profileLayout.addChild(_fullName);
+        _profileLayout.addChild(_infoText);
+
+        _personModel.addEventListener(PersonModel.MODERATOR_SET, setModeratorHandler);
+    }
+
+    private function setModeratorHandler(event:Event):void {
+        var image:File = File.applicationStorageDirectory.resolvePath(_moderator.image);
         _profile.source = image.url;
         _profile.addEventListener(Event.COMPLETE, imageCompleteHandler);
         _profileLayout.addChild(_profile);
 
-        _fullName = new TextField(100, 30, _moderator.name, "SourceSansProSemiBold", 26, 0xFFFFFF);
-        _infoText = new TextField(400, 30, "You have created " + 0 + " bills with a total of " + 0 + " euros", "SourceSansPro", 18, 0xFFFFFF);
-        _profileLayout.addChild(_fullName);
-        _profileLayout.addChild(_infoText);
+        _fullName.text = _moderator.name;
 
         tasksChangedHandler();
     }
@@ -136,9 +143,7 @@ public class Overview extends Screen {
     private function triggeredHandler(event:Event):void {
 
         if (_taskList.selectedItem) {
-            var listItem:TaskVO = TaskVO(_taskList.selectedItem);
-
-            _taskModel.currentTask = listItem;
+            _taskModel.currentTask = TaskVO(_taskList.selectedItem);
             _appmodel.currentScreen = "detail";
             _taskList.selectedIndex = -1;
         }

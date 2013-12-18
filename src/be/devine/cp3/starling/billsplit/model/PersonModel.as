@@ -12,6 +12,7 @@ public class PersonModel extends EventDispatcher {
 
     private var _persons:Array;
     private var _moderator:PersonVO;
+    public static const MODERATOR_SET:String = "MODERATOR_SET";
 
     public static function getInstance():PersonModel {
         if (instance == null) {
@@ -46,9 +47,6 @@ public class PersonModel extends EventDispatcher {
                 _moderator = person;
             }
         }
-        if(_moderator == null) {
-            trace('account aanmaken');
-        }
         return _moderator;
     }
 
@@ -58,6 +56,9 @@ public class PersonModel extends EventDispatcher {
             value.id = 1;
         } else {
             value.id = lastPerson.id + 1;
+        }
+        if(value.moderator) {
+            dispatchEvent(new Event(MODERATOR_SET));
         }
 
         var personVO:PersonVO = PersonVOFactory.createPersonVOFromObject(value);

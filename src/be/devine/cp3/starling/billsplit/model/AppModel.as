@@ -154,8 +154,6 @@ public class AppModel extends EventDispatcher {
 
         trace("[COMPLETE] = "+_completed);
 
-        trace('Hello', PersonVO(_persons[0]).name);
-
         if(_completed){
 
             dispatchEvent(new Event(COMPLETED,true));

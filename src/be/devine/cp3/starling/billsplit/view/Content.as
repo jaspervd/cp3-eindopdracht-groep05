@@ -4,6 +4,7 @@ import be.devine.cp3.starling.billsplit.model.AppModel;
 import be.devine.cp3.starling.billsplit.view.screens.Add;
 import be.devine.cp3.starling.billsplit.view.screens.Detail;
 import be.devine.cp3.starling.billsplit.view.screens.Overview;
+import be.devine.cp3.starling.billsplit.view.screens.Register;
 
 import feathers.controls.Screen;
 
@@ -14,11 +15,6 @@ import feathers.motion.transitions.ScreenSlidingStackTransitionManager;
 import flash.events.Event;
 
 import starling.animation.Transitions;
-
-import starling.animation.Tween;
-import starling.core.Starling;
-
-import starling.display.DisplayObject;
 
 
 public class Content extends Screen {
@@ -37,7 +33,7 @@ public class Content extends Screen {
         _navigator = new ScreenNavigator();
         addChild(_navigator);
 
-
+        _navigator.addScreen("register",new ScreenNavigatorItem( new Register() ));
         _navigator.addScreen("overview",new ScreenNavigatorItem( new Overview() ));
         _navigator.addScreen("detail",new ScreenNavigatorItem( new Detail() ));
         _navigator.addScreen("add",new ScreenNavigatorItem( new Add() ));
