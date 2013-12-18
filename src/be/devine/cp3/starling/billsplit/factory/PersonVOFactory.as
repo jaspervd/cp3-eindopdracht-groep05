@@ -16,6 +16,7 @@ public class PersonVOFactory {
         personVO.image = person.image;
         personVO.task_id = person.task_id;
         personVO.moderator = person.moderator;
+        personVO.iOu = person.iou;
         return personVO;
     }
 }

@@ -12,11 +12,9 @@ import feathers.controls.Button;
 import feathers.controls.LayoutGroup;
 import feathers.controls.List;
 import feathers.controls.Screen;
-import feathers.controls.ScrollContainer;
 import feathers.data.ListCollection;
 import feathers.layout.HorizontalLayout;
 import feathers.layout.VerticalLayout;
-
 import starling.display.Image;
 import starling.events.Event;
 import starling.text.TextField;
@@ -121,6 +119,7 @@ public class Detail extends Screen {
         _addPerson = new Button();
         _addPerson.nameList.add("addPerson");
         _addPerson.iconPosition = Button.ICON_POSITION_LEFT;
+        _addPerson.addEventListener(Event.TRIGGERED, addPerson);
         _detailGroup.addChild(_addPerson);
 
 
@@ -167,5 +166,19 @@ public class Detail extends Screen {
         _personList.y = _taskLayout.height;
     }
 
+    private function addPerson(event:Event):void {
+        trace(event.currentTarget);
+
+        var person:Object = new Object();
+        person.name = "person"+String(_personModel.getPersonsByTaskId(_currentTask.id).length+1);
+        person.image = "no Image";
+        person.task_id = _taskModel.currentTask.id;
+        person.iou = _taskModel.currentTask.price/_personModel.getPersonsByTaskId(_currentTask.id).length+1;
+
+        _personModel.add(person);
+
+        updateTask(null);
+
+    }
 }
 }

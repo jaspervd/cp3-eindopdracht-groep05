@@ -6,5 +6,6 @@ public class PersonVO {
     public var image:String;
     public var task_id:uint;
     public var moderator:Boolean;
+    public var iOu:Number;
 }
 }
