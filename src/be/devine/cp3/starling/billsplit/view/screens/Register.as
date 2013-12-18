@@ -24,8 +24,6 @@ import feathers.layout.VerticalLayout;
 
 import starling.events.Event;
 
-import starling.display.Sprite;
-import starling.events.TouchEvent;
 
 public class Register extends Screen {
     private var _appModel:AppModel;
@@ -34,6 +32,7 @@ public class Register extends Screen {
     private var _pictureService:PictureService;
     private var _inputName:TextInput;
     private var _submitBtn:Button;
+    private var _cameraHolder:Button;
 
     public function Register() {
         _appModel = AppModel.getInstance();
@@ -48,10 +47,11 @@ public class Register extends Screen {
         layout.paddingTop = 100;
         _registerLayout.layout = layout;
 
-        /*_pictureService = new PictureService();
-        _pictureService.addEventListener(TouchEvent.TOUCH, pictureTriggeredHandler);
-        _pictureService.height = this.width * .75;
-        _registerLayout.addChild(_pictureService);*/
+        _pictureService = new PictureService();
+        _registerLayout.addChild(_pictureService);
+
+        _cameraHolder= new Button();
+        _registerLayout.addChild(_cameraHolder);
 
         _inputName = new TextInput();
         _inputName.prompt = "Name";
@@ -64,9 +64,17 @@ public class Register extends Screen {
         _submitBtn.addEventListener(Event.TRIGGERED, buttonHandler);
     }
 
-    private function pictureTriggeredHandler(event:TouchEvent):void {
-        _registerLayout.removeChild(_pictureService);
-        _registerLayout.addChild(_pictureService.screenShot as Sprite);
+    override protected function initialize():void {
+        layout();
+        trace('[REGISTER]');
+    }
+
+    private function layout():void {
+        _cameraHolder.setSize(stage.stageWidth, stage.stageWidth * .75);
+    }
+
+    private function pictureTriggeredHandler(event:Event):void {
+        _pictureService.takePicture();
     }
 
     private function buttonHandler(event:Event):void {
