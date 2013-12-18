@@ -8,8 +8,8 @@
 package be.devine.cp3.starling.billsplit.service {
 import be.devine.cp3.starling.billsplit.factory.IouVOFactory;
 
-import flash.events.Event;
-import flash.events.EventDispatcher;
+import starling.events.Event;`
+import starling.events.EventDispatcher;
 import flash.filesystem.File;
 
 import flash.filesystem.FileMode;

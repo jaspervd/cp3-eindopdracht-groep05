@@ -44,6 +44,7 @@ public class PictureService extends Button {
 
         var jpgEncoder:JPGEncoder = new JPGEncoder();
         var byteArray:ByteArray = jpgEncoder.encode(bitmapData);
+        Starling.current.nativeOverlay.removeChild(_video);
 
         /*var fileReference:FileReference = new FileReference();
         fileReference.save(byteArray, "test1.jpg");*/

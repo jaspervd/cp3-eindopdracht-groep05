@@ -48,6 +48,7 @@ public class Register extends Screen {
         _registerLayout.layout = layout;
 
         _pictureService = new PictureService();
+        _pictureService.addEventListener(Event.TRIGGERED, pictureTriggeredHandler);
         _registerLayout.addChild(_pictureService);
 
         _cameraHolder= new Button();

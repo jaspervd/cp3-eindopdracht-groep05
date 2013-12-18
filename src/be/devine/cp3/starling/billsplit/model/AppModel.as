@@ -5,9 +5,9 @@ import be.devine.cp3.starling.billsplit.service.PersonService;
 import be.devine.cp3.starling.billsplit.service.TaskService;
 import be.devine.cp3.starling.billsplit.vo.IouVO;
 
-import flash.events.Event;
+import starling.events.Event;
 
-import flash.events.EventDispatcher;
+import starling.events.EventDispatcher;
 
 
 public class AppModel extends EventDispatcher {
