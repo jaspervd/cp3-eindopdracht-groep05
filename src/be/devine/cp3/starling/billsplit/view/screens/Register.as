@@ -22,7 +22,7 @@ import feathers.controls.TextInput;
 import feathers.data.ListCollection;
 import feathers.layout.VerticalLayout;
 
-import flash.events.Event;
+import starling.events.Event;
 
 import starling.display.Sprite;
 import starling.events.TouchEvent;
