@@ -1,11 +1,5 @@
-/**
- * Created with IntelliJ IDEA.
- * User: Jasper
- * Date: 12/12/13
- * Time: 15:14
- * To change this template use File | Settings | File Templates.
- */
 package be.devine.cp3.starling.billsplit.view.screens {
+
 
 
 import be.devine.cp3.starling.billsplit.format.DateFormat;
@@ -18,17 +12,21 @@ import feathers.controls.Button;
 import feathers.controls.LayoutGroup;
 import feathers.controls.List;
 import feathers.controls.Screen;
+import feathers.controls.ScrollContainer;
 import feathers.data.ListCollection;
 import feathers.layout.HorizontalLayout;
 import feathers.layout.VerticalLayout;
-import flash.events.Event;
+import starling.events.Event;
 import starling.text.TextField;
 
 
 
-public class Detail extends Screen {
 
 
+public class Detail extends ScrollContainer {
+
+
+    public static const TOGGLE_RIGHT_DRAWER:String = "TOGGLE_RIGHT_DRAWER";
 
     private var _appModel:AppModel;
     private var _taskModel:TaskModel;
@@ -137,12 +135,12 @@ public class Detail extends Screen {
     }
 
     override protected function initialize():void {
-        layout();
+        scherm();
         trace('[DETAIL]');
     }
 
 
-    private function layout():void {
+    private function scherm():void {
 
         _taskTitle.width = stage.stageWidth;
         _dateTime.width = stage.stageWidth;
@@ -150,5 +148,15 @@ public class Detail extends Screen {
         _personList.setSize(stage.stageWidth, (stage.stageHeight - _taskLayout.height));
         _personList.y = _taskLayout.height;
     }
+
+
+    private function showDock(event:Event):void{
+
+        trace("showDock");
+
+        this.dispatchEvent(new Event(TOGGLE_RIGHT_DRAWER));
+
+    }
+
 }
 }
