@@ -31,8 +31,9 @@ public class Register extends Screen {
     private var _registerLayout:LayoutGroup;
     private var _pictureService:PictureService;
     private var _inputName:TextInput;
+    private var _takePicBtn:Button;
     private var _submitBtn:Button;
-    private var _cameraHolder:Button;
+    private var _urlImage:String;
 
     public function Register() {
         _appModel = AppModel.getInstance();
@@ -48,11 +49,14 @@ public class Register extends Screen {
         _registerLayout.layout = layout;
 
         _pictureService = new PictureService();
-        _pictureService.addEventListener(Event.TRIGGERED, pictureTriggeredHandler);
         _registerLayout.addChild(_pictureService);
 
-        _cameraHolder= new Button();
-        _registerLayout.addChild(_cameraHolder);
+        _urlImage = "";
+
+        _takePicBtn = new Button();
+        _takePicBtn.label = "Take picture";
+        _takePicBtn.addEventListener(Event.TRIGGERED, takePictureHandler);
+        _registerLayout.addChild(_takePicBtn);
 
         _inputName = new TextInput();
         _inputName.prompt = "Name";
@@ -65,17 +69,17 @@ public class Register extends Screen {
         _submitBtn.addEventListener(Event.TRIGGERED, buttonHandler);
     }
 
+    private function takePictureHandler(event:Event):void {
+        _urlImage = _pictureService.takePicture();
+    }
+
     override protected function initialize():void {
         layout();
         trace('[REGISTER]');
     }
 
     private function layout():void {
-        _cameraHolder.setSize(stage.stageWidth, stage.stageWidth * .75);
-    }
-
-    private function pictureTriggeredHandler(event:Event):void {
-        _pictureService.takePicture();
+        _pictureService.setSize(stage.stageWidth, stage.stageWidth * .75);
     }
 
     private function buttonHandler(event:Event):void {
@@ -87,12 +91,17 @@ public class Register extends Screen {
                 { label: "OK" }
             ]));
             error = true;
+        } else if(_urlImage.length == 0) {
+            alert = Alert.show("Please take a picture", "Error", new ListCollection([
+                { label: "OK" }
+            ]));
+            error = true;
         }
-
 
         if (!error) {
             var personObj:Object = {};
             personObj.name = _inputName.text;
+            personObj.image = _urlImage;
             personObj.moderator = true;
 
             _personModel.add(personObj);

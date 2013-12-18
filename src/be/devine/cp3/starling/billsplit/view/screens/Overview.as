@@ -90,7 +90,7 @@ public class Overview extends Screen {
 
     private function setModeratorHandler(event:Event = null):void {
         _moderator = _personModel.getModerator();
-        var image:File = File.applicationStorageDirectory.resolvePath("images/person1.jpg"); // _moderator.image
+        var image:File = File.applicationStorageDirectory.resolvePath(_moderator.image);
         _profile.source = image.url;
         _profile.addEventListener(Event.COMPLETE, imageCompleteHandler);
 
