@@ -14,7 +14,7 @@ import starling.events.Event;
 
 
 
-public class Header extends ScrollContainer{
+public class Header extends Screen{
 
 
     [Embed(source="/../assets/images/metalworks/menu_stripes_btn.png")]
