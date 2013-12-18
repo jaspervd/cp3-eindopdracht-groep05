@@ -14,6 +14,7 @@ import be.devine.cp3.starling.billsplit.service.PictureService;
 import feathers.controls.Alert;
 
 import feathers.controls.Button;
+import feathers.controls.ImageLoader;
 
 import feathers.controls.LayoutGroup;
 
@@ -21,6 +22,8 @@ import feathers.controls.Screen;
 import feathers.controls.TextInput;
 import feathers.data.ListCollection;
 import feathers.layout.VerticalLayout;
+
+import flash.filesystem.File;
 
 import starling.events.Event;
 
@@ -34,6 +37,7 @@ public class Register extends Screen {
     private var _takePicBtn:Button;
     private var _submitBtn:Button;
     private var _urlImage:String;
+    private var _image:ImageLoader;
 
     public function Register() {
         _appModel = AppModel.getInstance();
@@ -52,6 +56,8 @@ public class Register extends Screen {
         _registerLayout.addChild(_pictureService);
 
         _urlImage = "";
+        _image = new ImageLoader();
+        _registerLayout.addChild(_image);
 
         _takePicBtn = new Button();
         _takePicBtn.label = "Take picture";
@@ -70,7 +76,11 @@ public class Register extends Screen {
     }
 
     private function takePictureHandler(event:Event):void {
+        _registerLayout.removeChild(_pictureService);
         _urlImage = _pictureService.takePicture();
+
+        var imgSrc:File = File.applicationStorageDirectory.resolvePath(_urlImage);
+        _image.source = imgSrc.url;
     }
 
     override protected function initialize():void {
