@@ -69,6 +69,28 @@ public class TaskModel extends EventDispatcher {
             value.id = lastTask.id + 1;
         }
         value.timestamp = date.getTime();
+        var newPrice:String = "";
+
+        for(var i:uint = 0; i<value.price.length; i++){
+
+            var char:String = value.price.charAt(i);
+            if(value.price.charAt(i) == ","){
+
+                char = ".";
+
+            }
+
+            trace(value.price.charAt(i));
+
+            newPrice += char;
+
+            trace(newPrice);
+
+        }
+
+        value.price = newPrice;
+        trace(value.price);
+
         var task:TaskVO = TaskVOFactory.createTaskVOFromObject(value);
         _tasks.push(task);
         dispatchEvent(new Event(Event.CHANGE));
