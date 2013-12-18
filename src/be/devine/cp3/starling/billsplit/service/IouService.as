@@ -8,7 +8,7 @@
 package be.devine.cp3.starling.billsplit.service {
 import be.devine.cp3.starling.billsplit.factory.IouVOFactory;
 
-import starling.events.Event;`
+import starling.events.Event;
 import starling.events.EventDispatcher;
 import flash.filesystem.File;
 
