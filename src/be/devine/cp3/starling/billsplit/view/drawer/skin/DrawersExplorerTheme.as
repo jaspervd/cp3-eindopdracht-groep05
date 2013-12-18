@@ -1,15 +1,13 @@
-package be.devine.cp3.starling.billsplit.view.drawer.skins {
-
-
+package be.devine.cp3.starling.billsplit.view.drawer.skin
+{
+import be.devine.cp3.starling.billsplit.view.Content;
 import be.devine.cp3.starling.billsplit.view.drawer.DrawerView;
-import be.devine.cp3.starling.billsplit.view.screens.Detail;
+
 import feathers.layout.HorizontalLayout;
 import feathers.layout.VerticalLayout;
 import feathers.themes.MetalWorksMobileTheme;
+
 import starling.display.Quad;
-
-
-
 
 public class DrawersExplorerTheme extends MetalWorksMobileTheme
 {
@@ -24,12 +22,12 @@ public class DrawersExplorerTheme extends MetalWorksMobileTheme
     override protected function initialize():void
     {
         super.initialize();
-        this.setInitializerForClass(Detail, contentViewInitializer);
+        this.setInitializerForClass(Content, contentViewInitializer);
         this.setInitializerForClass(DrawerView, topAndBottomDrawerViewInitializer, THEME_NAME_TOP_AND_BOTTOM_DRAWER);
         this.setInitializerForClass(DrawerView, leftAndRightDrawerViewInitializer, THEME_NAME_LEFT_AND_RIGHT_DRAWER);
     }
 
-    protected function contentViewInitializer(view:Detail):void
+    protected function contentViewInitializer(view:Content):void
     {
         var layout:VerticalLayout = new VerticalLayout();
         layout.horizontalAlign = VerticalLayout.HORIZONTAL_ALIGN_CENTER;

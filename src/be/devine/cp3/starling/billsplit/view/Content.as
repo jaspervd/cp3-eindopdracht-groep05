@@ -5,19 +5,17 @@ import be.devine.cp3.starling.billsplit.view.screens.Add;
 import be.devine.cp3.starling.billsplit.view.screens.Detail;
 import be.devine.cp3.starling.billsplit.view.screens.Overview;
 import be.devine.cp3.starling.billsplit.view.screens.Register;
-
-import feathers.controls.Screen;
-
 import feathers.controls.ScreenNavigator;
 import feathers.controls.ScreenNavigatorItem;
+import feathers.controls.ScrollContainer;
 import feathers.motion.transitions.ScreenSlidingStackTransitionManager;
-
-import flash.events.Event;
-
 import starling.animation.Transitions;
+import starling.events.Event;
 
 
-public class Content extends Screen {
+public class Content extends ScrollContainer {
+
+    public static const TOGGLE_RIGHT_DRAWER:String = "TOGGLE_RIGHT_DRAWER";
 
     private var _navigator:ScreenNavigator;
     private var _appmodel:AppModel;
@@ -46,8 +44,6 @@ public class Content extends Screen {
 
         this.navigator = _navigator;
 
-        this.backButtonHandler = onBack;
-
     }
 
     private function onBack():void {
@@ -59,6 +55,16 @@ public class Content extends Screen {
     private function screenHandler(event:Event):void {
 
         navigator.showScreen(_appmodel.currentScreen);
+    }
+
+
+
+    private function showDock(event:Event):void{
+
+        trace("showDock");
+
+        this.dispatchEvent(new Event(TOGGLE_RIGHT_DRAWER));
+
     }
 
 }

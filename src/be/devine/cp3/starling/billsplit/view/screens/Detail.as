@@ -23,10 +23,8 @@ import starling.text.TextField;
 
 
 
-public class Detail extends ScrollContainer {
+public class Detail extends Screen {
 
-
-    public static const TOGGLE_RIGHT_DRAWER:String = "TOGGLE_RIGHT_DRAWER";
 
     private var _appModel:AppModel;
     private var _taskModel:TaskModel;
@@ -147,15 +145,6 @@ public class Detail extends ScrollContainer {
         _taskLayout.setSize(stage.stageWidth, stage.stageHeight * 0.5);
         _personList.setSize(stage.stageWidth, (stage.stageHeight - _taskLayout.height));
         _personList.y = _taskLayout.height;
-    }
-
-
-    private function showDock(event:Event):void{
-
-        trace("showDock");
-
-        this.dispatchEvent(new Event(TOGGLE_RIGHT_DRAWER));
-
     }
 
 }

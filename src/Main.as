@@ -7,7 +7,6 @@ import flash.display.StageAlign;
 import flash.display.StageScaleMode;
 import flash.events.Event;
 import flash.geom.Rectangle;
-
 import starling.core.Starling;
 import starling.events.Event;
 import starling.events.ResizeEvent;
