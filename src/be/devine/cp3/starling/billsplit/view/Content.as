@@ -2,7 +2,7 @@ package be.devine.cp3.starling.billsplit.view {
 
 import be.devine.cp3.starling.billsplit.model.AppModel;
 import be.devine.cp3.starling.billsplit.view.drawer.DrawerView;
-import be.devine.cp3.starling.billsplit.view.drawer.skin.DrawersExplorerTheme;
+import be.devine.cp3.starling.billsplit.view.drawer.skins.DrawersExplorerTheme;
 import be.devine.cp3.starling.billsplit.view.screens.Add;
 import be.devine.cp3.starling.billsplit.view.screens.Detail;
 import be.devine.cp3.starling.billsplit.view.screens.Overview;

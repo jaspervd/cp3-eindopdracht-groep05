@@ -1,4 +1,4 @@
-package be.devine.cp3.starling.billsplit.view.drawer.skin {
+package be.devine.cp3.starling.billsplit.view.drawer.skins {
 
 
 import be.devine.cp3.starling.billsplit.view.drawer.DrawerView;
@@ -11,7 +11,7 @@ import starling.display.Quad;
 
 
 
-public class DrawersEplorerTheme extends MetalWorksMobileTheme
+public class DrawersExplorerTheme extends MetalWorksMobileTheme
 {
     public static const THEME_NAME_TOP_AND_BOTTOM_DRAWER:String = "drawers-explorer-top-and-bottom-drawer";
     public static const THEME_NAME_LEFT_AND_RIGHT_DRAWER:String = "drawers-explorer-left-and-right-drawer";
