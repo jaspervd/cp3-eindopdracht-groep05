@@ -46,6 +46,7 @@ public class Header extends Screen{
 
         _appmodel = AppModel.getInstance();
         _personModel = PersonModel.getInstance();
+        _personModel.addEventListener(PersonModel.MODERATOR_SET, moderatorSetHandler);
         _theme = new MetalWorksMobileTheme();
 
         _header = new feathers.controls.Header();
@@ -54,13 +55,18 @@ public class Header extends Screen{
 
         _overview = new Button(); // backbutton
         _overview.nameList.add("overview");
-        if(_personModel.getModerator()) {
-            _overview.addEventListener(Event.TRIGGERED, overviewClicked);
-            _multiple.addEventListener(Event.TRIGGERED, checkAction);
-        }
 
         _multiple = new Button();
         _multiple.nameList.add("multiple");
+
+        if(_personModel.getModerator()) {
+            moderatorSetHandler();
+        }
+    }
+
+    private function moderatorSetHandler(event:Event = null):void {
+        _overview.addEventListener(Event.TRIGGERED, overviewClicked);
+        _multiple.addEventListener(Event.TRIGGERED, checkAction);
     }
 
     private function overviewClicked(event:Event):void {

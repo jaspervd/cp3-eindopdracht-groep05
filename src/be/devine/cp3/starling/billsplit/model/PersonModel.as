@@ -2,9 +2,7 @@ package be.devine.cp3.starling.billsplit.model {
 
 import be.devine.cp3.starling.billsplit.factory.PersonVOFactory;
 import be.devine.cp3.starling.billsplit.vo.PersonVO;
-
 import starling.events.Event;
-
 import starling.events.EventDispatcher;
 
 public class PersonModel extends EventDispatcher {

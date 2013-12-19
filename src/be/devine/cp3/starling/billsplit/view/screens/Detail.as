@@ -16,6 +16,8 @@ import feathers.controls.Screen;
 import feathers.data.ListCollection;
 import feathers.layout.HorizontalLayout;
 import feathers.layout.VerticalLayout;
+import feathers.renderers.PersonListRenderer;
+
 import starling.display.Image;
 import starling.events.Event;
 import starling.text.TextField;
@@ -64,7 +66,9 @@ public class Detail extends Screen {
         _appModel.addEventListener(Event.CHANGE, updateTask);
 
         _personList = new List();
+        _personList.itemRendererType = PersonListRenderer;
         _personList.itemRendererProperties.labelField = "name";
+        _personList.itemRendererProperties.accessoryField = "accessory";
         addChild(_personList);
 
         _taskLayout = new LayoutGroup();
