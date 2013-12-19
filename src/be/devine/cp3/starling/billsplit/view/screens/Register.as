@@ -57,7 +57,7 @@ public class Register extends Screen {
 
         _urlImage = "";
         _image = new ImageLoader();
-        _registerLayout.addChild(_image);
+        //_registerLayout.addChild(_image);
 
         _takePicBtn = new Button();
         _takePicBtn.label = "Take picture";
@@ -95,6 +95,7 @@ public class Register extends Screen {
     private function buttonHandler(event:Event):void {
         var error:Boolean = false;
         var alert:Alert;
+        trace('buttonHandler');
 
         if (_urlImage.length == 0) {
             alert = Alert.show("Please take a picture", "Error", new ListCollection([
@@ -117,7 +118,8 @@ public class Register extends Screen {
             _personModel.add(personObj);
             PersonService.write(_personModel.persons);
 
-            _appModel.currentScreen = "overview";
+            trace('no error');
+            _appModel.currentScreen = "add";
         }
     }
 }
