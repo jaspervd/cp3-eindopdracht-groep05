@@ -15,6 +15,7 @@ import feathers.controls.Button;
 import feathers.controls.LayoutGroup;
 import feathers.controls.List;
 import feathers.controls.Screen;
+import feathers.controls.renderers.DefaultListItemRenderer;
 import feathers.core.PopUpManager;
 import feathers.data.ListCollection;
 import feathers.layout.HorizontalLayout;
@@ -68,7 +69,7 @@ public class Detail extends Screen {
 
         _personList = new List();
         _personList.itemRendererType = PersonListRenderer;
-       // _personList.itemRendererProperties.gap = 1;
+        _personList.itemRendererProperties.gap = 1;
         _personList.itemRendererProperties.labelField = "name";
         _personList.itemRendererProperties.accessoryField = "accessory";
         _personList.addEventListener(Event.CHANGE, editPopUpHandler);
@@ -201,6 +202,9 @@ public class Detail extends Screen {
     }
 
     private function closeButtonHandler(event:Event):void {
+        _personList.dataProvider = null;
+        _personList.validate();
+        _personList.dataProvider = new ListCollection(_personModel.getPersonsByTaskId(_currentTask.id));
         PopUpManager.removePopUp(_editPerson, true);
     }
 }
