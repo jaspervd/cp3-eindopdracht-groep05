@@ -5,11 +5,7 @@ public class PriceFormat {
     }
 
     public static function priceToPercentage(price:Number, totalPrice:Number):Number {
-        return Number((price / totalPrice).toFixed(2));
-    }
-
-    public static function percentageToPrice(percentage:Number, totalPrice:Number):Number {
-        return Number((totalPrice / percentage).toFixed(2));
+        return Number((price / totalPrice).toFixed(2)) * 100;
     }
 
     public static function calculatePricesEvenly(total:Number, persons:Array):Number {

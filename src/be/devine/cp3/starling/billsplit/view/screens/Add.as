@@ -1,6 +1,7 @@
 package be.devine.cp3.starling.billsplit.view.screens {
 
 
+import be.devine.cp3.starling.billsplit.format.PriceFormat;
 import be.devine.cp3.starling.billsplit.model.AppModel;
 import be.devine.cp3.starling.billsplit.model.PersonModel;
 import be.devine.cp3.starling.billsplit.model.TaskModel;
@@ -29,7 +30,6 @@ public class Add extends Screen {
     private var _taskModel:TaskModel;
     private var _personModel:PersonModel;
     private var _typesList:List;
-    private var _toggle:ToggleSwitch;
 
     public function Add() {
 
@@ -128,8 +128,6 @@ public class Add extends Screen {
             taskObj.price = _inputPrice.text.split(',').join('.');
             taskObj.type = _typesList.selectedItem.type;
 
-            _taskModel.currency = _toggle.isSelected;
-
             _taskModel.add(taskObj);
             TaskService.write(_taskModel.tasks);
 
@@ -139,6 +137,8 @@ public class Add extends Screen {
             personObj.name = moderator.name;
             personObj.image = moderator.image;
             personObj.task_id = _taskModel.currentTask.id;
+            personObj.iou = taskObj.price;
+            personObj.percentage = 100;
             personObj.label = personObj.name + "  -  € " + taskObj.price;
             _personModel.add(personObj);
             PersonService.write(_personModel.persons);

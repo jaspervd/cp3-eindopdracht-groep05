@@ -13,6 +13,8 @@ import be.devine.cp3.starling.billsplit.view.popups.EditTask;
 import be.devine.cp3.starling.billsplit.vo.PersonVO;
 import be.devine.cp3.starling.billsplit.vo.TaskVO;
 
+import feathers.controls.Alert;
+
 import feathers.controls.Button;
 import feathers.controls.LayoutGroup;
 import feathers.controls.List;
@@ -150,7 +152,7 @@ public class Detail extends Screen {
         _detailGroup.addChild(_toggleSwitch);
 
         _divideEvenBtn = new Button();
-        _divideEvenBtn.label = "divide";
+        _divideEvenBtn.label = "50/50";
         _divideEvenBtn.addEventListener(Event.TRIGGERED, divideHandler);
         _detailGroup.addChild(_divideEvenBtn);
     }
@@ -159,12 +161,12 @@ public class Detail extends Screen {
         var newArr:Array = [];
         for each(var person:PersonVO in _personModel.getPersonsByTaskId(_currentTask.id)) {
             if(_toggleSwitch.isSelected) {
-                person.label = person.name + "  -  € " + PriceFormat.percentageToPrice(person.percentage, _currentTask.price);
+                person.label = person.name + "  -  € " + person.iou;
             } else {
-                person.label = person.name + "  -  % " + PriceFormat.priceToPercentage(person.iou, _currentTask.price);
+                person.label = person.name + "  -  " + person.percentage + "%";
             }
+            newArr.push(person);
         }
-        updateTask(null); // just in case
 
         _personList.dataProvider = null;
         _personList.validate();
@@ -174,6 +176,10 @@ public class Detail extends Screen {
     private function divideHandler(event:Event):void {
         var iou:Number = PriceFormat.calculatePricesEvenly(_currentTask.price, _personModel.getPersonsByTaskId(_currentTask.id));
         _personModel.updateIou(_currentTask.id, iou);
+
+        _personList.dataProvider = null;
+        _personList.validate();
+        _personList.dataProvider = new ListCollection(_personModel.getPersonsByTaskId(_currentTask.id));
         updateTask(null);
     }
 
@@ -197,8 +203,6 @@ public class Detail extends Screen {
 
             _type.defaultIcon = TaskService.icon(_currentTask);
 
-            _personList.dataProvider = null;
-            _personList.validate();
             _personList.dataProvider = new ListCollection(_personModel.getPersonsByTaskId(_currentTask.id));
         }
     }
@@ -227,6 +231,10 @@ public class Detail extends Screen {
             _personModel.add(person);
 
             PersonService.write(_personModel.persons);
+        } else {
+            var alert:Alert = Alert.show("You can only add a person if the total is greater than zero.", "Notice", new ListCollection([
+                    { label: "OK" }
+                ]));
         }
     }
 

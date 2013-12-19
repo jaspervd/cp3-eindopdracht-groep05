@@ -1,21 +1,27 @@
 package be.devine.cp3.starling.billsplit.view.popups {
 
+import be.devine.cp3.starling.billsplit.format.PriceFormat;
 import be.devine.cp3.starling.billsplit.model.PersonModel;
+import be.devine.cp3.starling.billsplit.model.TaskModel;
 import be.devine.cp3.starling.billsplit.service.PersonService;
 import be.devine.cp3.starling.billsplit.vo.PersonVO;
+
 import feathers.controls.Alert;
 import feathers.controls.Button;
 import feathers.controls.LayoutGroup;
-import feathers.controls.Screen;
+import feathers.controls.ScrollContainer;
 import feathers.controls.TextInput;
 import feathers.data.ListCollection;
 import feathers.layout.HorizontalLayout;
 import feathers.layout.VerticalLayout;
+
+import starling.display.Quad;
 import starling.events.Event;
 
 
-public class EditPerson extends Screen {
+public class EditPerson extends ScrollContainer {
     private var _personModel:PersonModel;
+    private var _taskModel:TaskModel;
     private var _popupLayout:LayoutGroup;
     private var _nameInput:TextInput;
     private var _priceInput:TextInput;
@@ -23,15 +29,21 @@ public class EditPerson extends Screen {
     private var _saveButton:Button;
     private var _deleteButton:Button;
     private var _currentPerson:PersonVO;
+    private var _container:Quad;
 
     public function EditPerson() {
+        this.addEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
+        _container = new Quad(400, 500, 0x5b7f73);
+        this.backgroundSkin = _container;
+
         _personModel = PersonModel.getInstance();
+        _taskModel = TaskModel.getInstance();
 
         _popupLayout = new LayoutGroup();
         var layout:VerticalLayout = new VerticalLayout();
         layout.horizontalAlign = VerticalLayout.HORIZONTAL_ALIGN_CENTER;
-        layout.gap = 15;
-        layout.paddingTop = 100;
+        layout.gap = 5;
+        layout.paddingTop = layout.paddingBottom = 10;
         _popupLayout.layout = layout;
         addChild(_popupLayout);
 
@@ -56,13 +68,18 @@ public class EditPerson extends Screen {
         _deleteButton.addEventListener(Event.TRIGGERED, deleteButtonHandler);
         _buttonLayout.addChild(_deleteButton);
 
-        if(_personModel.currentPerson == null) {
+        if (_personModel.currentPerson == null) {
             _personModel.addEventListener(PersonModel.CURRENT_PERSON_SET, currentPersonSetHandler);
-            trace('currentperson is null');
         } else {
-            trace('currentperson is ', _personModel.currentPerson.name);
             currentPersonSetHandler();
         }
+    }
+
+    private function addedToStageHandler(event:Event):void {
+        _container.width = stage.stageWidth * .85;
+        _container.height = stage.stageHeight * .3;
+        _popupLayout.x = (_container.width - _popupLayout.width) / 4;
+        _popupLayout.y = (_container.height - _popupLayout.height) / 4;
     }
 
     private function currentPersonSetHandler(event:Event = null):void {
@@ -108,6 +125,7 @@ public class EditPerson extends Screen {
             var personObj:Object = {};
             personObj.name = _nameInput.text;
             personObj.iou = _priceInput.text.split(',').join('.');
+            personObj.percentage = PriceFormat.priceToPercentage(personObj.iou, _taskModel.currentTask.price);
             _personModel.updatePerson(_currentPerson, personObj);
             PersonService.write(_personModel.persons);
 

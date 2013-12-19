@@ -9,15 +9,17 @@ import be.devine.cp3.starling.billsplit.vo.TaskVO;
 import feathers.controls.Alert;
 import feathers.controls.Button;
 import feathers.controls.LayoutGroup;
-import feathers.controls.Screen;
+import feathers.controls.ScrollContainer;
 import feathers.controls.TextInput;
 import feathers.data.ListCollection;
 import feathers.layout.HorizontalLayout;
 import feathers.layout.VerticalLayout;
+
+import starling.display.Quad;
 import starling.events.Event;
 
 
-public class EditTask extends Screen {
+public class EditTask extends ScrollContainer {
     private var _taskModel:TaskModel;
     private var _personModel:PersonModel;
     private var _popupLayout:LayoutGroup;
@@ -27,8 +29,13 @@ public class EditTask extends Screen {
     private var _saveButton:Button;
     private var _deleteButton:Button;
     private var _currentTask:TaskVO;
+    private var _container:Quad;
 
     public function EditTask() {
+        this.addEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
+        _container = new Quad(400, 500, 0x5b7f73);
+        this.backgroundSkin = _container;
+
         _taskModel = TaskModel.getInstance();
         _personModel = PersonModel.getInstance();
 
@@ -66,6 +73,13 @@ public class EditTask extends Screen {
             _titleInput.text = _currentTask.title;
             _priceInput.text = String(_currentTask.price);
         }
+    }
+
+    private function addedToStageHandler(event:Event):void {
+        _container.width = stage.stageWidth * .85;
+        _container.height = stage.stageHeight * .3;
+        _popupLayout.x = (_container.width - _popupLayout.width) / 4;
+        _popupLayout.y = (_container.height - _popupLayout.height) / 4;
     }
 
     private function deleteButtonHandler(event:Event):void {
