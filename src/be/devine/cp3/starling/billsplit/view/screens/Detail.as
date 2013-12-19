@@ -3,7 +3,6 @@ package be.devine.cp3.starling.billsplit.view.screens {
 
 
 import be.devine.cp3.starling.billsplit.format.DateFormat;
-import be.devine.cp3.starling.billsplit.format.PriceFormat;
 import be.devine.cp3.starling.billsplit.model.AppModel;
 import be.devine.cp3.starling.billsplit.model.PersonModel;
 import be.devine.cp3.starling.billsplit.model.TaskModel;
@@ -19,7 +18,6 @@ import feathers.data.ListCollection;
 import feathers.layout.HorizontalLayout;
 import feathers.layout.VerticalLayout;
 import feathers.renderers.PersonListRenderer;
-
 import starling.display.Image;
 import starling.events.Event;
 import starling.text.TextField;
@@ -71,7 +69,15 @@ public class Detail extends Screen {
         _personList.itemRendererType = PersonListRenderer;
         _personList.itemRendererProperties.labelField = "name";
         _personList.itemRendererProperties.accessoryField = "accessory";
+        _personList.addEventListener(Event.CHANGE, editPopUpHandler);
         addChild(_personList);
+
+
+       /* _taskList = new List();
+        _taskList.itemRendererType = TaskListRenderer;
+        _taskList.itemRendererProperties.labelField = "title";
+        _taskList.itemRendererProperties.accessoryField = "accessory";
+        addChild(_taskList);*/
 
         _taskLayout = new LayoutGroup();
         addChild(_taskLayout);
@@ -182,8 +188,8 @@ public class Detail extends Screen {
         person.iou = 0;
         _personModel.add(person);
 
-        var iou:Number = PriceFormat.calculatePrices(_currentTask.price,_personModel.getPersonsByTaskId(_currentTask.id));
-        _personModel.updateIou(_currentTask.id,iou);
+       /* var iou:Number = PriceFormat.calculatePrices(_currentTask.price,_personModel.getPersonsByTaskId(_currentTask.id));
+        _personModel.updateIou(_currentTask.id,iou);*/
 
         PersonService.write(_personModel.persons);
 
@@ -192,6 +198,12 @@ public class Detail extends Screen {
         }
 
         updateTask(null);
+
+    }
+
+    private function editPopUpHandler(event:Event):void {
+
+        _personModel.currentPerson = _personList.selectedItem as PersonVO;
 
     }
 }
