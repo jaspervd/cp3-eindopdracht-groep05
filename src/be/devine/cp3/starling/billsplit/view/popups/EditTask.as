@@ -81,7 +81,7 @@ public class EditTask extends Screen {
         _taskModel.deleteById(_currentTask.id);
         _personModel.deletePersonsByTaskId(_currentTask.id);
         TaskService.write(_taskModel.tasks);
-        TaskService.write(_personModel.persons);
+        PersonService.write(_personModel.persons);
         dispatchEvent(new Event(Event.CLOSE));
     }
 
