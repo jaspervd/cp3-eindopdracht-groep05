@@ -20,6 +20,8 @@ import feathers.data.ListCollection;
 import feathers.layout.HorizontalLayout;
 import feathers.layout.VerticalLayout;
 import feathers.renderers.PersonListRenderer;
+import feathers.renderers.TaskListRenderer;
+
 import starling.display.Image;
 import starling.events.Event;
 import starling.text.TextField;
@@ -68,6 +70,7 @@ public class Detail extends Screen {
 
         _personList = new List();
         _personList.itemRendererType = PersonListRenderer;
+        _personList.itemRendererProperties.gap = 1;
         _personList.itemRendererProperties.labelField = "name";
         _personList.itemRendererProperties.accessoryField = "accessory";
         _personList.addEventListener(Event.CHANGE, editPopUpHandler);
