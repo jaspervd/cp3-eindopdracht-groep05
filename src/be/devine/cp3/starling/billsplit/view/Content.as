@@ -1,6 +1,7 @@
 package be.devine.cp3.starling.billsplit.view {
 
 import be.devine.cp3.starling.billsplit.model.AppModel;
+import be.devine.cp3.starling.billsplit.model.PersonModel;
 import be.devine.cp3.starling.billsplit.view.screens.Add;
 import be.devine.cp3.starling.billsplit.view.screens.Detail;
 import be.devine.cp3.starling.billsplit.view.screens.Overview;
@@ -19,12 +20,14 @@ public class Content extends ScrollContainer {
 
     private var _navigator:ScreenNavigator;
     private var _appmodel:AppModel;
+    private var _personModel:PersonModel;
     protected var navigator:ScreenNavigator;
 
     public function Content() {
 
 
         _appmodel = AppModel.getInstance();
+        _personModel = PersonModel.getInstance();
 
         _appmodel.addEventListener(Event.CHANGE,screenHandler);
 
@@ -40,7 +43,11 @@ public class Content extends ScrollContainer {
         transitionManager.ease = Transitions.EASE_IN_OUT;
         transitionManager.duration = .5;
 
-        _navigator.showScreen("overview");
+        if(_personModel.getModerator() == null) {
+            _navigator.showScreen("register");
+        } else {
+            _navigator.showScreen("overview");
+        }
 
         this.navigator = _navigator;
 

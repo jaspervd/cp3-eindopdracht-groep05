@@ -61,10 +61,6 @@ public class Application extends Sprite {
         header = new Header();
         addChild(header);
 
-        if(_personModel.getModerator() == null) {
-            _appModel.currentScreen = "register";
-        }
-
         //this.addEventListener(FeathersEventType.INITIALIZE, intializerHandler);
 
     }

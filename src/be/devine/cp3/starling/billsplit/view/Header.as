@@ -2,6 +2,8 @@ package be.devine.cp3.starling.billsplit.view {
 
 
 import be.devine.cp3.starling.billsplit.model.AppModel;
+import be.devine.cp3.starling.billsplit.model.PersonModel;
+
 import feathers.controls.Button;
 import feathers.controls.Header;
 import feathers.controls.Screen;
@@ -36,6 +38,7 @@ public class Header extends Screen{
     private var _theme:MetalWorksMobileTheme;
     private var _action:String;
     private var _appmodel:AppModel;
+    private var _personModel:PersonModel;
     private var _back:Boolean;
 
     public function Header() {
@@ -43,6 +46,7 @@ public class Header extends Screen{
 
 
         _appmodel = AppModel.getInstance();
+        _personModel = PersonModel.getInstance();
         _theme = new MetalWorksMobileTheme();
 
         _header = new feathers.controls.Header();
@@ -51,14 +55,13 @@ public class Header extends Screen{
 
         _overview = new Button(); // backbutton
         _overview.nameList.add("overview");
-        _overview.addEventListener(Event.TRIGGERED, overviewClicked);
+        if(_personModel.getModerator()) {
+            _overview.addEventListener(Event.TRIGGERED, overviewClicked);
+            _multiple.addEventListener(Event.TRIGGERED, checkAction);
+        }
 
         _multiple = new Button();
         _multiple.nameList.add("multiple");
-        _multiple.addEventListener(Event.TRIGGERED, checkAction);
-
-
-
     }
 
     private function overviewClicked(event:Event):void {

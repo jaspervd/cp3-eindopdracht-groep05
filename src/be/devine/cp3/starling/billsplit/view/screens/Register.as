@@ -96,13 +96,13 @@ public class Register extends Screen {
         var error:Boolean = false;
         var alert:Alert;
 
-        if (_inputName.text.length == 0) {
-            alert = Alert.show("Please fill in your name", "Error", new ListCollection([
+        if (_urlImage.length == 0) {
+            alert = Alert.show("Please take a picture", "Error", new ListCollection([
                 { label: "OK" }
             ]));
             error = true;
-        } else if(_urlImage.length == 0) {
-            alert = Alert.show("Please take a picture", "Error", new ListCollection([
+        } else if (_inputName.text.length == 0) {
+            alert = Alert.show("Please fill in your name", "Error", new ListCollection([
                 { label: "OK" }
             ]));
             error = true;
