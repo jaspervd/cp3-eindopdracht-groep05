@@ -43,6 +43,7 @@ public class EditPerson extends Screen {
         layout.gap = 15;
         layout.paddingTop = 100;
         _popupLayout.layout = layout;
+        addChild(_popupLayout);
 
         _nameInput = new TextInput();
         _nameInput.text = "";
@@ -59,17 +60,22 @@ public class EditPerson extends Screen {
         _saveButton = new Button();
         _saveButton.label = "Save";
         _saveButton.addEventListener(Event.TRIGGERED, saveButtonHandler);
+        _buttonLayout.addChild(_saveButton);
 
         _deleteButton = new Button();
         _deleteButton.label = "Delete";
         _deleteButton.addEventListener(Event.TRIGGERED, deleteButtonHandler);
+        _buttonLayout.addChild(_deleteButton);
 
-        _personModel.addEventListener(PersonModel.CURRENT_PERSON_SET, currentPersonSet);
+        _currentPerson = _personModel.currentPerson;
+
+        _nameInput.text = _currentPerson.name;
+        _priceInput.text = String(_currentPerson.iou);
     }
 
     private function deleteButtonHandler(event:Event):void {
         _personModel.deleteById(_currentPerson.id);
-        dispatchEvent(new Event(Event.TRIGGERED));
+        dispatchEvent(new Event(Event.CLOSE));
     }
 
     private function saveButtonHandler(event:Event):void {
@@ -100,7 +106,7 @@ public class EditPerson extends Screen {
             error = true;
         }
 
-        if(!error) {
+        if (!error) {
             var personObj:Object = {};
             personObj.name = _nameInput.text;
             personObj.iou = _priceInput.text;
@@ -108,14 +114,8 @@ public class EditPerson extends Screen {
             PersonService.write(_personModel.persons);
 
             _nameInput.text = _priceInput.text = "";
-            dispatchEvent(new Event(Event.TRIGGERED));
+            dispatchEvent(new Event(Event.CLOSE));
         }
-    }
-
-    private function currentPersonSet(event:Event):void {
-        _currentPerson = _personModel.currentPerson;
-        _nameInput.text = _currentPerson.name;
-        _priceInput.text = String(_currentPerson.iou);
     }
 }
 }

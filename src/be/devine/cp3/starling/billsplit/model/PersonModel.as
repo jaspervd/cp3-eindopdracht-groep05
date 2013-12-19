@@ -119,7 +119,7 @@ public class PersonModel extends EventDispatcher {
     public function updatePerson(_currentPerson:PersonVO, personObj:Object):void {
         var index:uint = _persons.indexOf(_currentPerson);
         _persons[index].name = personObj.name;
-        _persons[index].price = personObj.price;
+        _persons[index].iou = personObj.iou;
         dispatchEvent(new Event(Event.CHANGE));
     }
 }

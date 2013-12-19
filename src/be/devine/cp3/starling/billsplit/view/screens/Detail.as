@@ -8,12 +8,14 @@ import be.devine.cp3.starling.billsplit.model.PersonModel;
 import be.devine.cp3.starling.billsplit.model.TaskModel;
 import be.devine.cp3.starling.billsplit.service.PersonService;
 import be.devine.cp3.starling.billsplit.service.TaskService;
+import be.devine.cp3.starling.billsplit.view.popups.EditPerson;
 import be.devine.cp3.starling.billsplit.vo.PersonVO;
 import be.devine.cp3.starling.billsplit.vo.TaskVO;
 import feathers.controls.Button;
 import feathers.controls.LayoutGroup;
 import feathers.controls.List;
 import feathers.controls.Screen;
+import feathers.core.PopUpManager;
 import feathers.data.ListCollection;
 import feathers.layout.HorizontalLayout;
 import feathers.layout.VerticalLayout;
@@ -53,8 +55,7 @@ public class Detail extends Screen {
     private var _people:Button;
     private var _addPerson:Button;
     private var _dateTime:TextField;
-
-
+    private var _editPerson:EditPerson;
 
     public function Detail() {
 
@@ -134,8 +135,6 @@ public class Detail extends Screen {
         _addPerson.iconPosition = Button.ICON_POSITION_LEFT;
         _addPerson.addEventListener(Event.TRIGGERED, addPerson);
         _detailGroup.addChild(_addPerson);
-
-
     }
 
     private function updateTask(event:Event):void {
@@ -204,7 +203,16 @@ public class Detail extends Screen {
     private function editPopUpHandler(event:Event):void {
 
         _personModel.currentPerson = _personList.selectedItem as PersonVO;
+        _personList.selectedIndex = -1;
+        _editPerson = new EditPerson();
+        _editPerson.addEventListener(Event.CLOSE, closeButtonHandler);
+        PopUpManager.addPopUp(_editPerson);
 
+    }
+
+    private function closeButtonHandler(event:Event):void {
+        updateTask(null);
+        PopUpManager.removePopUp(_editPerson);
     }
 }
 }

@@ -9,6 +9,7 @@ import be.devine.cp3.starling.billsplit.view.screens.Register;
 import feathers.controls.ScreenNavigator;
 import feathers.controls.ScreenNavigatorItem;
 import feathers.controls.ScrollContainer;
+import feathers.core.PopUpManager;
 import feathers.motion.transitions.ScreenSlidingStackTransitionManager;
 import starling.animation.Transitions;
 import starling.events.Event;
@@ -24,8 +25,6 @@ public class Content extends ScrollContainer {
     protected var navigator:ScreenNavigator;
 
     public function Content() {
-
-
         _appmodel = AppModel.getInstance();
         _personModel = PersonModel.getInstance();
 
