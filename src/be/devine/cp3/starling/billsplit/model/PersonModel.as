@@ -10,7 +10,9 @@ public class PersonModel extends EventDispatcher {
 
     private var _persons:Array;
     private var _moderator:PersonVO;
+    private var _currentPerson:PersonVO;
     public static const MODERATOR_SET:String = "MODERATOR_SET";
+    public static const CURRENT_PERSON_SET:String = "CURRENT_PERSON_SET";
 
     public static function getInstance():PersonModel {
         if (instance == null) {
@@ -103,6 +105,20 @@ public class PersonModel extends EventDispatcher {
 
     }
 
+    public function get currentPerson():PersonVO {
+        return _currentPerson;
+    }
+
+    public function set currentPerson(value:PersonVO):void {
+        if(_currentPerson != value) {
+            _currentPerson = value;
+            dispatchEvent(new Event(CURRENT_PERSON_SET));
+        }
+    }
+
+    public function replace(_currentPerson:PersonVO, personObj:Object):void {
+        
+    }
 }
 }
 internal class Enforcer {
