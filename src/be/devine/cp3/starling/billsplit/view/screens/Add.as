@@ -6,30 +6,25 @@
  * To change this template use File | Settings | File Templates.
  */
 package be.devine.cp3.starling.billsplit.view.screens {
-import be.devine.cp3.starling.billsplit.factory.TaskVOFactory;
+
+
 import be.devine.cp3.starling.billsplit.model.AppModel;
 import be.devine.cp3.starling.billsplit.model.PersonModel;
 import be.devine.cp3.starling.billsplit.model.TaskModel;
 import be.devine.cp3.starling.billsplit.service.PersonService;
 import be.devine.cp3.starling.billsplit.service.TaskService;
 import be.devine.cp3.starling.billsplit.vo.PersonVO;
-import be.devine.cp3.starling.billsplit.vo.TaskVO;
-
 import feathers.controls.Alert;
 import feathers.controls.Button;
 import feathers.controls.LayoutGroup;
 import feathers.controls.List;
-import feathers.controls.PickerList;
-import feathers.controls.Radio;
 import feathers.controls.Screen;
-import feathers.controls.ScrollContainer;
 import feathers.controls.TextInput;
-import feathers.core.ToggleGroup;
+import feathers.controls.ToggleSwitch;
 import feathers.data.ListCollection;
 import feathers.layout.HorizontalLayout;
 import feathers.layout.VerticalLayout;
 import feathers.renderers.TypesListRenderer;
-
 import starling.events.Event;
 
 public class Add extends Screen {
@@ -41,6 +36,7 @@ public class Add extends Screen {
     private var _taskModel:TaskModel;
     private var _personModel:PersonModel;
     private var _typesList:List;
+    private var _toggle:ToggleSwitch
 
     public function Add() {
 
@@ -73,6 +69,13 @@ public class Add extends Screen {
             {"type": "cinema"}
         ]);
         _typesList.selectedIndex = 0;
+
+        _toggle= new ToggleSwitch();
+        _toggle.onText = "€";
+        _toggle.offText = "%";
+        _toggle.isSelected = true;
+        _toggle.addEventListener(Event.CHANGE, toggleHandler);
+        _addLayout.addChild( _toggle );
 
         _inputTitle = new TextInput();
         _inputTitle.prompt = "Title";
@@ -138,6 +141,8 @@ public class Add extends Screen {
             taskObj.price = _inputPrice.text;
             taskObj.type = _typesList.selectedItem.type;
 
+            _taskModel.currency = _toggle.isSelected;
+
             _taskModel.add(taskObj);
             TaskService.write(_taskModel.tasks);
 
@@ -156,6 +161,11 @@ public class Add extends Screen {
 
             _appModel.currentScreen = "detail";
         }
+    }
+
+    private function toggleHandler(event:Event):void {
+
+        trace(_toggle.isSelected);
     }
 }
 }

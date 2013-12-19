@@ -15,6 +15,7 @@ public class TaskModel extends EventDispatcher {
     private var _tasks:Array;
     private var _task:TaskVO;
     private var _currentTask:TaskVO;
+    private var _currency:Boolean = false;
 
     public static function getInstance():TaskModel {
 
@@ -113,6 +114,14 @@ public class TaskModel extends EventDispatcher {
 
     public function set currentTask(value:TaskVO):void {
         _currentTask = value;
+    }
+
+    public function get currency():Boolean {
+        return _currency;
+    }
+
+    public function set currency(value:Boolean):void {
+        _currency = value;
     }
 }
 }
