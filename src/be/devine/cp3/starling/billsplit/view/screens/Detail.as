@@ -1,7 +1,6 @@
 package be.devine.cp3.starling.billsplit.view.screens {
 
 
-
 import be.devine.cp3.starling.billsplit.format.DateFormat;
 import be.devine.cp3.starling.billsplit.model.AppModel;
 import be.devine.cp3.starling.billsplit.model.PersonModel;
@@ -11,6 +10,7 @@ import be.devine.cp3.starling.billsplit.service.TaskService;
 import be.devine.cp3.starling.billsplit.view.popups.EditPerson;
 import be.devine.cp3.starling.billsplit.vo.PersonVO;
 import be.devine.cp3.starling.billsplit.vo.TaskVO;
+
 import feathers.controls.Button;
 import feathers.controls.LayoutGroup;
 import feathers.controls.List;
@@ -25,9 +25,6 @@ import feathers.renderers.TaskListRenderer;
 import starling.display.Image;
 import starling.events.Event;
 import starling.text.TextField;
-
-
-
 
 
 public class Detail extends Screen {
@@ -67,10 +64,11 @@ public class Detail extends Screen {
         _currentTask = new TaskVO();
 
         _appModel.addEventListener(Event.CHANGE, updateTask);
+        _personModel.addEventListener(Event.CHANGE, updateTask);
 
         _personList = new List();
         _personList.itemRendererType = PersonListRenderer;
-        _personList.itemRendererProperties.gap = 1;
+       // _personList.itemRendererProperties.gap = 1;
         _personList.itemRendererProperties.labelField = "name";
         _personList.itemRendererProperties.accessoryField = "accessory";
         _personList.addEventListener(Event.CHANGE, editPopUpHandler);
@@ -116,7 +114,6 @@ public class Detail extends Screen {
         _detailGroup.layout = horlayout;
 
 
-
         _total = new Button();
         _total.nameList.add("total");
         _total.labelOffsetX = -15;
@@ -124,13 +121,11 @@ public class Detail extends Screen {
         _detailGroup.addChild(_total);
 
 
-
         _people = new Button();
         _people.labelOffsetX = -15;
         _people.nameList.add("people");
         _people.iconPosition = Button.ICON_POSITION_LEFT;
         _detailGroup.addChild(_people);
-
 
 
         _addPerson = new Button();
@@ -142,8 +137,7 @@ public class Detail extends Screen {
 
     private function updateTask(event:Event):void {
 
-        if(_taskModel.currentTask) {
-
+        if (_taskModel.currentTask) {
             _currentTask = _taskModel.currentTask;
 
             _taskTitle.text = _currentTask.title;
@@ -161,8 +155,6 @@ public class Detail extends Screen {
             _type.defaultIcon = TaskService.icon(_currentTask);
 
             _personList.dataProvider = new ListCollection(_personModel.getPersonsByTaskId(_currentTask.id));
-
-
         }
     }
 
@@ -173,7 +165,6 @@ public class Detail extends Screen {
 
 
     private function scherm():void {
-
         _taskTitle.width = stage.stageWidth;
         _dateTime.width = stage.stageWidth;
         _taskLayout.setSize(stage.stageWidth, stage.stageHeight * 0.5);
@@ -183,10 +174,10 @@ public class Detail extends Screen {
 
     private function addPerson(event:Event):void {
 
-        var person:Object = new Object();
-        person.name = "person"+String(_personModel.getPersonsByTaskId(_currentTask.id).length+1);
+        var person:Object = {};
+        person.name = "person" + String(_personModel.getPersonsByTaskId(_currentTask.id).length + 1);
         person.image = "no Image";
-        person.task_id = _taskModel.currentTask.id;
+        person.task_id = _currentTask.id;
         person.iou = 0;
         _personModel.add(person);
 
@@ -195,26 +186,22 @@ public class Detail extends Screen {
 
         PersonService.write(_personModel.persons);
 
-        for each(var personVo:PersonVO in _personModel.persons){
-            trace(personVo.iou);
-        }
-
-        updateTask(null);
-
+        /*for each(var personVo:PersonVO in _personModel.persons){
+         trace(personVo.iou);
+         }*/
     }
 
     private function editPopUpHandler(event:Event):void {
-        _personModel.currentPerson = _personList.selectedItem as PersonVO;
-        _personList.selectedIndex = -1;
-        _editPerson = new EditPerson();
-        _editPerson.addEventListener(Event.CLOSE, closeButtonHandler);
-        PopUpManager.addPopUp(_editPerson);
-
+        if (_personList.selectedItem) {
+            _personModel.currentPerson = PersonVO(_personList.selectedItem);
+            _editPerson = new EditPerson();
+            _editPerson.addEventListener(Event.CLOSE, closeButtonHandler);
+            PopUpManager.addPopUp(_editPerson);
+        }
     }
 
     private function closeButtonHandler(event:Event):void {
-        updateTask(null);
-        PopUpManager.removePopUp(_editPerson);
+        PopUpManager.removePopUp(_editPerson, true);
     }
 }
 }

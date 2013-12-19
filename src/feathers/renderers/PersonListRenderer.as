@@ -49,7 +49,7 @@ public class PersonListRenderer extends DefaultListItemRenderer {
     }
 
     private function editButtonHandler(event:Event):void {
-        dispatchEvent(new Event(Event.CHANGE));
+        //dispatchEvent(new Event(Event.CHANGE));
     }
 }
 }

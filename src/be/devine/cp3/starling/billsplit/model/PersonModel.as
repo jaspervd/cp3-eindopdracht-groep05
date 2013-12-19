@@ -2,6 +2,7 @@ package be.devine.cp3.starling.billsplit.model {
 
 import be.devine.cp3.starling.billsplit.factory.PersonVOFactory;
 import be.devine.cp3.starling.billsplit.vo.PersonVO;
+
 import starling.events.Event;
 import starling.events.EventDispatcher;
 
@@ -34,7 +35,7 @@ public class PersonModel extends EventDispatcher {
     }
 
     public function set persons(value:Array):void {
-        if(_persons != value) {
+        if (_persons != value) {
 
             _persons = value;
 
@@ -43,7 +44,7 @@ public class PersonModel extends EventDispatcher {
 
     public function getModerator():PersonVO {
         for each(var person:PersonVO in _persons) {
-            if(person.moderator) {
+            if (person.moderator) {
                 _moderator = person;
             }
         }
@@ -52,7 +53,7 @@ public class PersonModel extends EventDispatcher {
 
     public function add(value:Object):Array {
         var lastPerson:PersonVO = _persons[_persons.length - 1];
-        if(_persons.length == 0) {
+        if (_persons.length == 0) {
             value.id = 1;
         } else {
             value.id = lastPerson.id + 1;
@@ -61,7 +62,7 @@ public class PersonModel extends EventDispatcher {
         _persons.push(personVO);
         dispatchEvent(new Event(Event.CHANGE));
 
-        if(value.moderator) {
+        if (value.moderator) {
             dispatchEvent(new Event(MODERATOR_SET));
         }
 
@@ -88,13 +89,14 @@ public class PersonModel extends EventDispatcher {
         }
         return tempArr;
     }
-    public function updateIou(taskId:uint,iou:Number){
 
-        for each(var person:PersonVO in persons){
+    public function updateIou(taskId:uint, iou:Number):void {
+
+        for each(var person:PersonVO in persons) {
             trace(person.name);
             trace(_persons.indexOf(person));
 
-            if(person.task_id == taskId){
+            if (person.task_id == taskId) {
                 _persons.splice(_persons.indexOf(person), 1);
                 person.iou = Number(iou.toFixed(2));
                 _persons.push(person);
@@ -110,7 +112,7 @@ public class PersonModel extends EventDispatcher {
     }
 
     public function set currentPerson(value:PersonVO):void {
-        if(_currentPerson != value) {
+        if (_currentPerson != value) {
             _currentPerson = value;
             dispatchEvent(new Event(CURRENT_PERSON_SET));
         }
@@ -120,6 +122,7 @@ public class PersonModel extends EventDispatcher {
         var index:uint = _persons.indexOf(_currentPerson);
         _persons[index].name = personObj.name;
         _persons[index].iou = personObj.iou;
+
         dispatchEvent(new Event(Event.CHANGE));
     }
 }

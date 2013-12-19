@@ -18,9 +18,6 @@ public class AppModel extends EventDispatcher {
 
     private var _completed:Boolean;
 
-    public static var PERSONS_CHANGED:String = 'PERSONS_CHANGED';
-    public static var TASKS_CHANGED:String = 'TASKS_CHANGED';
-    public static var CALCULATION_CHANGED:String = 'CALCULATION_CHANGED';
     public static var COMPLETED:String = 'COMPLETED';
 
     public static function getInstance():AppModel {
@@ -67,22 +64,12 @@ public class AppModel extends EventDispatcher {
         TaskService.write(_tasks);
     }
 
-
     public function get persons():Array {
         return _persons;
     }
     public function get tasks():Array {
         return _tasks;
     }
-
-
-
-
-
-
-
-
-
 
     public function get completed():Boolean {
         return _completed;

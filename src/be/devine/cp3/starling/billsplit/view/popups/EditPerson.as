@@ -21,7 +21,6 @@ import feathers.controls.TextInput;
 import feathers.data.ListCollection;
 import feathers.layout.HorizontalLayout;
 import feathers.layout.VerticalLayout;
-import feathers.renderers.PersonListRenderer;
 
 import starling.events.Event;
 
@@ -30,7 +29,7 @@ public class EditPerson extends Screen {
     private var _popupLayout:LayoutGroup;
     private var _nameInput:TextInput;
     private var _priceInput:TextInput;
-    private var _buttonLayout;
+    private var _buttonLayout:LayoutGroup;
     private var _saveButton:Button;
     private var _deleteButton:Button;
     private var _currentPerson:PersonVO;
@@ -47,11 +46,9 @@ public class EditPerson extends Screen {
         addChild(_popupLayout);
 
         _nameInput = new TextInput();
-        _nameInput.text = "";
         _popupLayout.addChild(_nameInput);
 
         _priceInput = new TextInput();
-        _priceInput.text = "";
         _popupLayout.addChild(_priceInput);
 
         _buttonLayout = new LayoutGroup();
@@ -70,13 +67,15 @@ public class EditPerson extends Screen {
 
         if(_personModel.currentPerson == null) {
             _personModel.addEventListener(PersonModel.CURRENT_PERSON_SET, currentPersonSetHandler);
+            trace('currentperson is null');
         } else {
-            _currentPerson = _personModel.currentPerson;
+            trace('currentperson is ', _personModel.currentPerson.name);
             currentPersonSetHandler();
         }
     }
 
     private function currentPersonSetHandler(event:Event = null):void {
+        _currentPerson = _personModel.currentPerson;
         _nameInput.text = _currentPerson.name;
         _priceInput.text = String(_currentPerson.iou);
     }

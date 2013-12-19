@@ -54,7 +54,7 @@ public class TaskModel extends EventDispatcher {
 
     public function getTask(id:uint):TaskVO {
         for each(var task:TaskVO in _tasks) {
-            if (task.id = id) {
+            if (task.id == id) {
                 _task = task;
             }
         }
