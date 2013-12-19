@@ -26,7 +26,6 @@ import feathers.data.ListCollection;
 import feathers.layout.HorizontalLayout;
 import feathers.layout.VerticalLayout;
 import feathers.renderers.TypesListRenderer;
-
 import starling.events.Event;
 
 public class Add extends Screen {
@@ -70,14 +69,8 @@ public class Add extends Screen {
             {"type": "bar"},
             {"type": "cinema"}
         ]);
+        _typesList.addEventListener(Event.TRIGGERED, selectedButton);
         _typesList.selectedIndex = 0;
-
-        _toggle = new ToggleSwitch();
-        _toggle.onText = "€";
-        _toggle.offText = "%";
-        _toggle.isSelected = true;
-        _toggle.addEventListener(Event.CHANGE, toggleHandler);
-        _addLayout.addChild(_toggle);
 
         _inputTitle = new TextInput();
         _inputTitle.prompt = "Title";
@@ -169,6 +162,16 @@ public class Add extends Screen {
     private function toggleHandler(event:Event):void {
 
         trace(_toggle.isSelected);
+    }
+
+    private function selectedButton(event:Event):void {
+
+        trace("UPDATE TYPES");
+        var _dataLen:int = _typesList.dataProvider.length;
+        for(var i:int = 0; i < _dataLen; i++) {
+            trace(_typesList.dataProvider.updateItemAt(i));
+        }
+
     }
 }
 }

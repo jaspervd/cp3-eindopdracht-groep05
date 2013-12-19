@@ -1,30 +1,18 @@
-/**
- * Created with IntelliJ IDEA.
- * User: Jasper
- * Date: 18/12/13
- * Time: 12:17
- * To change this template use File | Settings | File Templates.
- */
 package be.devine.cp3.starling.billsplit.view.screens {
+
 import be.devine.cp3.starling.billsplit.model.AppModel;
 import be.devine.cp3.starling.billsplit.model.PersonModel;
 import be.devine.cp3.starling.billsplit.service.PersonService;
 import be.devine.cp3.starling.billsplit.service.PictureService;
-
 import feathers.controls.Alert;
-
 import feathers.controls.Button;
 import feathers.controls.ImageLoader;
-
 import feathers.controls.LayoutGroup;
-
 import feathers.controls.Screen;
 import feathers.controls.TextInput;
 import feathers.data.ListCollection;
 import feathers.layout.VerticalLayout;
-
 import flash.filesystem.File;
-
 import starling.events.Event;
 
 
@@ -48,7 +36,7 @@ public class Register extends Screen {
 
         var layout:VerticalLayout = new VerticalLayout();
         layout.horizontalAlign = VerticalLayout.HORIZONTAL_ALIGN_CENTER;
-        layout.gap = 15;
+        layout.gap = 10;
         layout.paddingTop = 100;
         _registerLayout.layout = layout;
 
@@ -57,7 +45,7 @@ public class Register extends Screen {
 
         _urlImage = "";
         _image = new ImageLoader();
-        //_registerLayout.addChild(_image);
+        _registerLayout.addChild(_image);
 
         _takePicBtn = new Button();
         _takePicBtn.label = "Take picture";

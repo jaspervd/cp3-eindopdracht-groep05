@@ -35,6 +35,17 @@ public class TypesListRenderer extends DefaultListItemRenderer {
         var icon:Button = new Button();
         icon.defaultIcon = TaskService.icon(task);
         icon.addEventListener(Event.TRIGGERED, triggeredHandler);
+
+        if(this.isSelected){
+
+            icon.setSize(70,70)
+
+        }else{
+
+            icon.setSize(100,100);
+
+        }
+
         this.replaceIcon(icon);
     }
 
