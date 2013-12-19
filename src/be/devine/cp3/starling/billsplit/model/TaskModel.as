@@ -16,6 +16,7 @@ public class TaskModel extends EventDispatcher {
     private var _task:TaskVO;
     private var _currentTask:TaskVO;
     private var _currency:Boolean = false;
+    private var _totalPrice:Number;
 
     public static function getInstance():TaskModel {
 
@@ -130,6 +131,14 @@ public class TaskModel extends EventDispatcher {
         _tasks[index].price = taskObj.price;
 
         dispatchEvent(new Event(Event.CHANGE));
+    }
+
+    public function get totalPrice():Number {
+        return _totalPrice;
+    }
+
+    public function set totalPrice(value:Number):void {
+        _totalPrice = value;
     }
 }
 }

@@ -54,6 +54,7 @@ public class EditTask extends Screen {
         _popupLayout.addChild(_titleInput);
 
         _priceInput = new TextInput();
+        _priceInput.restrict = "0-9.,";
         _popupLayout.addChild(_priceInput);
 
         _buttonLayout = new LayoutGroup();

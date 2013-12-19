@@ -14,6 +14,7 @@ import be.devine.cp3.starling.billsplit.model.TaskModel;
 import be.devine.cp3.starling.billsplit.service.PersonService;
 import be.devine.cp3.starling.billsplit.service.TaskService;
 import be.devine.cp3.starling.billsplit.vo.PersonVO;
+
 import feathers.controls.Alert;
 import feathers.controls.Button;
 import feathers.controls.LayoutGroup;
@@ -25,6 +26,7 @@ import feathers.data.ListCollection;
 import feathers.layout.HorizontalLayout;
 import feathers.layout.VerticalLayout;
 import feathers.renderers.TypesListRenderer;
+
 import starling.events.Event;
 
 public class Add extends Screen {
@@ -36,7 +38,7 @@ public class Add extends Screen {
     private var _taskModel:TaskModel;
     private var _personModel:PersonModel;
     private var _typesList:List;
-    private var _toggle:ToggleSwitch
+    private var _toggle:ToggleSwitch;
 
     public function Add() {
 
@@ -70,12 +72,12 @@ public class Add extends Screen {
         ]);
         _typesList.selectedIndex = 0;
 
-        _toggle= new ToggleSwitch();
+        _toggle = new ToggleSwitch();
         _toggle.onText = "€";
         _toggle.offText = "%";
         _toggle.isSelected = true;
         _toggle.addEventListener(Event.CHANGE, toggleHandler);
-        _addLayout.addChild( _toggle );
+        _addLayout.addChild(_toggle);
 
         _inputTitle = new TextInput();
         _inputTitle.prompt = "Title";
@@ -138,7 +140,7 @@ public class Add extends Screen {
         if (!error) {
             var taskObj:Object = {};
             taskObj.title = _inputTitle.text;
-            taskObj.price = _inputPrice.text;
+            taskObj.price = _inputPrice.text.split(',').join('.');
             taskObj.type = _typesList.selectedItem.type;
 
             _taskModel.currency = _toggle.isSelected;
@@ -152,6 +154,7 @@ public class Add extends Screen {
             personObj.name = moderator.name;
             personObj.image = moderator.image;
             personObj.task_id = _taskModel.currentTask.id;
+            personObj.label = personObj.name + "  -  € " + taskObj.price;
             _personModel.add(personObj);
             trace(personObj);
             trace(_personModel.persons);

@@ -153,6 +153,8 @@ public class Detail extends Screen {
         if (_taskModel.currentTask) {
             _currentTask = _taskModel.currentTask;
 
+            _taskModel.totalPrice = _currentTask.price;
+
             _taskTitle.text = _currentTask.title;
 
             _dateTime.text = DateFormat.timestampToUFDate(_currentTask.timestamp as Number);
@@ -162,7 +164,8 @@ public class Detail extends Screen {
             _addPerson.defaultIcon = Image.fromBitmap(new PersonAdd());
             _editTaskBtn.defaultIcon = Image.fromBitmap(new Edit());
 
-            _total.label = "€" + String(_currentTask.price);
+            calculateTotal();
+            _total.label = "€" + String(_taskModel.totalPrice);
 
             _people.label = String(_personModel.getPersonsByTaskId(_currentTask.id).length);
 
@@ -187,22 +190,33 @@ public class Detail extends Screen {
     }
 
     private function addPerson(event:Event):void {
+        if (_taskModel.totalPrice > 0) {
+            var person:Object = {};
+            person.name = "person" + String(_personModel.getPersonsByTaskId(_currentTask.id).length + 1);
+            person.image = "no Image";
+            person.task_id = _currentTask.id;
+            person.iou = 0;
+            _personModel.add(person);
 
-        var person:Object = {};
-        person.name = "person" + String(_personModel.getPersonsByTaskId(_currentTask.id).length + 1);
-        person.image = "no Image";
-        person.task_id = _currentTask.id;
-        person.iou = 0;
-        _personModel.add(person);
+            /* var iou:Number = PriceFormat.calculatePrices(_currentTask.price,_personModel.getPersonsByTaskId(_currentTask.id));
+             _personModel.updateIou(_currentTask.id,iou);*/
 
-        /* var iou:Number = PriceFormat.calculatePrices(_currentTask.price,_personModel.getPersonsByTaskId(_currentTask.id));
-         _personModel.updateIou(_currentTask.id,iou);*/
+            PersonService.write(_personModel.persons);
 
-        PersonService.write(_personModel.persons);
+            /*for each(var personVo:PersonVO in _personModel.persons){
+             trace(personVo.iou);
+             }*/
+        }
+    }
 
-        /*for each(var personVo:PersonVO in _personModel.persons){
-         trace(personVo.iou);
-         }*/
+    private function calculateTotal():void {
+        var total:Number = _taskModel.currentTask.price;
+        for each(var person:PersonVO in _personModel.getPersonsByTaskId(_currentTask.id)) {
+            total -= person.iou;
+        } if(total < 0) {
+            total = 0;
+        }
+        _taskModel.totalPrice = total;
     }
 
 
@@ -214,7 +228,7 @@ public class Detail extends Screen {
 
     private function closeTaskEditPopUpHandler(event:Event):void {
         PopUpManager.removePopUp(_editTask, true);
-        if(_taskModel.getTask(_currentTask.id) == null) {
+        if (_taskModel.getTask(_currentTask.id) == null) {
             _appModel.currentScreen = "overview";
         } else {
             updateTask(null);
@@ -234,6 +248,7 @@ public class Detail extends Screen {
         _personList.dataProvider = null;
         _personList.validate();
         _personList.dataProvider = new ListCollection(_personModel.getPersonsByTaskId(_currentTask.id));
+        trace(_personModel.getPersonsByTaskId(_currentTask.id)[0].iou);
         PopUpManager.removePopUp(_editPerson, true);
     }
 }

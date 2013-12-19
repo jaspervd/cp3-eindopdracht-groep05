@@ -49,6 +49,7 @@ public class EditPerson extends Screen {
         _popupLayout.addChild(_nameInput);
 
         _priceInput = new TextInput();
+        _priceInput.restrict = "0-9.,";
         _popupLayout.addChild(_priceInput);
 
         _buttonLayout = new LayoutGroup();
@@ -116,7 +117,7 @@ public class EditPerson extends Screen {
         if (!error) {
             var personObj:Object = {};
             personObj.name = _nameInput.text;
-            personObj.iou = _priceInput.text;
+            personObj.iou = _priceInput.text.split(',').join('.');
             _personModel.updatePerson(_currentPerson, personObj);
             PersonService.write(_personModel.persons);
 
