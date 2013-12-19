@@ -10,20 +10,23 @@ package feathers.renderers {
 import be.devine.cp3.starling.billsplit.vo.PersonVO;
 import feathers.controls.Button;
 import feathers.controls.renderers.DefaultListItemRenderer;
+
+import starling.display.Image;
 import starling.events.Event;
 
 
 
 public class PersonListRenderer extends DefaultListItemRenderer {
-    //[Embed(source="/../assets/images/metalworks/list-accessory-drill-down-icon.png")]
-    //public static const ListAccessory:Class;
+    [Embed(source="/../assets/images/list-accessory-edit-icon.png")]
+    public static const ListAccessory:Class;
+
+    [Embed(source="/../assets/images/price-icon.png")]
+    public static const PriceIcon:Class;
 
     public function PersonListRenderer() {
         super();
-        this.itemHasIcon = false;
-        this.itemHasAccessory = false;
-        this.accessoryPosition = "right";
-        this.labelField = "";
+        this.itemHasIcon = true;
+        this.itemHasAccessory = true;
     }
 
     protected var editButton:Button;
@@ -36,9 +39,15 @@ public class PersonListRenderer extends DefaultListItemRenderer {
             return;
         }
 
+        var icon:Button = new Button();
+        icon.label = person.iou as String;
+        icon.labelOffsetX = -100;
+        icon.defaultIcon = Image.fromBitmap(new PriceIcon());
+        this.replaceIcon(icon);
+
         this.editButton = new Button();
-        //this.goToButton.defaultIcon = Image.fromBitmap(new ListAccessory());
-        this.editButton.label = "Edit";
+        this.editButton.defaultIcon = Image.fromBitmap(new ListAccessory());
+        this.editButton.setSize(10, 10);
         this.editButton.addEventListener(Event.TRIGGERED, editButtonHandler);
         this.replaceAccessory(editButton);
     }

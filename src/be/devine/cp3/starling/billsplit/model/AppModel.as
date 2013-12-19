@@ -1,9 +1,7 @@
 package be.devine.cp3.starling.billsplit.model {
 
-import be.devine.cp3.starling.billsplit.service.IouService;
 import be.devine.cp3.starling.billsplit.service.PersonService;
 import be.devine.cp3.starling.billsplit.service.TaskService;
-import be.devine.cp3.starling.billsplit.vo.IouVO;
 
 import starling.events.Event;
 
@@ -11,24 +9,17 @@ import starling.events.EventDispatcher;
 
 
 public class AppModel extends EventDispatcher {
-
     private static var instance:AppModel;
-
-
 
     private var _persons:Array;
     private var _tasks:Array;
-    private var _ious:Array;
     private var _currentScreen:String = "overview";
     public var _oldScreenName:String = "overview";
 
     private var _completed:Boolean;
 
-
-
     public static var PERSONS_CHANGED:String = 'PERSONS_CHANGED';
     public static var TASKS_CHANGED:String = 'TASKS_CHANGED';
-    public static var IOUS_CHANGED:String = 'IOUS_CHANGED';
     public static var CALCULATION_CHANGED:String = 'CALCULATION_CHANGED';
     public static var COMPLETED:String = 'COMPLETED';
 
@@ -46,7 +37,6 @@ public class AppModel extends EventDispatcher {
 
         _persons = [];
         _tasks = [];
-        _ious = [];
     }
 
     public function load():void {
@@ -57,10 +47,6 @@ public class AppModel extends EventDispatcher {
         var taskService:TaskService = new TaskService();
         taskService.addEventListener(Event.COMPLETE, tasksLoadCompleteHandler);
         taskService.load();
-
-        var iouService:IouService = new IouService();
-        iouService.addEventListener(Event.COMPLETE, iousLoadCompleteHandler);
-        iouService.load();
 
         completed = true;
     }
@@ -75,53 +61,10 @@ public class AppModel extends EventDispatcher {
         _tasks = taskService.tasks;
     }
 
-    private function iousLoadCompleteHandler(event:Event):void {
-        var iouService:IouService = event.target as IouService;
-        _ious = iouService.ious;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-    //add iou
-
-    public function addIou(value:Object):Array {
-        var lastIou:IouVO = _ious[_ious.length - 1];
-        if(_ious.length == 0) {
-            value.id = 1;
-        } else {
-            value.id = lastIou.id + 1;
-        }
-        var iou:IouVO = IouVO(value);
-        _ious.push(iou);
-        return _ious;
-    }
-
-    public function deleteById(id:uint):Array {
-        for each(var iou:IouVO in _ious) {
-            if (iou.id == id) {
-                _ious.splice(_ious.indexOf(iou), 1);
-            }
-        }
-        return _ious;
-    }
-
-
-
-
     //write json when app Closes
     public function closeApp():void {
         PersonService.write(_persons);
         TaskService.write(_tasks);
-        IouService.write(_ious);
     }
 
 
@@ -130,9 +73,6 @@ public class AppModel extends EventDispatcher {
     }
     public function get tasks():Array {
         return _tasks;
-    }
-    public function get ious():Array {
-        return _ious;
     }
 
 

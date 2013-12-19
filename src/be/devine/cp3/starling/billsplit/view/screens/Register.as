@@ -114,6 +114,7 @@ public class Register extends Screen {
             personObj.name = _inputName.text;
             personObj.image = _urlImage;
             personObj.moderator = true;
+            personObj.iou = 0;
 
             _personModel.add(personObj);
             PersonService.write(_personModel.persons);

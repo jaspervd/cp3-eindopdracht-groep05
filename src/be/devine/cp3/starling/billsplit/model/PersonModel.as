@@ -72,6 +72,8 @@ public class PersonModel extends EventDispatcher {
                 _persons.splice(_persons.indexOf(person), 1);
             }
         }
+        dispatchEvent(new Event(Event.CHANGE));
+
         return _persons;
     }
 
@@ -84,6 +86,23 @@ public class PersonModel extends EventDispatcher {
         }
         return tempArr;
     }
+    public function updateIou(taskId:uint,iou:Number){
+
+        for each(var person:PersonVO in persons){
+            trace(person.name);
+            trace(_persons.indexOf(person));
+
+            if(person.task_id == taskId){
+                _persons.splice(_persons.indexOf(person), 1);
+                person.iou = Number(iou.toFixed(2));
+                _persons.push(person);
+            }
+
+        }
+
+
+    }
+
 }
 }
 internal class Enforcer {

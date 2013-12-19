@@ -6,7 +6,6 @@
  * To change this template use File | Settings | File Templates.
  */
 package be.devine.cp3.starling.billsplit.format {
-import be.devine.cp3.starling.billsplit.vo.IouVO;
 
 public class PriceFormat {
     public function PriceFormat() {
@@ -16,9 +15,10 @@ public class PriceFormat {
         return price / totalPrice;
     }
 
-    public static function calculatePrices(iouVO:IouVO, ious:Array):Array {
+    public static function calculatePrices(total:Number, persons:Array):Number {
         // Prijs berekeken via nieuwe prijs -> de rest gelijk verdelen
-        return [];
+        trace(persons.length);
+        return total/persons.length;
     }
 }
 }

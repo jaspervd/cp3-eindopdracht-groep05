@@ -3,11 +3,13 @@ package be.devine.cp3.starling.billsplit.view.screens {
 
 
 import be.devine.cp3.starling.billsplit.format.DateFormat;
+import be.devine.cp3.starling.billsplit.format.PriceFormat;
 import be.devine.cp3.starling.billsplit.model.AppModel;
 import be.devine.cp3.starling.billsplit.model.PersonModel;
 import be.devine.cp3.starling.billsplit.model.TaskModel;
 import be.devine.cp3.starling.billsplit.service.PersonService;
 import be.devine.cp3.starling.billsplit.service.TaskService;
+import be.devine.cp3.starling.billsplit.vo.PersonVO;
 import be.devine.cp3.starling.billsplit.vo.TaskVO;
 import feathers.controls.Button;
 import feathers.controls.LayoutGroup;
@@ -172,17 +174,22 @@ public class Detail extends Screen {
     }
 
     private function addPerson(event:Event):void {
-        trace(event.currentTarget);
 
         var person:Object = new Object();
         person.name = "person"+String(_personModel.getPersonsByTaskId(_currentTask.id).length+1);
         person.image = "no Image";
         person.task_id = _taskModel.currentTask.id;
         person.iou = 0;
-
         _personModel.add(person);
 
+        var iou:Number = PriceFormat.calculatePrices(_currentTask.price,_personModel.getPersonsByTaskId(_currentTask.id));
+        _personModel.updateIou(_currentTask.id,iou);
+
         PersonService.write(_personModel.persons);
+
+        for each(var personVo:PersonVO in _personModel.persons){
+            trace(personVo.iou);
+        }
 
         updateTask(null);
 

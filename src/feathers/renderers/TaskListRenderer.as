@@ -8,7 +8,6 @@
 package feathers.renderers {
 
 
-import be.devine.cp3.starling.billsplit.format.DateFormat;
 import be.devine.cp3.starling.billsplit.service.TaskService;
 import be.devine.cp3.starling.billsplit.vo.TaskVO;
 import feathers.controls.Button;
@@ -37,8 +36,6 @@ public class TaskListRenderer extends DefaultListItemRenderer {
         if (!task) {
             return;
         }
-
-        trace(DateFormat.timestampToUFDate(task.timestamp));
 
         var icon:Button = new Button();
         icon.defaultIcon = TaskService.icon(task);
