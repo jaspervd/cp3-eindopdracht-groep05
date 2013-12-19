@@ -125,6 +125,15 @@ public class PersonModel extends EventDispatcher {
 
         dispatchEvent(new Event(Event.CHANGE));
     }
+
+    public function deletePersonsByTaskId(taskId:uint):void {
+        for each(var person:PersonVO in _persons) {
+            if (person.task_id == taskId) {
+                _persons.splice(_persons.indexOf(person), 1);
+            }
+        }
+        dispatchEvent(new Event(Event.CHANGE));
+    }
 }
 }
 internal class Enforcer {

@@ -8,6 +8,7 @@ import be.devine.cp3.starling.billsplit.model.TaskModel;
 import be.devine.cp3.starling.billsplit.service.PersonService;
 import be.devine.cp3.starling.billsplit.service.TaskService;
 import be.devine.cp3.starling.billsplit.view.popups.EditPerson;
+import be.devine.cp3.starling.billsplit.view.popups.EditTask;
 import be.devine.cp3.starling.billsplit.vo.PersonVO;
 import be.devine.cp3.starling.billsplit.vo.TaskVO;
 
@@ -54,8 +55,10 @@ public class Detail extends Screen {
     private var _total:Button;
     private var _people:Button;
     private var _addPerson:Button;
+    private var _editTaskBtn:Button;
     private var _dateTime:TextField;
     private var _editPerson:EditPerson;
+    private var _editTask:EditTask;
 
     public function Detail() {
 
@@ -72,7 +75,7 @@ public class Detail extends Screen {
         _personList.itemRendererProperties.gap = 1;
         _personList.itemRendererProperties.labelField = "name";
         _personList.itemRendererProperties.accessoryField = "accessory";
-        _personList.addEventListener(Event.CHANGE, editPopUpHandler);
+        _personList.addEventListener(Event.CHANGE, personEditPopUpHandler);
         addChild(_personList);
 
 
@@ -134,6 +137,13 @@ public class Detail extends Screen {
         _addPerson.iconPosition = Button.ICON_POSITION_LEFT;
         _addPerson.addEventListener(Event.TRIGGERED, addPerson);
         _detailGroup.addChild(_addPerson);
+
+        _editTaskBtn = new Button();
+        _editTaskBtn.label = "edit";
+        //_editTask.nameList.add("editTask");
+        //_editTask.iconPosition = Button.ICON_POSITION_LEFT;
+        _editTaskBtn.addEventListener(Event.TRIGGERED, editTaskHandler);
+        _detailGroup.addChild(_editTaskBtn);
     }
 
     private function updateTask(event:Event):void {
@@ -192,16 +202,32 @@ public class Detail extends Screen {
          }*/
     }
 
-    private function editPopUpHandler(event:Event):void {
+
+    private function editTaskHandler(event:Event):void {
+        _editTask = new EditTask();
+        _editTask.addEventListener(Event.CLOSE, closeTaskEditPopUpHandler);
+        PopUpManager.addPopUp(_editTask);
+    }
+
+    private function closeTaskEditPopUpHandler(event:Event):void {
+        PopUpManager.removePopUp(_editTask, true);
+        if(_taskModel.getTask(_currentTask.id) == null) {
+            _appModel.currentScreen = "overview";
+        } else {
+            updateTask(null);
+        }
+    }
+
+    private function personEditPopUpHandler(event:Event):void {
         if (_personList.selectedItem) {
             _personModel.currentPerson = PersonVO(_personList.selectedItem);
             _editPerson = new EditPerson();
-            _editPerson.addEventListener(Event.CLOSE, closeButtonHandler);
+            _editPerson.addEventListener(Event.CLOSE, closePersonEditButtonHandler);
             PopUpManager.addPopUp(_editPerson);
         }
     }
 
-    private function closeButtonHandler(event:Event):void {
+    private function closePersonEditButtonHandler(event:Event):void {
         _personList.dataProvider = null;
         _personList.validate();
         _personList.dataProvider = new ListCollection(_personModel.getPersonsByTaskId(_currentTask.id));

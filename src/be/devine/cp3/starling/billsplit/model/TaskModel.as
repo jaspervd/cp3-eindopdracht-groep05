@@ -123,6 +123,14 @@ public class TaskModel extends EventDispatcher {
     public function set currency(value:Boolean):void {
         _currency = value;
     }
+
+    public function updateTask(_currentTask:TaskVO, taskObj:Object):void {
+        var index:uint = _tasks.indexOf(_currentTask);
+        _tasks[index].title = taskObj.title;
+        _tasks[index].price = taskObj.price;
+
+        dispatchEvent(new Event(Event.CHANGE));
+    }
 }
 }
 internal class Enforcer {

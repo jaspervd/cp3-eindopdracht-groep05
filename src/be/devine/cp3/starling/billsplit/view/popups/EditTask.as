@@ -7,8 +7,11 @@
  */
 package be.devine.cp3.starling.billsplit.view.popups {
 import be.devine.cp3.starling.billsplit.model.PersonModel;
+import be.devine.cp3.starling.billsplit.model.TaskModel;
 import be.devine.cp3.starling.billsplit.service.PersonService;
+import be.devine.cp3.starling.billsplit.service.TaskService;
 import be.devine.cp3.starling.billsplit.vo.PersonVO;
+import be.devine.cp3.starling.billsplit.vo.TaskVO;
 
 import feathers.controls.Alert;
 
@@ -24,17 +27,19 @@ import feathers.layout.VerticalLayout;
 
 import starling.events.Event;
 
-public class EditPerson extends Screen {
+public class EditTask extends Screen {
+    private var _taskModel:TaskModel;
     private var _personModel:PersonModel;
     private var _popupLayout:LayoutGroup;
-    private var _nameInput:TextInput;
+    private var _titleInput:TextInput;
     private var _priceInput:TextInput;
     private var _buttonLayout:LayoutGroup;
     private var _saveButton:Button;
     private var _deleteButton:Button;
-    private var _currentPerson:PersonVO;
+    private var _currentTask:TaskVO;
 
-    public function EditPerson() {
+    public function EditTask() {
+        _taskModel = TaskModel.getInstance();
         _personModel = PersonModel.getInstance();
 
         _popupLayout = new LayoutGroup();
@@ -45,8 +50,8 @@ public class EditPerson extends Screen {
         _popupLayout.layout = layout;
         addChild(_popupLayout);
 
-        _nameInput = new TextInput();
-        _popupLayout.addChild(_nameInput);
+        _titleInput = new TextInput();
+        _popupLayout.addChild(_titleInput);
 
         _priceInput = new TextInput();
         _popupLayout.addChild(_priceInput);
@@ -65,23 +70,18 @@ public class EditPerson extends Screen {
         _deleteButton.addEventListener(Event.TRIGGERED, deleteButtonHandler);
         _buttonLayout.addChild(_deleteButton);
 
-        if(_personModel.currentPerson == null) {
-            _personModel.addEventListener(PersonModel.CURRENT_PERSON_SET, currentPersonSetHandler);
-            trace('currentperson is null');
-        } else {
-            trace('currentperson is ', _personModel.currentPerson.name);
-            currentPersonSetHandler();
+        if(_taskModel.currentTask != null) {
+            _currentTask = _taskModel.currentTask;
+            _titleInput.text = _currentTask.title;
+            _priceInput.text = String(_currentTask.price);
         }
     }
 
-    private function currentPersonSetHandler(event:Event = null):void {
-        _currentPerson = _personModel.currentPerson;
-        _nameInput.text = _currentPerson.name;
-        _priceInput.text = String(_currentPerson.iou);
-    }
-
     private function deleteButtonHandler(event:Event):void {
-        _personModel.deleteById(_currentPerson.id);
+        _taskModel.deleteById(_currentTask.id);
+        _personModel.deletePersonsByTaskId(_currentTask.id);
+        TaskService.write(_taskModel.tasks);
+        TaskService.write(_personModel.persons);
         dispatchEvent(new Event(Event.CLOSE));
     }
 
@@ -91,13 +91,13 @@ public class EditPerson extends Screen {
 
         var alert:Alert;
 
-        if (_nameInput.text.length == 0 && _priceInput.text.length == 0) {
+        if (_titleInput.text.length == 0 && _priceInput.text.length == 0) {
             alert = Alert.show("Please fill in all textboxes", moderator.name, new ListCollection([
                 { label: "OK" }
             ]));
             error = true;
-        } else if (_nameInput.text.length == 0) {
-            alert = Alert.show("Please fill in a name", moderator.name, new ListCollection([
+        } else if (_titleInput.text.length == 0) {
+            alert = Alert.show("Please fill in a title", moderator.name, new ListCollection([
                 { label: "OK" }
             ]));
             error = true;
@@ -114,13 +114,13 @@ public class EditPerson extends Screen {
         }
 
         if (!error) {
-            var personObj:Object = {};
-            personObj.name = _nameInput.text;
-            personObj.iou = _priceInput.text;
-            _personModel.updatePerson(_currentPerson, personObj);
-            PersonService.write(_personModel.persons);
+            var taskObj:Object = {};
+            taskObj.title = _titleInput.text;
+            taskObj.price = _priceInput.text;
+            _taskModel.updateTask(_currentTask, taskObj);
+            TaskService.write(_taskModel.tasks);
 
-            _nameInput.text = _priceInput.text = "";
+            _titleInput.text = _priceInput.text = "";
             dispatchEvent(new Event(Event.CLOSE));
         }
     }
