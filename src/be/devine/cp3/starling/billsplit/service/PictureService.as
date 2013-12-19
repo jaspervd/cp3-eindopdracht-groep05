@@ -64,7 +64,7 @@ public class PictureService extends ScrollContainer {
 
     public function takePicture():String {
         _mask.y = 0;
-        bitmapData = new BitmapData(_camera.width, _camera.height + 100, true, 0);
+        bitmapData = new BitmapData(_camera.width, _camera.height + 70, true, 0);
         bitmapData.draw(_container);
         _video.attachCamera(null);
         Starling.current.nativeOverlay.removeChild(_container);

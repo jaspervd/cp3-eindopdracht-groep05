@@ -3,7 +3,6 @@ package be.devine.cp3.starling.billsplit.view {
 
 import be.devine.cp3.starling.billsplit.model.AppModel;
 import be.devine.cp3.starling.billsplit.model.PersonModel;
-
 import feathers.controls.Button;
 import feathers.controls.Header;
 import feathers.controls.Screen;
@@ -45,6 +44,7 @@ public class Header extends Screen{
 
 
         _appmodel = AppModel.getInstance();
+        _appmodel.addEventListener(Event.CHANGE, checkBack);
         _personModel = PersonModel.getInstance();
         _personModel.addEventListener(PersonModel.MODERATOR_SET, moderatorSetHandler);
         _theme = new MetalWorksMobileTheme();

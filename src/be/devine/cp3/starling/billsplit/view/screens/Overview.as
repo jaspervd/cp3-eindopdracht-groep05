@@ -125,7 +125,7 @@ public class Overview extends Screen {
     private function layout():void {
 
 
-        _layout.paddingTop = stage.stageHeight * 0.15;
+        _layout.paddingTop = stage.stageHeight * 0.12;
         _fullName.width = stage.stageWidth * 0.5;
 
         _profileLayout.setSize(stage.stageWidth, stage.stageHeight / 2);
