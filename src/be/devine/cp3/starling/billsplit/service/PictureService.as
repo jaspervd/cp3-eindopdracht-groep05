@@ -58,6 +58,7 @@ public class PictureService extends ScrollContainer {
         _video.attachCamera(null);
         Starling.current.nativeOverlay.removeChild(_video);
 
+
         var byteArray:ByteArray = PNGEncoder.encode(bitmapData);
 
         var date:Date = new Date();

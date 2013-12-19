@@ -7,7 +7,6 @@ import be.devine.cp3.starling.billsplit.model.PersonModel;
 import feathers.controls.Button;
 import feathers.controls.Header;
 import feathers.controls.Screen;
-import feathers.controls.ScrollContainer;
 import feathers.themes.MetalWorksMobileTheme;
 import starling.display.DisplayObject;
 import starling.display.Image;
