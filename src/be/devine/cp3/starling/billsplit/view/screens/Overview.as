@@ -69,7 +69,7 @@ public class Overview extends Screen {
 
         _layout = new VerticalLayout();
         _layout.horizontalAlign = VerticalLayout.HORIZONTAL_ALIGN_CENTER;
-        _layout.gap = 15;
+        _layout.gap = 5;
         _profileLayout.layout = _layout;
 
         _profile = new ImageLoader();
@@ -111,7 +111,7 @@ public class Overview extends Screen {
 
     private function imageCompleteHandler(event:Event):void {
 
-        _profile.setSize(stage.stageWidth * 0.3, stage.stageWidth * 0.3);
+        _profile.setSize(stage.stageWidth * 0.35, stage.stageWidth * 0.35);
 
     }
 
@@ -135,11 +135,6 @@ public class Overview extends Screen {
         _taskList.dataProvider = new ListCollection(_tasks);
         _taskList.itemRendererProperties.gap = 1;
         _taskList.addEventListener(Event.CHANGE, triggeredHandler);
-
-
-    }
-
-    private function mask():void {
 
 
     }
