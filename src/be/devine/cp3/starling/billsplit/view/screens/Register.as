@@ -73,7 +73,6 @@ public class Register extends Screen {
 
     override protected function initialize():void {
         layout();
-        trace('[REGISTER]');
     }
 
     private function layout():void {
@@ -83,7 +82,6 @@ public class Register extends Screen {
     private function buttonHandler(event:Event):void {
         var error:Boolean = false;
         var alert:Alert;
-        trace('buttonHandler');
 
         if (_urlImage.length == 0) {
             alert = Alert.show("Please take a picture", "Error", new ListCollection([
@@ -107,7 +105,6 @@ public class Register extends Screen {
             _personModel.add(personObj);
             PersonService.write(_personModel.persons);
 
-            trace('no error');
             _appModel.currentScreen = "add";
         }
     }

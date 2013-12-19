@@ -1,17 +1,8 @@
-/**
- * Created with IntelliJ IDEA.
- * User: Jasper
- * Date: 18/12/13
- * Time: 12:50
- * To change this template use File | Settings | File Templates.
- */
 package be.devine.cp3.starling.billsplit.service {
+
 import com.adobe.images.PNGEncoder;
 
 import feathers.controls.ScrollContainer;
-
-import flash.display.Bitmap;
-
 import flash.display.BitmapData;
 import flash.display.Shape;
 import flash.display.Sprite;
@@ -21,9 +12,7 @@ import flash.filesystem.FileStream;
 import flash.media.Camera;
 import flash.media.Video;
 import flash.utils.ByteArray;
-
 import starling.core.Starling;
-import starling.display.DisplayObject;
 import starling.events.Event;
 
 public class PictureService extends ScrollContainer {

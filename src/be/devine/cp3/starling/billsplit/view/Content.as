@@ -55,7 +55,6 @@ public class Content extends ScrollContainer {
     }
 
     private function screenHandler(event:Event):void {
-        trace('screenhandler');
         navigator.showScreen(_appmodel.currentScreen);
     }
 }

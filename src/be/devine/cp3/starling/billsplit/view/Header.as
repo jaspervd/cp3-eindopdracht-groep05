@@ -11,7 +11,6 @@ import starling.display.DisplayObject;
 import starling.display.Image;
 import starling.display.Quad;
 import starling.events.Event;
-import starling.events.Event;
 
 
 
@@ -101,10 +100,6 @@ public class Header extends Screen{
 
         _header.backgroundSkin = _quad;
 
-
-
-
-        trace('[HEADER]');
     }
 
 
@@ -119,21 +114,12 @@ public class Header extends Screen{
 
         var currentButton:Button = Button(event.target);
 
-        trace(currentButton.name);
 
         switch (currentButton.name){
 
             case "add feathers-header-item":
 
-                    trace("add");
                     _appmodel.currentScreen = "add";
-            break;
-
-
-            case "edit feathers-header-item":
-
-                    trace("edit");
-
             break;
 
         }

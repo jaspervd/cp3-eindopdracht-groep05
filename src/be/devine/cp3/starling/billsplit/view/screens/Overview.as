@@ -1,10 +1,3 @@
-/**
- * Created with IntelliJ IDEA.
- * User: test
- * Date: 9/12/13
- * Time: 13:41
- * To change this template use File | Settings | File Templates.
- */
 package be.devine.cp3.starling.billsplit.view.screens {
 
 
@@ -13,7 +6,6 @@ import be.devine.cp3.starling.billsplit.model.PersonModel;
 import be.devine.cp3.starling.billsplit.model.TaskModel;
 import be.devine.cp3.starling.billsplit.vo.PersonVO;
 import be.devine.cp3.starling.billsplit.vo.TaskVO;
-
 import feathers.controls.ImageLoader;
 import feathers.controls.LayoutGroup;
 import feathers.controls.List;
@@ -21,9 +13,7 @@ import feathers.controls.Screen;
 import feathers.data.ListCollection;
 import feathers.layout.VerticalLayout;
 import feathers.renderers.TaskListRenderer;
-
 import flash.filesystem.File;
-
 import starling.events.Event;
 import starling.text.TextField;
 
@@ -118,7 +108,6 @@ public class Overview extends Screen {
 
     override protected function initialize():void {
         layout();
-        trace('[OVERVIEW]');
     }
 
 

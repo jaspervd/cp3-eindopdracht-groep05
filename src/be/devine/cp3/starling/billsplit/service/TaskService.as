@@ -1,22 +1,15 @@
-/**
- * Created with IntelliJ IDEA.
- * User: Jasper
- * Date: 11/12/13
- * Time: 13:25
- * To change this template use File | Settings | File Templates.
- */
 package be.devine.cp3.starling.billsplit.service {
+
+
 import be.devine.cp3.starling.billsplit.factory.TaskVOFactory;
 import be.devine.cp3.starling.billsplit.vo.TaskVO;
-
 import starling.events.Event;
 import starling.events.EventDispatcher;
 import flash.filesystem.File;
-
 import flash.filesystem.FileMode;
 import flash.filesystem.FileStream;
-
 import starling.display.Image;
+
 
 public class TaskService extends EventDispatcher {
 

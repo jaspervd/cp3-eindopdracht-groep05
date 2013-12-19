@@ -1,28 +1,18 @@
-/**
- * Created with IntelliJ IDEA.
- * User: Jasper
- * Date: 19/12/13
- * Time: 16:02
- * To change this template use File | Settings | File Templates.
- */
 package be.devine.cp3.starling.billsplit.view.popups {
+
 import be.devine.cp3.starling.billsplit.model.PersonModel;
 import be.devine.cp3.starling.billsplit.service.PersonService;
 import be.devine.cp3.starling.billsplit.vo.PersonVO;
-
 import feathers.controls.Alert;
-
 import feathers.controls.Button;
-
 import feathers.controls.LayoutGroup;
-
 import feathers.controls.Screen;
 import feathers.controls.TextInput;
 import feathers.data.ListCollection;
 import feathers.layout.HorizontalLayout;
 import feathers.layout.VerticalLayout;
-
 import starling.events.Event;
+
 
 public class EditPerson extends Screen {
     private var _personModel:PersonModel;

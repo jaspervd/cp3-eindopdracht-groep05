@@ -1,11 +1,5 @@
-/**
- * Created with IntelliJ IDEA.
- * User: Jasper
- * Date: 16/12/13
- * Time: 15:58
- * To change this template use File | Settings | File Templates.
- */
 package be.devine.cp3.starling.billsplit.format {
+
 public class DateFormat {
     public function DateFormat() {
     }

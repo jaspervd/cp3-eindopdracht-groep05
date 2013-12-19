@@ -36,18 +36,11 @@ public class Application extends Sprite {
         addEventListener(Event.ADDED_TO_STAGE, addedHandler);
     }
 
-
-    private function closeHandler(event:Event):void {
-        trace('main close');
-        _appModel.closeApp();
-    }
-
     private function addedHandler(event:Event):void {
 
 
         removeEventListener(Event.ADDED_TO_STAGE, addedHandler);
         stage.addEventListener(Event.RESIZE, resizeHandler);
-        stage.addEventListener(Event.CLOSE, closeHandler);
 
 
         _personModel.persons = _appModel.persons;
@@ -67,7 +60,6 @@ public class Application extends Sprite {
 
     private function resizeHandler(event:Event):void {
 
-        trace("resize");
     }
 }
 }

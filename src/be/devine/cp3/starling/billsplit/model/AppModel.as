@@ -2,9 +2,7 @@ package be.devine.cp3.starling.billsplit.model {
 
 import be.devine.cp3.starling.billsplit.service.PersonService;
 import be.devine.cp3.starling.billsplit.service.TaskService;
-
 import starling.events.Event;
-
 import starling.events.EventDispatcher;
 
 
@@ -78,7 +76,6 @@ public class AppModel extends EventDispatcher {
     public function set completed(value:Boolean):void {
         _completed = value;
 
-        trace("[COMPLETE] = "+_completed);
 
         if(_completed){
 

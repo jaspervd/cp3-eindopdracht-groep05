@@ -1,10 +1,3 @@
-/**
- * Created with IntelliJ IDEA.
- * User: Jasper
- * Date: 15/12/13
- * Time: 17:52
- * To change this template use File | Settings | File Templates.
- */
 package feathers.renderers {
 
 
@@ -13,8 +6,8 @@ import be.devine.cp3.starling.billsplit.service.TaskService;
 import be.devine.cp3.starling.billsplit.vo.TaskVO;
 import feathers.controls.Button;
 import feathers.controls.renderers.DefaultListItemRenderer;
-
 import starling.events.Event;
+
 
 public class TypesListRenderer extends DefaultListItemRenderer {
     public function TypesListRenderer() {

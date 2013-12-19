@@ -1,10 +1,3 @@
-/**
- * Created with IntelliJ IDEA.
- * User: Jasper
- * Date: 12/12/13
- * Time: 16:12
- * To change this template use File | Settings | File Templates.
- */
 package be.devine.cp3.starling.billsplit.view.screens {
 
 
@@ -14,7 +7,6 @@ import be.devine.cp3.starling.billsplit.model.TaskModel;
 import be.devine.cp3.starling.billsplit.service.PersonService;
 import be.devine.cp3.starling.billsplit.service.TaskService;
 import be.devine.cp3.starling.billsplit.vo.PersonVO;
-
 import feathers.controls.Alert;
 import feathers.controls.Button;
 import feathers.controls.LayoutGroup;
@@ -149,8 +141,6 @@ public class Add extends Screen {
             personObj.task_id = _taskModel.currentTask.id;
             personObj.label = personObj.name + "  -  € " + taskObj.price;
             _personModel.add(personObj);
-            trace(personObj);
-            trace(_personModel.persons);
             PersonService.write(_personModel.persons);
 
             _inputTitle.text = _inputPrice.text = "";
@@ -159,17 +149,12 @@ public class Add extends Screen {
         }
     }
 
-    private function toggleHandler(event:Event):void {
-
-        trace(_toggle.isSelected);
-    }
 
     private function selectedButton(event:Event):void {
 
-        trace("UPDATE TYPES");
         var _dataLen:int = _typesList.dataProvider.length;
         for(var i:int = 0; i < _dataLen; i++) {
-            trace(_typesList.dataProvider.updateItemAt(i));
+            _typesList.dataProvider.updateItemAt(i);
         }
 
     }
