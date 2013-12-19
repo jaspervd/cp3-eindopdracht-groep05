@@ -24,8 +24,6 @@ import feathers.layout.VerticalLayout;
 
 import starling.events.Event;
 
-import starling.text.TextField;
-
 public class EditPerson extends Screen {
     private var _personModel:PersonModel;
     private var _popupLayout:LayoutGroup;
@@ -55,15 +53,23 @@ public class EditPerson extends Screen {
         _popupLayout.addChild(_priceInput);
 
         _buttonLayout = new LayoutGroup();
-        var horLayout:HorizontalLayout = new HorizontalLayout();
-        _buttonLayout.layout = horLayout;
+        _buttonLayout.layout = new HorizontalLayout();
         _popupLayout.addChild(_buttonLayout);
 
         _saveButton = new Button();
         _saveButton.label = "Save";
         _saveButton.addEventListener(Event.TRIGGERED, saveButtonHandler);
 
+        _deleteButton = new Button();
+        _deleteButton.label = "Delete";
+        _deleteButton.addEventListener(Event.TRIGGERED, deleteButtonHandler);
+
         _personModel.addEventListener(PersonModel.CURRENT_PERSON_SET, currentPersonSet);
+    }
+
+    private function deleteButtonHandler(event:Event):void {
+        _personModel.deleteById(_currentPerson.id);
+        dispatchEvent(new Event(Event.TRIGGERED));
     }
 
     private function saveButtonHandler(event:Event):void {
@@ -98,11 +104,11 @@ public class EditPerson extends Screen {
             var personObj:Object = {};
             personObj.name = _nameInput.text;
             personObj.iou = _priceInput.text;
-            _personModel.replace(_currentPerson, personObj);
+            _personModel.updatePerson(_currentPerson, personObj);
             PersonService.write(_personModel.persons);
 
-            //_inputTitle.text = _inputPrice.text = "";
-            dispatchEvent(new Event(Event.CHANGE));
+            _nameInput.text = _priceInput.text = "";
+            dispatchEvent(new Event(Event.TRIGGERED));
         }
     }
 

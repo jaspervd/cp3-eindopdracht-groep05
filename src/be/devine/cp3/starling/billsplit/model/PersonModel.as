@@ -116,8 +116,11 @@ public class PersonModel extends EventDispatcher {
         }
     }
 
-    public function replace(_currentPerson:PersonVO, personObj:Object):void {
-        
+    public function updatePerson(_currentPerson:PersonVO, personObj:Object):void {
+        var index:uint = _persons.indexOf(_currentPerson);
+        _persons[index].name = personObj.name;
+        _persons[index].price = personObj.price;
+        dispatchEvent(new Event(Event.CHANGE));
     }
 }
 }
