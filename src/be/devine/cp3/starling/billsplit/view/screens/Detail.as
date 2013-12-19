@@ -74,11 +74,11 @@ public class Detail extends Screen {
         addChild(_personList);
 
 
-       /* _taskList = new List();
-        _taskList.itemRendererType = TaskListRenderer;
-        _taskList.itemRendererProperties.labelField = "title";
-        _taskList.itemRendererProperties.accessoryField = "accessory";
-        addChild(_taskList);*/
+        /* _taskList = new List();
+         _taskList.itemRendererType = TaskListRenderer;
+         _taskList.itemRendererProperties.labelField = "title";
+         _taskList.itemRendererProperties.accessoryField = "accessory";
+         addChild(_taskList);*/
 
         _taskLayout = new LayoutGroup();
         addChild(_taskLayout);
@@ -187,8 +187,8 @@ public class Detail extends Screen {
         person.iou = 0;
         _personModel.add(person);
 
-       /* var iou:Number = PriceFormat.calculatePrices(_currentTask.price,_personModel.getPersonsByTaskId(_currentTask.id));
-        _personModel.updateIou(_currentTask.id,iou);*/
+        /* var iou:Number = PriceFormat.calculatePrices(_currentTask.price,_personModel.getPersonsByTaskId(_currentTask.id));
+         _personModel.updateIou(_currentTask.id,iou);*/
 
         PersonService.write(_personModel.persons);
 

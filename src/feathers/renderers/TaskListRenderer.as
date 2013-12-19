@@ -1,10 +1,3 @@
-/**
- * Created with IntelliJ IDEA.
- * User: Jasper
- * Date: 15/12/13
- * Time: 17:52
- * To change this template use File | Settings | File Templates.
- */
 package feathers.renderers {
 
 

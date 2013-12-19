@@ -67,6 +67,7 @@ package feathers.themes
 	import feathers.display.TiledImage;
 	import feathers.layout.HorizontalLayout;
 	import feathers.layout.VerticalLayout;
+import feathers.renderers.PersonListRenderer;
 import feathers.renderers.TaskListRenderer;
 import feathers.skins.SmartDisplayObjectStateValueSelector;
 	import feathers.skins.StandardIcons;
@@ -168,8 +169,6 @@ import feathers.skins.SmartDisplayObjectStateValueSelector;
 			super(container);
 			this._scaleToDPI = scaleToDPI;
 			this.initialize();
-
-            this.setInitializerForClass(TaskListRenderer, this.itemRendererInitializer);
 		}
 
 		protected var _originalDPI:int;
@@ -517,6 +516,9 @@ import feathers.skins.SmartDisplayObjectStateValueSelector;
 			this.setInitializerForClass(Panel, panelInitializer);
 			this.setInitializerForClass(Alert, alertInitializer);
 			this.setInitializerForClass(ScrollContainer, scrollContainerToolbarInitializer, ScrollContainer.ALTERNATE_NAME_TOOLBAR);
+
+            this.setInitializerForClass(PersonListRenderer, itemRendererInitializer);
+            this.setInitializerForClass(TaskListRenderer, itemRendererInitializer);
 		}
 
 		protected function pageIndicatorNormalSymbolFactory():DisplayObject
