@@ -122,6 +122,7 @@ public class PersonModel extends EventDispatcher {
         var index:uint = _persons.indexOf(_currentPerson);
         _persons[index].name = personObj.name;
         _persons[index].iou = personObj.iou;
+        _persons[index].label = personObj.name+"  -  € "+personObj.iou;
 
         dispatchEvent(new Event(Event.CHANGE));
     }

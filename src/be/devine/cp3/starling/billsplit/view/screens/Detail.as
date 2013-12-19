@@ -39,6 +39,10 @@ public class Detail extends Screen {
     public static const PersonAdd:Class;
 
 
+    [Embed(source="/../assets/images/edit_big.png")]
+    public static const Edit:Class;
+
+
     [Embed(source="/../assets/images/task_icon.png")]
     public static const Task:Class;
 
@@ -73,7 +77,7 @@ public class Detail extends Screen {
         _personList = new List();
         _personList.itemRendererType = PersonListRenderer;
         _personList.itemRendererProperties.gap = 1;
-        _personList.itemRendererProperties.labelField = "name";
+        _personList.itemRendererProperties.labelField = "label";
         _personList.itemRendererProperties.accessoryField = "accessory";
         _personList.addEventListener(Event.CHANGE, personEditPopUpHandler);
         addChild(_personList);
@@ -139,9 +143,7 @@ public class Detail extends Screen {
         _detailGroup.addChild(_addPerson);
 
         _editTaskBtn = new Button();
-        _editTaskBtn.label = "edit";
         //_editTask.nameList.add("editTask");
-        //_editTask.iconPosition = Button.ICON_POSITION_LEFT;
         _editTaskBtn.addEventListener(Event.TRIGGERED, editTaskHandler);
         _detailGroup.addChild(_editTaskBtn);
     }
@@ -158,6 +160,7 @@ public class Detail extends Screen {
             _people.defaultIcon = Image.fromBitmap(new Person());
             _total.defaultIcon = Image.fromBitmap(new Task());
             _addPerson.defaultIcon = Image.fromBitmap(new PersonAdd());
+            _editTaskBtn.defaultIcon = Image.fromBitmap(new Edit());
 
             _total.label = "€" + String(_currentTask.price);
 

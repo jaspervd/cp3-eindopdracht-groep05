@@ -11,6 +11,7 @@ import starling.display.DisplayObject;
 import starling.display.Image;
 import starling.display.Quad;
 import starling.events.Event;
+import starling.events.Event;
 
 
 
@@ -25,6 +26,7 @@ public class Header extends Screen{
 
     [Embed(source="/../assets/images/metalworks/add_plus_btn.png")]
     public static const Multiple:Class;
+
 
     [Embed(source="/../assets/images/metalworks/transparent_repeat.png")]
     public static const Transparent:Class;
@@ -128,9 +130,10 @@ public class Header extends Screen{
             break;
 
 
-            case "remove feathers-header-item":
+            case "edit feathers-header-item":
 
-                trace("Remove");
+                    trace("edit");
+
             break;
 
         }
@@ -178,6 +181,7 @@ public class Header extends Screen{
             back = true;
 
         }
+
 
     }
 }
