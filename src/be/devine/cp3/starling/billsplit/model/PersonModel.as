@@ -31,6 +31,7 @@ public class PersonModel extends EventDispatcher {
     }
 
     public function get persons():Array {
+        _persons.sortOn('id', Array.DESCENDING);
         return _persons;
     }
 
@@ -87,24 +88,18 @@ public class PersonModel extends EventDispatcher {
                 tempArr.push(person);
             }
         }
+        tempArr.sortOn('id', Array.DESCENDING);
         return tempArr;
     }
 
     public function updateIou(taskId:uint, iou:Number):void {
-
         for each(var person:PersonVO in persons) {
-            trace(person.name);
-            trace(_persons.indexOf(person));
-
             if (person.task_id == taskId) {
                 _persons.splice(_persons.indexOf(person), 1);
                 person.iou = Number(iou.toFixed(2));
                 _persons.push(person);
             }
-
         }
-
-
     }
 
     public function get currentPerson():PersonVO {
@@ -122,7 +117,8 @@ public class PersonModel extends EventDispatcher {
         var index:uint = _persons.indexOf(_currentPerson);
         _persons[index].name = personObj.name;
         _persons[index].iou = personObj.iou;
-        _persons[index].label = personObj.name+"  -  € "+personObj.iou;
+        _persons[index].percentage = personObj.percentage;
+        _persons[index].label = personObj.name + "  -  € " + personObj.iou;
 
         dispatchEvent(new Event(Event.CHANGE));
     }

@@ -8,5 +8,6 @@ public class PersonVO {
     public var moderator:Boolean;
     public var label:String;
     public var iou:Number;
+    public var percentage:Number;
 }
 }

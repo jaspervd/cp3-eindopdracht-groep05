@@ -1,10 +1,3 @@
-/**
- * Created with IntelliJ IDEA.
- * User: Jasper
- * Date: 11/12/13
- * Time: 13:12
- * To change this template use File | Settings | File Templates.
- */
 package be.devine.cp3.starling.billsplit.factory {
 import be.devine.cp3.starling.billsplit.vo.PersonVO;
 
@@ -16,8 +9,9 @@ public class PersonVOFactory {
         personVO.image = person.image;
         personVO.task_id = person.task_id;
         personVO.moderator = person.moderator;
-        personVO.label = person.name+"  -  € "+person.iou;
+        personVO.label = person.name + "  -  € " + person.iou;
         personVO.iou = person.iou;
+        personVO.percentage = person.percentage;
         return personVO;
     }
 }

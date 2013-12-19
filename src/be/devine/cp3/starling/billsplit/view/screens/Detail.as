@@ -2,6 +2,7 @@ package be.devine.cp3.starling.billsplit.view.screens {
 
 
 import be.devine.cp3.starling.billsplit.format.DateFormat;
+import be.devine.cp3.starling.billsplit.format.PriceFormat;
 import be.devine.cp3.starling.billsplit.model.AppModel;
 import be.devine.cp3.starling.billsplit.model.PersonModel;
 import be.devine.cp3.starling.billsplit.model.TaskModel;
@@ -16,6 +17,7 @@ import feathers.controls.Button;
 import feathers.controls.LayoutGroup;
 import feathers.controls.List;
 import feathers.controls.Screen;
+import feathers.controls.ToggleSwitch;
 import feathers.controls.renderers.DefaultListItemRenderer;
 import feathers.core.PopUpManager;
 import feathers.data.ListCollection;
@@ -57,12 +59,13 @@ public class Detail extends Screen {
     private var _currentTask:TaskVO;
     private var _type:Button;
     private var _total:Button;
-    private var _people:Button;
     private var _addPerson:Button;
     private var _editTaskBtn:Button;
     private var _dateTime:TextField;
     private var _editPerson:EditPerson;
     private var _editTask:EditTask;
+    private var _toggleSwitch:ToggleSwitch;
+    private var _divideEvenBtn:Button;
 
     public function Detail() {
 
@@ -128,14 +131,6 @@ public class Detail extends Screen {
         _total.iconPosition = Button.ICON_POSITION_LEFT;
         _detailGroup.addChild(_total);
 
-
-        _people = new Button();
-        _people.labelOffsetX = -15;
-        _people.nameList.add("people");
-        _people.iconPosition = Button.ICON_POSITION_LEFT;
-        _detailGroup.addChild(_people);
-
-
         _addPerson = new Button();
         _addPerson.nameList.add("addPerson");
         _addPerson.iconPosition = Button.ICON_POSITION_LEFT;
@@ -146,6 +141,40 @@ public class Detail extends Screen {
         //_editTask.nameList.add("editTask");
         _editTaskBtn.addEventListener(Event.TRIGGERED, editTaskHandler);
         _detailGroup.addChild(_editTaskBtn);
+
+        _toggleSwitch = new ToggleSwitch();
+        _toggleSwitch.onText = "€";
+        _toggleSwitch.offText = "%";
+        _toggleSwitch.isSelected = true;
+        _toggleSwitch.addEventListener(Event.CHANGE, toggleHandler);
+        _detailGroup.addChild(_toggleSwitch);
+
+        _divideEvenBtn = new Button();
+        _divideEvenBtn.label = "divide";
+        _divideEvenBtn.addEventListener(Event.TRIGGERED, divideHandler);
+        _detailGroup.addChild(_divideEvenBtn);
+    }
+
+    private function toggleHandler(event:Event):void {
+        var newArr:Array = [];
+        for each(var person:PersonVO in _personModel.getPersonsByTaskId(_currentTask.id)) {
+            if(_toggleSwitch.isSelected) {
+                person.label = person.name + "  -  € " + PriceFormat.percentageToPrice(person.percentage, _currentTask.price);
+            } else {
+                person.label = person.name + "  -  % " + PriceFormat.priceToPercentage(person.iou, _currentTask.price);
+            }
+        }
+        updateTask(null); // just in case
+
+        _personList.dataProvider = null;
+        _personList.validate();
+        _personList.dataProvider = new ListCollection(newArr);
+    }
+
+    private function divideHandler(event:Event):void {
+        var iou:Number = PriceFormat.calculatePricesEvenly(_currentTask.price, _personModel.getPersonsByTaskId(_currentTask.id));
+        _personModel.updateIou(_currentTask.id, iou);
+        updateTask(null);
     }
 
     private function updateTask(event:Event):void {
@@ -159,7 +188,6 @@ public class Detail extends Screen {
 
             _dateTime.text = DateFormat.timestampToUFDate(_currentTask.timestamp as Number);
 
-            _people.defaultIcon = Image.fromBitmap(new Person());
             _total.defaultIcon = Image.fromBitmap(new Task());
             _addPerson.defaultIcon = Image.fromBitmap(new PersonAdd());
             _editTaskBtn.defaultIcon = Image.fromBitmap(new Edit());
@@ -167,10 +195,10 @@ public class Detail extends Screen {
             calculateTotal();
             _total.label = "€" + String(_taskModel.totalPrice);
 
-            _people.label = String(_personModel.getPersonsByTaskId(_currentTask.id).length);
-
             _type.defaultIcon = TaskService.icon(_currentTask);
 
+            _personList.dataProvider = null;
+            _personList.validate();
             _personList.dataProvider = new ListCollection(_personModel.getPersonsByTaskId(_currentTask.id));
         }
     }
@@ -198,14 +226,7 @@ public class Detail extends Screen {
             person.iou = 0;
             _personModel.add(person);
 
-            /* var iou:Number = PriceFormat.calculatePrices(_currentTask.price,_personModel.getPersonsByTaskId(_currentTask.id));
-             _personModel.updateIou(_currentTask.id,iou);*/
-
             PersonService.write(_personModel.persons);
-
-            /*for each(var personVo:PersonVO in _personModel.persons){
-             trace(personVo.iou);
-             }*/
         }
     }
 
@@ -213,7 +234,8 @@ public class Detail extends Screen {
         var total:Number = _taskModel.currentTask.price;
         for each(var person:PersonVO in _personModel.getPersonsByTaskId(_currentTask.id)) {
             total -= person.iou;
-        } if(total < 0) {
+        }
+        if (total < 0) {
             total = 0;
         }
         _taskModel.totalPrice = total;
@@ -248,7 +270,6 @@ public class Detail extends Screen {
         _personList.dataProvider = null;
         _personList.validate();
         _personList.dataProvider = new ListCollection(_personModel.getPersonsByTaskId(_currentTask.id));
-        trace(_personModel.getPersonsByTaskId(_currentTask.id)[0].iou);
         PopUpManager.removePopUp(_editPerson, true);
     }
 }

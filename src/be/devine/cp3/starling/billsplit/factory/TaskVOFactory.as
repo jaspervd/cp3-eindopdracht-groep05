@@ -1,10 +1,3 @@
-/**
- * Created with IntelliJ IDEA.
- * User: Jasper
- * Date: 11/12/13
- * Time: 13:12
- * To change this template use File | Settings | File Templates.
- */
 package be.devine.cp3.starling.billsplit.factory {
 import be.devine.cp3.starling.billsplit.vo.TaskVO;
 
