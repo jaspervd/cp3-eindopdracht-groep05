@@ -204,7 +204,6 @@ public class Detail extends Screen {
     }
 
     private function editPopUpHandler(event:Event):void {
-
         _personModel.currentPerson = _personList.selectedItem as PersonVO;
         _personList.selectedIndex = -1;
         _editPerson = new EditPerson();
