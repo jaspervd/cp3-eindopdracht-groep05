@@ -37,6 +37,7 @@ public class PersonListRenderer extends DefaultListItemRenderer {
 
         var icon:Button = new Button();
         icon.label = personVo.iou as String;
+        icon.labelOffsetX = -20;
         icon.defaultIcon = Image.fromBitmap(new ListAccessory());
         this.replaceIcon(icon);
 
