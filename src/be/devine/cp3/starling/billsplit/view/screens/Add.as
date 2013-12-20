@@ -137,8 +137,8 @@ public class Add extends Screen {
             personObj.name = moderator.name;
             personObj.image = moderator.image;
             personObj.task_id = _taskModel.currentTask.id;
-            personObj.iou = taskObj.price;
-            personObj.percentage = 100;
+            personObj.iou = 0;
+            personObj.percentage = 0;
             personObj.label = personObj.name + "  -  € " + taskObj.price;
             _personModel.add(personObj);
             PersonService.write(_personModel.persons);

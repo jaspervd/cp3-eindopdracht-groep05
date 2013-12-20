@@ -8,6 +8,10 @@ public class PriceFormat {
         return Number((price / totalPrice).toFixed(2)) * 100;
     }
 
+    public static function percentageToPrice(percentage:Number, totalPrice:Number):uint {
+        return Number(((totalPrice / 100) * percentage).toFixed(2));
+    }
+
     public static function calculatePricesEvenly(total:Number, persons:Array):Number {
         return total / persons.length;
     }

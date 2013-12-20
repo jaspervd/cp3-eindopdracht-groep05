@@ -20,13 +20,11 @@ import feathers.controls.LayoutGroup;
 import feathers.controls.List;
 import feathers.controls.Screen;
 import feathers.controls.ToggleSwitch;
-import feathers.controls.renderers.DefaultListItemRenderer;
 import feathers.core.PopUpManager;
 import feathers.data.ListCollection;
 import feathers.layout.HorizontalLayout;
 import feathers.layout.VerticalLayout;
 import feathers.renderers.PersonListRenderer;
-import feathers.renderers.TaskListRenderer;
 
 import starling.display.Image;
 import starling.events.Event;
@@ -34,29 +32,23 @@ import starling.text.TextField;
 
 
 public class Detail extends Screen {
-
     [Embed(source="/../assets/images/person_icon.png")]
     public static const Person:Class;
-
 
     [Embed(source="/../assets/images/person_add_icon.png")]
     public static const PersonAdd:Class;
 
-
     [Embed(source="/../assets/images/edit_big.png")]
     public static const Edit:Class;
 
-
     [Embed(source="/../assets/images/task_icon.png")]
     public static const Task:Class;
-
 
     private var _appModel:AppModel;
     private var _taskModel:TaskModel;
     private var _personModel:PersonModel;
     private var _personList:List;
     private var _taskLayout:LayoutGroup;
-    private var _detailGroup:LayoutGroup;
     private var _taskTitle:TextField;
     private var _currentTask:TaskVO;
     private var _type:Button;
@@ -67,7 +59,6 @@ public class Detail extends Screen {
     private var _editPerson:EditPerson;
     private var _editTask:EditTask;
     private var _toggleSwitch:ToggleSwitch;
-    private var _divideEvenBtn:Button;
 
     public function Detail() {
 
@@ -87,16 +78,8 @@ public class Detail extends Screen {
         _personList.addEventListener(Event.CHANGE, personEditPopUpHandler);
         addChild(_personList);
 
-
-        /* _taskList = new List();
-         _taskList.itemRendererType = TaskListRenderer;
-         _taskList.itemRendererProperties.labelField = "title";
-         _taskList.itemRendererProperties.accessoryField = "accessory";
-         addChild(_taskList);*/
-
         _taskLayout = new LayoutGroup();
         addChild(_taskLayout);
-
 
         var layout:VerticalLayout = new VerticalLayout();
         layout.horizontalAlign = VerticalLayout.HORIZONTAL_ALIGN_CENTER;
@@ -112,58 +95,58 @@ public class Detail extends Screen {
         _taskTitle = new TextField(100, 30, "", "SourceSansProSemiBold", 28, 0xFFFFFF);
         _taskLayout.addChild(_taskTitle);
 
-
         _dateTime = new TextField(100, 30, "", "SourceSansProSemiBold", 18, 0xFFFFFF);
         _taskLayout.addChild(_dateTime);
 
-
-        _detailGroup = new LayoutGroup();
-        _taskLayout.addChild(_detailGroup);
-
+        var detailGroup:LayoutGroup = new LayoutGroup();
+        _taskLayout.addChild(detailGroup);
 
         var horlayout:HorizontalLayout = new HorizontalLayout();
         horlayout.horizontalAlign = VerticalLayout.HORIZONTAL_ALIGN_LEFT;
         horlayout.gap = 20;
-        _detailGroup.layout = horlayout;
-
+        detailGroup.layout = horlayout;
 
         _total = new Button();
         _total.nameList.add("total");
         _total.labelOffsetX = -15;
         _total.iconPosition = Button.ICON_POSITION_LEFT;
-        _detailGroup.addChild(_total);
+        detailGroup.addChild(_total);
 
         _addPerson = new Button();
         _addPerson.nameList.add("addPerson");
         _addPerson.iconPosition = Button.ICON_POSITION_LEFT;
         _addPerson.addEventListener(Event.TRIGGERED, addPerson);
-        _detailGroup.addChild(_addPerson);
+        detailGroup.addChild(_addPerson);
 
         _editTaskBtn = new Button();
-        //_editTask.nameList.add("editTask");
         _editTaskBtn.addEventListener(Event.TRIGGERED, editTaskHandler);
-        _detailGroup.addChild(_editTaskBtn);
+        detailGroup.addChild(_editTaskBtn);
 
         _toggleSwitch = new ToggleSwitch();
         _toggleSwitch.onText = "€";
         _toggleSwitch.offText = "%";
         _toggleSwitch.isSelected = true;
         _toggleSwitch.addEventListener(Event.CHANGE, toggleHandler);
-        _detailGroup.addChild(_toggleSwitch);
+        detailGroup.addChild(_toggleSwitch);
 
-        _divideEvenBtn = new Button();
-        _divideEvenBtn.label = "50/50";
-        _divideEvenBtn.addEventListener(Event.TRIGGERED, divideHandler);
-        _detailGroup.addChild(_divideEvenBtn);
+        var divideEvenBtn:Button = new Button();
+        divideEvenBtn.label = "50/50";
+        divideEvenBtn.addEventListener(Event.TRIGGERED, divideHandler);
+        detailGroup.addChild(divideEvenBtn);
+
+        _personList.dataProvider = null;
+        _personList.validate();
     }
 
     private function toggleHandler(event:Event):void {
+        _taskModel.currency = _toggleSwitch.isSelected;
         var newArr:Array = [];
         for each(var person:PersonVO in _personModel.getPersonsByTaskId(_currentTask.id)) {
             if(_toggleSwitch.isSelected) {
-                person.label = person.name + "  -  € " + person.iou;
+                person.label = person.name + "  -  € " + Number(person.iou);
             } else {
-                person.label = person.name + "  -  " + person.percentage + "%";
+                person.percentage = PriceFormat.priceToPercentage(person.iou, _currentTask.price);
+                person.label = person.name + "  -  " + Number(person.percentage) + " %";
             }
             newArr.push(person);
         }
@@ -184,8 +167,8 @@ public class Detail extends Screen {
     }
 
     private function updateTask(event:Event):void {
-
         if (_taskModel.currentTask) {
+            trace('[updateTask]');
             _currentTask = _taskModel.currentTask;
 
             _taskModel.totalPrice = _currentTask.price;
@@ -199,9 +182,13 @@ public class Detail extends Screen {
             _editTaskBtn.defaultIcon = Image.fromBitmap(new Edit());
 
             calculateTotal();
-            _total.label = "€" + String(_taskModel.totalPrice);
+            _total.label = "€" + String(_taskModel.totalPrice.toFixed(2));
 
             _type.defaultIcon = TaskService.icon(_currentTask);
+
+            for each(var person:PersonVO in _personModel.getPersonsByTaskId(_currentTask.id)) {
+                trace(person.name, person.label);
+            }
 
             _personList.dataProvider = new ListCollection(_personModel.getPersonsByTaskId(_currentTask.id));
         }
@@ -229,6 +216,10 @@ public class Detail extends Screen {
             person.task_id = _currentTask.id;
             person.iou = 0;
             _personModel.add(person);
+
+            _personList.dataProvider = null;
+            _personList.validate();
+            _personList.dataProvider = new ListCollection(_personModel.getPersonsByTaskId(_currentTask.id));
 
             PersonService.write(_personModel.persons);
         } else {
@@ -260,9 +251,9 @@ public class Detail extends Screen {
         PopUpManager.removePopUp(_editTask, true);
         if (_taskModel.getTask(_currentTask.id) == null) {
             _appModel.currentScreen = "overview";
-        } else {
-            updateTask(null);
         }
+        updateTask(null);
+        toggleHandler(null);
     }
 
     private function personEditPopUpHandler(event:Event):void {
@@ -275,9 +266,8 @@ public class Detail extends Screen {
     }
 
     private function closePersonEditButtonHandler(event:Event):void {
-        _personList.dataProvider = null;
-        _personList.validate();
-        _personList.dataProvider = new ListCollection(_personModel.getPersonsByTaskId(_currentTask.id));
+        updateTask(null);
+        toggleHandler(null);
         PopUpManager.removePopUp(_editPerson, true);
     }
 }

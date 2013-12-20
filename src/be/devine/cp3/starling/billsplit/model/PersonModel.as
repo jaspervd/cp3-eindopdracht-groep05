@@ -37,9 +37,7 @@ public class PersonModel extends EventDispatcher {
 
     public function set persons(value:Array):void {
         if (_persons != value) {
-
             _persons = value;
-
         }
     }
 
@@ -52,8 +50,8 @@ public class PersonModel extends EventDispatcher {
         return _moderator;
     }
 
-    public function add(value:Object):Array {
-        var lastPerson:PersonVO = _persons[_persons.length - 1];
+    public function add(value:Object):void {
+        var lastPerson:PersonVO = _persons[0];
         if (_persons.length == 0) {
             value.id = 1;
         } else {
@@ -66,12 +64,11 @@ public class PersonModel extends EventDispatcher {
         if (value.moderator) {
             dispatchEvent(new Event(MODERATOR_SET));
         }
-
-        return _persons;
     }
 
     public function deleteById(id:uint):Array {
         for each(var person:PersonVO in _persons) {
+            trace(person.id, id);
             if (person.id == id) {
                 _persons.splice(_persons.indexOf(person), 1);
             }

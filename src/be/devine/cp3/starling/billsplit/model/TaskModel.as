@@ -7,7 +7,6 @@ import starling.events.Event;
 
 import starling.events.EventDispatcher;
 
-
 public class TaskModel extends EventDispatcher {
 
     private static var instance:TaskModel;
@@ -15,26 +14,22 @@ public class TaskModel extends EventDispatcher {
     private var _tasks:Array;
     private var _task:TaskVO;
     private var _currentTask:TaskVO;
-    private var _currency:Boolean = false;
     private var _totalPrice:Number;
+    private var _currency:Boolean;
 
     public static function getInstance():TaskModel {
-
         if (instance == null) {
             instance = new TaskModel(new Enforcer());
         }
-
         return instance;
-
     }
 
     public function TaskModel(e:Enforcer) {
-
         if (e == null) {
             throw new Error('TaskModel is a singleton, use getInstance() instead');
         }
-
         _tasks = [];
+        _currency = true;
     }
 
     public function get tasks():Array {
@@ -44,9 +39,7 @@ public class TaskModel extends EventDispatcher {
 
     public function set tasks(value:Array):void {
         if (_tasks != value) {
-
             _tasks = value;
-
         }
     }
 
@@ -63,10 +56,10 @@ public class TaskModel extends EventDispatcher {
         return _task;
     }
 
-    public function add(value:Object):Array {
-        var lastTask:TaskVO = _tasks[_tasks.length - 1];
+    public function add(value:Object):void {
+        var lastTask:TaskVO = _tasks[0];
         var date:Date = new Date();
-        if(_tasks.length == 0) {
+        if (_tasks.length == 0) {
             value.id = 1;
         } else {
             value.id = lastTask.id + 1;
@@ -76,7 +69,6 @@ public class TaskModel extends EventDispatcher {
         var task:TaskVO = TaskVOFactory.createTaskVOFromObject(value);
         _tasks.push(task);
         dispatchEvent(new Event(Event.CHANGE));
-        return _tasks;
     }
 
     public function deleteById(id:uint):Array {
@@ -97,14 +89,6 @@ public class TaskModel extends EventDispatcher {
         _currentTask = value;
     }
 
-    public function get currency():Boolean {
-        return _currency;
-    }
-
-    public function set currency(value:Boolean):void {
-        _currency = value;
-    }
-
     public function updateTask(_currentTask:TaskVO, taskObj:Object):void {
         var index:uint = _tasks.indexOf(_currentTask);
         _tasks[index].title = taskObj.title;
@@ -119,6 +103,16 @@ public class TaskModel extends EventDispatcher {
 
     public function set totalPrice(value:Number):void {
         _totalPrice = value;
+    }
+
+    public function get currency():Boolean {
+        return _currency;
+    }
+
+    public function set currency(value:Boolean):void {
+        if(_currency != value) {
+            _currency = value;
+        }
     }
 }
 }

@@ -25,9 +25,6 @@ public class EditPerson extends ScrollContainer {
     private var _popupLayout:LayoutGroup;
     private var _nameInput:TextInput;
     private var _priceInput:TextInput;
-    private var _buttonLayout:LayoutGroup;
-    private var _saveButton:Button;
-    private var _deleteButton:Button;
     private var _currentPerson:PersonVO;
     private var _container:Quad;
 
@@ -48,25 +45,33 @@ public class EditPerson extends ScrollContainer {
         addChild(_popupLayout);
 
         _nameInput = new TextInput();
+        _nameInput.prompt = "Name";
         _popupLayout.addChild(_nameInput);
 
         _priceInput = new TextInput();
-        _priceInput.restrict = "0-9.,";
+        if(_taskModel.currency) {
+            _priceInput.prompt = "Price";
+            _priceInput.restrict = "0-9.,";
+        } else {
+            _priceInput.prompt = "Percentage";
+            _priceInput.maxChars = 2;
+            _priceInput.restrict = "0-9";
+        }
         _popupLayout.addChild(_priceInput);
 
-        _buttonLayout = new LayoutGroup();
-        _buttonLayout.layout = new HorizontalLayout();
-        _popupLayout.addChild(_buttonLayout);
+        var buttonLayout:LayoutGroup = new LayoutGroup();
+        buttonLayout.layout = new HorizontalLayout();
+        _popupLayout.addChild(buttonLayout);
 
-        _saveButton = new Button();
-        _saveButton.label = "Save";
-        _saveButton.addEventListener(Event.TRIGGERED, saveButtonHandler);
-        _buttonLayout.addChild(_saveButton);
+        var saveButton:Button = new Button();
+        saveButton.label = "Save";
+        saveButton.addEventListener(Event.TRIGGERED, saveButtonHandler);
+        buttonLayout.addChild(saveButton);
 
-        _deleteButton = new Button();
-        _deleteButton.label = "Delete";
-        _deleteButton.addEventListener(Event.TRIGGERED, deleteButtonHandler);
-        _buttonLayout.addChild(_deleteButton);
+        var deleteButton:Button = new Button();
+        deleteButton.label = "Delete";
+        deleteButton.addEventListener(Event.TRIGGERED, deleteButtonHandler);
+        buttonLayout.addChild(deleteButton);
 
         if (_personModel.currentPerson == null) {
             _personModel.addEventListener(PersonModel.CURRENT_PERSON_SET, currentPersonSetHandler);
@@ -85,7 +90,11 @@ public class EditPerson extends ScrollContainer {
     private function currentPersonSetHandler(event:Event = null):void {
         _currentPerson = _personModel.currentPerson;
         _nameInput.text = _currentPerson.name;
-        _priceInput.text = String(_currentPerson.iou);
+        if(_taskModel.currency) {
+            _priceInput.text = String(_currentPerson.iou);
+        } else {
+            _priceInput.text = String(_currentPerson.percentage);
+        }
     }
 
     private function deleteButtonHandler(event:Event):void {
@@ -99,6 +108,13 @@ public class EditPerson extends ScrollContainer {
 
         var alert:Alert;
 
+        var typeCurrency:String;
+        if(_taskModel.currency) {
+            typeCurrency = "price";
+        } else {
+            typeCurrency = "percentage";
+        }
+
         if (_nameInput.text.length == 0 && _priceInput.text.length == 0) {
             alert = Alert.show("Please fill in all textboxes", moderator.name, new ListCollection([
                 { label: "OK" }
@@ -110,12 +126,12 @@ public class EditPerson extends ScrollContainer {
             ]));
             error = true;
         } else if (_priceInput.text.length == 0) {
-            alert = Alert.show("Please fill in a price", moderator.name, new ListCollection([
+            alert = Alert.show("Please fill in a " + typeCurrency, moderator.name, new ListCollection([
                 { label: "OK" }
             ]));
             error = true;
         } else if (isNaN(_priceInput.text as Number)) {
-            alert = Alert.show("Please fill in a valid price", moderator.name, new ListCollection([
+            alert = Alert.show("Please fill in a valid " + typeCurrency, moderator.name, new ListCollection([
                 { label: "OK" }
             ]));
             error = true;
@@ -124,8 +140,13 @@ public class EditPerson extends ScrollContainer {
         if (!error) {
             var personObj:Object = {};
             personObj.name = _nameInput.text;
-            personObj.iou = _priceInput.text.split(',').join('.');
-            personObj.percentage = PriceFormat.priceToPercentage(personObj.iou, _taskModel.currentTask.price);
+            if(_taskModel.currency) {
+                personObj.iou = _priceInput.text.split(',').join('.');
+                personObj.percentage = PriceFormat.priceToPercentage(personObj.iou, _taskModel.currentTask.price);
+            } else {
+                personObj.iou = PriceFormat.percentageToPrice(Number(_priceInput.text), _taskModel.currentTask.price);
+                personObj.percentage = _priceInput.text;
+            }
             _personModel.updatePerson(_currentPerson, personObj);
             PersonService.write(_personModel.persons);
 

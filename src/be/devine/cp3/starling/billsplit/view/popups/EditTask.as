@@ -25,9 +25,6 @@ public class EditTask extends ScrollContainer {
     private var _popupLayout:LayoutGroup;
     private var _titleInput:TextInput;
     private var _priceInput:TextInput;
-    private var _buttonLayout:LayoutGroup;
-    private var _saveButton:Button;
-    private var _deleteButton:Button;
     private var _currentTask:TaskVO;
     private var _container:Quad;
 
@@ -54,21 +51,21 @@ public class EditTask extends ScrollContainer {
         _priceInput.restrict = "0-9.,";
         _popupLayout.addChild(_priceInput);
 
-        _buttonLayout = new LayoutGroup();
-        _buttonLayout.layout = new HorizontalLayout();
-        _popupLayout.addChild(_buttonLayout);
+        var buttonLayout:LayoutGroup = new LayoutGroup();
+        buttonLayout.layout = new HorizontalLayout();
+        _popupLayout.addChild(buttonLayout);
 
-        _saveButton = new Button();
-        _saveButton.label = "Save";
-        _saveButton.addEventListener(Event.TRIGGERED, saveButtonHandler);
-        _buttonLayout.addChild(_saveButton);
+        var saveButton:Button = new Button();
+        saveButton.label = "Save";
+        saveButton.addEventListener(Event.TRIGGERED, saveButtonHandler);
+        buttonLayout.addChild(saveButton);
 
-        _deleteButton = new Button();
-        _deleteButton.label = "Delete";
-        _deleteButton.addEventListener(Event.TRIGGERED, deleteButtonHandler);
-        _buttonLayout.addChild(_deleteButton);
+        var deleteButton:Button = new Button();
+        deleteButton.label = "Delete";
+        deleteButton.addEventListener(Event.TRIGGERED, deleteButtonHandler);
+        buttonLayout.addChild(deleteButton);
 
-        if(_taskModel.currentTask != null) {
+        if (_taskModel.currentTask != null) {
             _currentTask = _taskModel.currentTask;
             _titleInput.text = _currentTask.title;
             _priceInput.text = String(_currentTask.price);

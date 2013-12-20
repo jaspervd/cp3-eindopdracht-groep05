@@ -22,8 +22,6 @@ public class Register extends Screen {
     private var _registerLayout:LayoutGroup;
     private var _pictureService:PictureService;
     private var _inputName:TextInput;
-    private var _takePicBtn:Button;
-    private var _submitBtn:Button;
     private var _urlImage:String;
     private var _image:ImageLoader;
 
@@ -47,20 +45,20 @@ public class Register extends Screen {
         _image = new ImageLoader();
         _registerLayout.addChild(_image);
 
-        _takePicBtn = new Button();
-        _takePicBtn.label = "Take picture";
-        _takePicBtn.addEventListener(Event.TRIGGERED, takePictureHandler);
-        _registerLayout.addChild(_takePicBtn);
+        var takePicBtn:Button = new Button();
+        takePicBtn.label = "Take picture";
+        takePicBtn.addEventListener(Event.TRIGGERED, takePictureHandler);
+        _registerLayout.addChild(takePicBtn);
 
         _inputName = new TextInput();
         _inputName.prompt = "Name";
         _registerLayout.addChild(_inputName);
 
-        _submitBtn = new Button();
-        _submitBtn.label = "Save";
-        _registerLayout.addChild(_submitBtn);
+        var submitBtn:Button = new Button();
+        submitBtn.label = "Save";
+        _registerLayout.addChild(submitBtn);
 
-        _submitBtn.addEventListener(Event.TRIGGERED, buttonHandler);
+        submitBtn.addEventListener(Event.TRIGGERED, buttonHandler);
     }
 
     private function takePictureHandler(event:Event):void {
