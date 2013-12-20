@@ -79,7 +79,6 @@ public class PersonModel extends EventDispatcher {
 
     public function deleteById(id:uint):Array {
         for each(var person:PersonVO in _persons) {
-            trace(person.id, id);
             if (person.id == id) {
                 _persons.splice(_persons.indexOf(person), 1);
             }

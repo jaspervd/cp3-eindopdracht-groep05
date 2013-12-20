@@ -1,7 +1,4 @@
 package be.devine.cp3.starling.billsplit.view.screens {
-
-
-import be.devine.cp3.starling.billsplit.format.PriceFormat;
 import be.devine.cp3.starling.billsplit.model.AppModel;
 import be.devine.cp3.starling.billsplit.model.PersonModel;
 import be.devine.cp3.starling.billsplit.model.TaskModel;
@@ -14,7 +11,6 @@ import feathers.controls.LayoutGroup;
 import feathers.controls.List;
 import feathers.controls.Screen;
 import feathers.controls.TextInput;
-import feathers.controls.ToggleSwitch;
 import feathers.data.ListCollection;
 import feathers.layout.HorizontalLayout;
 import feathers.layout.VerticalLayout;
@@ -81,9 +77,6 @@ public class Add extends Screen {
     }
 
     override protected function initialize():void {
-
-        trace('[HEADER]');
-
         draw();
     }
 

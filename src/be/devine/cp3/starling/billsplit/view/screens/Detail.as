@@ -189,7 +189,6 @@ public class Detail extends Screen {
 
     override protected function initialize():void {
         scherm();
-        trace('[DETAIL]');
     }
 
 
