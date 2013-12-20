@@ -175,7 +175,6 @@ public class Detail extends Screen {
     }
 
     private function updateTask(event:Event):void {
-        trace('[updateTask]');
         _taskModel.totalPrice = _currentTask.price;
         _taskTitle.text = _currentTask.title;
 
