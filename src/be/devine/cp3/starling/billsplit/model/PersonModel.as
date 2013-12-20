@@ -1,6 +1,7 @@
 package be.devine.cp3.starling.billsplit.model {
 
 import be.devine.cp3.starling.billsplit.factory.PersonVOFactory;
+import be.devine.cp3.starling.billsplit.service.PersonService;
 import be.devine.cp3.starling.billsplit.vo.PersonVO;
 
 import starling.events.Event;
@@ -26,8 +27,18 @@ public class PersonModel extends EventDispatcher {
         if (e == null) {
             throw new Error('PersonModel is a singleton, use getInstance() instead');
         }
-
         _persons = [];
+    }
+
+    public function load():void {
+        var personService:PersonService = new PersonService();
+        personService.addEventListener(Event.COMPLETE, personsLoadCompleteHandler);
+        personService.load();
+    }
+
+    private function personsLoadCompleteHandler(event:Event):void {
+        var personService:PersonService = event.target as PersonService;
+        persons = personService.persons;
     }
 
     public function get persons():Array {

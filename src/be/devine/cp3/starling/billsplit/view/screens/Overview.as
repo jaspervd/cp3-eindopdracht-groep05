@@ -42,14 +42,13 @@ public class Overview extends Screen {
         _personModel = PersonModel.getInstance();
         _taskModel = TaskModel.getInstance();
         _appmodel = AppModel.getInstance();
-        _tasks = _taskModel.getAllTasks();
+        _tasks = _taskModel.tasks;
         _moderator = _personModel.getModerator();
 
         _taskModel.addEventListener(Event.CHANGE, tasksChangedHandler);
 
         _profileLayout = new LayoutGroup();
         addChild(_profileLayout);
-
 
         _taskList = new List();
         _taskList.itemRendererType = TaskListRenderer;

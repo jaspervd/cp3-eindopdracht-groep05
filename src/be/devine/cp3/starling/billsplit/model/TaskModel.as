@@ -1,6 +1,7 @@
 package be.devine.cp3.starling.billsplit.model {
 
 import be.devine.cp3.starling.billsplit.factory.TaskVOFactory;
+import be.devine.cp3.starling.billsplit.service.TaskService;
 import be.devine.cp3.starling.billsplit.vo.TaskVO;
 
 import starling.events.Event;
@@ -32,6 +33,17 @@ public class TaskModel extends EventDispatcher {
         _currency = true;
     }
 
+    public function load():void {
+        var taskService:TaskService = new TaskService();
+        taskService.addEventListener(Event.COMPLETE, tasksLoadCompleteHandler);
+        taskService.load();
+    }
+
+    private function tasksLoadCompleteHandler(event:Event):void {
+        var taskService:TaskService = event.target as TaskService;
+        tasks = taskService.tasks;
+    }
+
     public function get tasks():Array {
         _tasks.sortOn('id', Array.DESCENDING);
         return _tasks;
@@ -41,10 +53,6 @@ public class TaskModel extends EventDispatcher {
         if (_tasks != value) {
             _tasks = value;
         }
-    }
-
-    public function getAllTasks():Array {
-        return _tasks;
     }
 
     public function getTask(id:uint):TaskVO {

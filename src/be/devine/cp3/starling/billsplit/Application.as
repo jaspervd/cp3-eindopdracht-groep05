@@ -28,34 +28,23 @@ public class Application extends Sprite {
         _theme = new MetalWorksMobileTheme();
 
         _appModel = AppModel.getInstance();
-        _appModel.load();
-
         _personModel = PersonModel.getInstance();
         _taskModel = TaskModel.getInstance();
+        _personModel.load();
+        _taskModel.load();
 
         addEventListener(Event.ADDED_TO_STAGE, addedHandler);
     }
 
     private function addedHandler(event:Event):void {
-
-
         removeEventListener(Event.ADDED_TO_STAGE, addedHandler);
         stage.addEventListener(Event.RESIZE, resizeHandler);
-
-
-        _personModel.persons = _appModel.persons;
-        _taskModel.tasks = _appModel.tasks;
-
 
         app = new Content();
         addChild(app);
 
-
         header = new Header();
         addChild(header);
-
-        //this.addEventListener(FeathersEventType.INITIALIZE, intializerHandler);
-
     }
 
     private function resizeHandler(event:Event):void {

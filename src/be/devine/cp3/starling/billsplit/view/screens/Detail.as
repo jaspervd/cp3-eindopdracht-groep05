@@ -133,9 +133,6 @@ public class Detail extends Screen {
         divideEvenBtn.label = "50/50";
         divideEvenBtn.addEventListener(Event.TRIGGERED, divideHandler);
         detailGroup.addChild(divideEvenBtn);
-
-        _personList.dataProvider = null;
-        _personList.validate();
     }
 
     private function toggleHandler(event:Event):void {
@@ -150,9 +147,6 @@ public class Detail extends Screen {
             }
             newArr.push(person);
         }
-
-        _personList.dataProvider = null;
-        _personList.validate();
         _personList.dataProvider = new ListCollection(newArr);
     }
 
@@ -160,8 +154,6 @@ public class Detail extends Screen {
         var iou:Number = PriceFormat.calculatePricesEvenly(_currentTask.price, _personModel.getPersonsByTaskId(_currentTask.id));
         _personModel.updateIou(_currentTask.id, iou);
 
-        _personList.dataProvider = null;
-        _personList.validate();
         _personList.dataProvider = new ListCollection(_personModel.getPersonsByTaskId(_currentTask.id));
         updateTask(null);
     }
@@ -185,10 +177,6 @@ public class Detail extends Screen {
             _total.label = "€" + String(_taskModel.totalPrice.toFixed(2));
 
             _type.defaultIcon = TaskService.icon(_currentTask);
-
-            for each(var person:PersonVO in _personModel.getPersonsByTaskId(_currentTask.id)) {
-                trace(person.name, person.label);
-            }
 
             _personList.dataProvider = new ListCollection(_personModel.getPersonsByTaskId(_currentTask.id));
         }
@@ -217,8 +205,6 @@ public class Detail extends Screen {
             person.iou = 0;
             _personModel.add(person);
 
-            _personList.dataProvider = null;
-            _personList.validate();
             _personList.dataProvider = new ListCollection(_personModel.getPersonsByTaskId(_currentTask.id));
 
             PersonService.write(_personModel.persons);
@@ -268,6 +254,7 @@ public class Detail extends Screen {
     private function closePersonEditButtonHandler(event:Event):void {
         updateTask(null);
         toggleHandler(null);
+        _personList.dataProvider = new ListCollection(_personModel.getPersonsByTaskId(_currentTask.id));
         PopUpManager.removePopUp(_editPerson, true);
     }
 }
