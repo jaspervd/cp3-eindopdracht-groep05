@@ -12,8 +12,8 @@ public class PriceFormat {
         return Number(((totalPrice / 100) * percentage).toFixed(2));
     }
 
-    public static function calculatePricesEvenly(total:Number, persons:Array):Number {
-        return total / persons.length;
+    public static function calculatePricesEvenly(totalPrice:Number, totalPersons):Number {
+        return totalPrice / totalPersons;
     }
 }
 }

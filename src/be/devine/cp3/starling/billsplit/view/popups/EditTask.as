@@ -65,11 +65,18 @@ public class EditTask extends ScrollContainer {
         deleteButton.addEventListener(Event.TRIGGERED, deleteButtonHandler);
         buttonLayout.addChild(deleteButton);
 
+        _taskModel.addEventListener(TaskModel.CURRENT_TASK_SET, currentTaskSetHandler);
         if (_taskModel.currentTask != null) {
             _currentTask = _taskModel.currentTask;
             _titleInput.text = _currentTask.title;
             _priceInput.text = String(_currentTask.price);
         }
+    }
+
+    private function currentTaskSetHandler(event:TaskModel):void {
+        _currentTask = _taskModel.currentTask;
+        _titleInput.text = _currentTask.title;
+        _priceInput.text = String(_currentTask.price);
     }
 
     private function addedToStageHandler(event:Event):void {

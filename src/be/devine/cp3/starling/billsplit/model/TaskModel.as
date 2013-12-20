@@ -17,6 +17,7 @@ public class TaskModel extends EventDispatcher {
     private var _currentTask:TaskVO;
     private var _totalPrice:Number;
     private var _currency:Boolean;
+    public static const CURRENT_TASK_SET:String = 'CURRENT_TASK_SET';
 
     public static function getInstance():TaskModel {
         if (instance == null) {
@@ -94,7 +95,10 @@ public class TaskModel extends EventDispatcher {
     }
 
     public function set currentTask(value:TaskVO):void {
-        _currentTask = value;
+        if(_currentTask != value) {
+            _currentTask = value;
+            dispatchEvent(new Event(CURRENT_TASK_SET));
+        }
     }
 
     public function updateTask(_currentTask:TaskVO, taskObj:Object):void {

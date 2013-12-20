@@ -67,8 +67,7 @@ public class Detail extends Screen {
         _personModel = PersonModel.getInstance();
         _currentTask = new TaskVO();
 
-        _appModel.addEventListener(Event.CHANGE, updateTask);
-        _personModel.addEventListener(Event.CHANGE, updateTask);
+        _taskModel.addEventListener(TaskModel.CURRENT_TASK_SET, currentTaskSetHandler);
 
         _personList = new List();
         _personList.itemRendererType = PersonListRenderer;
@@ -135,11 +134,17 @@ public class Detail extends Screen {
         detailGroup.addChild(divideEvenBtn);
     }
 
+    private function currentTaskSetHandler(event:Event):void {
+        _personModel.addEventListener(Event.CHANGE, updateTask);
+        _currentTask = _taskModel.currentTask;
+        updateTask(null);
+    }
+
     private function toggleHandler(event:Event):void {
         _taskModel.currency = _toggleSwitch.isSelected;
         var newArr:Array = [];
         for each(var person:PersonVO in _personModel.getPersonsByTaskId(_currentTask.id)) {
-            if(_toggleSwitch.isSelected) {
+            if (_toggleSwitch.isSelected) {
                 person.label = person.name + "  -  € " + Number(person.iou);
             } else {
                 person.percentage = PriceFormat.priceToPercentage(person.iou, _currentTask.price);
@@ -147,39 +152,39 @@ public class Detail extends Screen {
             }
             newArr.push(person);
         }
+
+        _personList.dataProvider = null;
+        _personList.validate();
         _personList.dataProvider = new ListCollection(newArr);
     }
 
     private function divideHandler(event:Event):void {
-        var iou:Number = PriceFormat.calculatePricesEvenly(_currentTask.price, _personModel.getPersonsByTaskId(_currentTask.id));
+        var iou:Number = PriceFormat.calculatePricesEvenly(_currentTask.price, _personModel.getPersonsByTaskId(_currentTask.id).length);
         _personModel.updateIou(_currentTask.id, iou);
 
+        _personList.dataProvider = null;
+        _personList.validate();
         _personList.dataProvider = new ListCollection(_personModel.getPersonsByTaskId(_currentTask.id));
         updateTask(null);
     }
 
     private function updateTask(event:Event):void {
-        if (_taskModel.currentTask) {
-            trace('[updateTask]');
-            _currentTask = _taskModel.currentTask;
+        _taskModel.totalPrice = _currentTask.price;
 
-            _taskModel.totalPrice = _currentTask.price;
+        _taskTitle.text = _currentTask.title;
 
-            _taskTitle.text = _currentTask.title;
+        _dateTime.text = DateFormat.timestampToUFDate(_currentTask.timestamp as Number);
 
-            _dateTime.text = DateFormat.timestampToUFDate(_currentTask.timestamp as Number);
+        _total.defaultIcon = Image.fromBitmap(new Task());
+        _addPerson.defaultIcon = Image.fromBitmap(new PersonAdd());
+        _editTaskBtn.defaultIcon = Image.fromBitmap(new Edit());
 
-            _total.defaultIcon = Image.fromBitmap(new Task());
-            _addPerson.defaultIcon = Image.fromBitmap(new PersonAdd());
-            _editTaskBtn.defaultIcon = Image.fromBitmap(new Edit());
+        calculateTotal();
+        _total.label = "€" + String(_taskModel.totalPrice.toFixed(2));
 
-            calculateTotal();
-            _total.label = "€" + String(_taskModel.totalPrice.toFixed(2));
+        _type.defaultIcon = TaskService.icon(_currentTask);
 
-            _type.defaultIcon = TaskService.icon(_currentTask);
-
-            _personList.dataProvider = new ListCollection(_personModel.getPersonsByTaskId(_currentTask.id));
-        }
+        _personList.dataProvider = new ListCollection(_personModel.getPersonsByTaskId(_currentTask.id));
     }
 
     override protected function initialize():void {
@@ -205,13 +210,15 @@ public class Detail extends Screen {
             person.iou = 0;
             _personModel.add(person);
 
+            _personList.dataProvider = null;
+            _personList.validate();
             _personList.dataProvider = new ListCollection(_personModel.getPersonsByTaskId(_currentTask.id));
 
             PersonService.write(_personModel.persons);
         } else {
             var alert:Alert = Alert.show("You can only add a person if the total is greater than zero.", "Notice", new ListCollection([
-                    { label: "OK" }
-                ]));
+                { label: "OK" }
+            ]));
         }
     }
 
@@ -254,6 +261,9 @@ public class Detail extends Screen {
     private function closePersonEditButtonHandler(event:Event):void {
         updateTask(null);
         toggleHandler(null);
+
+        _personList.dataProvider = null;
+        _personList.validate();
         _personList.dataProvider = new ListCollection(_personModel.getPersonsByTaskId(_currentTask.id));
         PopUpManager.removePopUp(_editPerson, true);
     }

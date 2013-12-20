@@ -103,11 +103,10 @@ public class PersonModel extends EventDispatcher {
     public function updateIou(taskId:uint, iou:Number):void {
         for each(var person:PersonVO in persons) {
             if (person.task_id == taskId) {
-                _persons.splice(_persons.indexOf(person), 1);
-                person.iou = Number(iou.toFixed(2));
-                _persons.push(person);
+                _persons[_persons.indexOf(person)].iou = Number(iou.toFixed(2));
             }
         }
+        dispatchEvent(new Event(Event.CHANGE));
     }
 
     public function get currentPerson():PersonVO {
